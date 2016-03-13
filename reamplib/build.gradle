@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
+apply plugin: 'signing'
 
 android {
     compileSdkVersion 23
@@ -25,4 +27,44 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'io.reactivex:rxandroid:1.1.0'
     compile 'io.reactivex:rxjava:1.1.0'
+}
+
+def isReleaseBuild() {
+    return VERSION_NAME.contains("SNAPSHOT") == false
+}
+
+def getReleaseRepositoryUrl() {
+    return RELEASE_REPOSITORY_URL
+}
+
+def getSnapshotRepositoryUrl() {
+    return SNAPSHOT_REPOSITORY_URL
+}
+
+def getRepositoryUsername() {
+    return hasProperty('NEXUS_USERNAME') ? NEXUS_USERNAME : ""
+}
+
+def getRepositoryPassword() {
+    return hasProperty('NEXUS_PASSWORD') ? NEXUS_PASSWORD : ""
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            pom.groupId = 'etr.android.reamp'
+            pom.artifactId = 'reamp'
+            pom.version = '0.1'
+
+            repository(url: getReleaseRepositoryUrl()) {
+                authentication(userName: getRepositoryUsername(), password: getRepositoryPassword())
+            }
+
+            pom.project {
+                name "etr.android.reamp"
+                packaging "aar"
+                description "Reamp Framework"
+            }
+        }
+    }
 }
