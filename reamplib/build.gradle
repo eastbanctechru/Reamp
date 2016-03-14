@@ -34,11 +34,11 @@ def isReleaseBuild() {
 }
 
 def getReleaseRepositoryUrl() {
-    return RELEASE_REPOSITORY_URL
+    return hasProperty("RELEASE_REPOSITORY_URL") ? RELEASE_REPOSITORY_URL : ""
 }
 
 def getSnapshotRepositoryUrl() {
-    return SNAPSHOT_REPOSITORY_URL
+    return ghasProperty("SNAPSHOT_REPOSITORY_URL") ? SNAPSHOT_REPOSITORY_URL : ""
 }
 
 def getRepositoryUsername() {
