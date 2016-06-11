@@ -78,6 +78,7 @@ public class MvpActivityDelegate<P extends MvpPresenter<SM>, SM extends MvpState
     }
 
     public void onPause() {
+        activity.getPresenter().onPause();
         for (Subscription subscription : subscriptions) {
             subscription.unsubscribe();
         }
@@ -110,6 +111,7 @@ public class MvpActivityDelegate<P extends MvpPresenter<SM>, SM extends MvpState
 
     public void onDestroy(boolean finishing) {
         P presenter = activity.getPresenter();
+        presenter.onDestroy();
         presenter.setView(null);
         activity.setPresenter(null);
 

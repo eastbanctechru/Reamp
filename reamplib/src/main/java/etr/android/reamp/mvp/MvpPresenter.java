@@ -151,4 +151,12 @@ public class MvpPresenter<SM extends MvpStateModel> {
     public void onResult(int requestCode, int resultCode, Intent data) {
 
     }
+
+    public void onPause() {
+
+    }
+
+    public void onDestroy() {
+
+    }
 }

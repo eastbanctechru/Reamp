@@ -73,6 +73,7 @@ public class MvpFragmentDelegate<P extends MvpPresenter<SM>, SM extends MvpState
     }
 
     public void onPause() {
+        fragment.getPresenter().onPause();
         for (Subscription subscription : subscriptions) {
             subscription.unsubscribe();
         }
@@ -86,6 +87,7 @@ public class MvpFragmentDelegate<P extends MvpPresenter<SM>, SM extends MvpState
 
     public void onDestroy() {
         P presenter = fragment.getPresenter();
+        presenter.onDestroy();
         presenter.setView(null);
         presenter.setNavigation(null);
         fragment.setPresenter(null);
