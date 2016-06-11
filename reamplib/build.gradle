@@ -53,7 +53,7 @@ uploadArchives {
         mavenDeployer {
             pom.groupId = 'etr.android.reamp'
             pom.artifactId = 'reamp'
-            pom.version = '0.2'
+            pom.version = '0.3'
 
             repository(url: getReleaseRepositoryUrl()) {
                 authentication(userName: getRepositoryUsername(), password: getRepositoryPassword())
