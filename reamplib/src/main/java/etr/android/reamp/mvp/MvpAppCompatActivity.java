@@ -6,10 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
 
-import butterknife.ButterKnife;
 import etr.android.reamp.R;
 
 public abstract class MvpAppCompatActivity<P extends MvpPresenter<SM>, SM extends MvpStateModel> extends AppCompatActivity implements IMvpActivity<P, SM> {
@@ -17,30 +14,6 @@ public abstract class MvpAppCompatActivity<P extends MvpPresenter<SM>, SM extend
     private P presenter;
     private String mvpId;
     private MvpActivityDelegate<P, SM> mvpActivityDelegate = new MvpActivityDelegate<>(this);
-
-    @Override
-    public void setContentView(int layoutResID) {
-        super.setContentView(layoutResID);
-        ButterKnife.bind(this);
-    }
-
-    @Override
-    public void setContentView(View view) {
-        super.setContentView(view);
-        ButterKnife.bind(this);
-    }
-
-    @Override
-    public void setContentView(View view, ViewGroup.LayoutParams params) {
-        super.setContentView(view, params);
-        ButterKnife.bind(this);
-    }
-
-    @Override
-    public void addContentView(View view, ViewGroup.LayoutParams params) {
-        super.addContentView(view, params);
-        ButterKnife.bind(this);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

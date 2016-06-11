@@ -6,9 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.View;
 
-import butterknife.ButterKnife;
 import etr.android.reamp.R;
 
 public abstract class MvpFragment<P extends MvpPresenter<SM>, SM extends MvpStateModel> extends Fragment implements IMvpFragment<P, SM> {
@@ -50,12 +48,6 @@ public abstract class MvpFragment<P extends MvpPresenter<SM>, SM extends MvpStat
     public void onDestroy() {
         super.onDestroy();
         mvpFragmentDelegate.onDestroy();
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
     }
 
     @Override
