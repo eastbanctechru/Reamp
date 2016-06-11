@@ -1,0 +1,12 @@
+[0.3]
+Added
+-Presenter.onPause() and Presenter.onDestroy() calls
+
+Removed
+-all Butterknife dependencies
+
+Changed
+-'com.android.tools.build:gradle:2.1.2'
+-gradle wrapper up to 2.10
+-buildToolsVersion "23.0.3"
+-'com.android.support:appcompat-v7:23.4.0'
