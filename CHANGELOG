@@ -1,3 +1,6 @@
+[0.4]
+Added RxStateModel and examples
+
 [0.3]
 Added
 -Presenter.onPause() and Presenter.onDestroy() calls
