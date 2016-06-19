@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="example.reamp"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="example.reamp">
 
     <application
         android:allowBackup="true"
@@ -16,6 +16,8 @@
         <activity android:name=".details.DetailsActivity">
         </activity>
         <activity android:name=".tablet.TabletActivity">
+        </activity>
+        <activity android:name=".subject.SubjectActivity">
         </activity>
     </application>
 
