@@ -15,6 +15,8 @@
         </activity>
         <activity android:name=".details.DetailsActivity">
         </activity>
+        <activity android:name=".number.NumberActivity">
+        </activity>
         <activity android:name=".tablet.TabletActivity">
         </activity>
         <activity android:name=".subject.SubjectActivity">

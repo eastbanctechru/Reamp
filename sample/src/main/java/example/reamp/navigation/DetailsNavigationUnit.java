@@ -59,9 +59,12 @@ public class DetailsNavigationUnit extends NavigationUnit<String> {
 
     @Override
     protected String getNavigationResult(Navigation navigation, int requestCode, int resultCode, Intent data) {
-        if (navigation.getActivity() instanceof TabletActivity) {
-            return sharedText;
+        if (data != null && resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
+            if (navigation.getActivity() instanceof TabletActivity) {
+                return sharedText;
+            }
+            return data.getStringExtra(EXTRA_TEXT);
         }
-        return data.getStringExtra(EXTRA_TEXT);
+        return null;
     }
 }

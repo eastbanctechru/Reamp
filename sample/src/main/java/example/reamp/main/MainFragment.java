@@ -50,12 +50,18 @@ public class MainFragment extends MvpFragment<MainFragmentPresenter, MainFragmen
                 getPresenter().onOpenDetailsClicked();
             }
         });
+        view.findViewById(R.id.open_number_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getPresenter().onOpenNumberClicked();
+            }
+        });
     }
 
     @Override
     public MainFragmentStateModel onCreateStateModel() {
         MainFragmentStateModel mainFragmentStateModel = new MainFragmentStateModel();
-        mainFragmentStateModel.textFromDetails = "No text yet";
+        mainFragmentStateModel.resultText = "No text yet";
         mainFragmentStateModel.mainText = "Send me to another screen";
         return mainFragmentStateModel;
     }
@@ -68,6 +74,6 @@ public class MainFragment extends MvpFragment<MainFragmentPresenter, MainFragmen
     @Override
     public void onStateChanged(MainFragmentStateModel stateModel) {
         mainEditText.setText(stateModel.mainText);
-        textFromDetails.setText(stateModel.textFromDetails);
+        textFromDetails.setText(stateModel.resultText);
     }
 }
