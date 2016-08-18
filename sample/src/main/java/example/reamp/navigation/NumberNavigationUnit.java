@@ -3,11 +3,11 @@ package example.reamp.navigation;
 import android.app.Activity;
 import android.content.Intent;
 
+import etr.android.reamp.navigation.ComplexNavigationUnit;
 import etr.android.reamp.navigation.Navigation;
-import etr.android.reamp.navigation.NavigationUnit;
 import example.reamp.number.NumberActivity;
 
-public class NumberNavigationUnit extends NavigationUnit<String, Integer> {
+public class NumberNavigationUnit extends ComplexNavigationUnit<String, Integer> {
     private static final String EXTRA_TEXT = "EXTRA_TEXT";
     private static final String EXTRA_NUMBER = "EXTRA_NUMBER";
     private static final int REQUEST_CODE = 2;
