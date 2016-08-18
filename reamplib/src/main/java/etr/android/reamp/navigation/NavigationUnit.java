@@ -2,7 +2,7 @@ package etr.android.reamp.navigation;
 
 import android.content.Intent;
 
-public abstract class NavigationUnit<T> {
+public abstract class NavigationUnit<T, R> {
 
     protected abstract void navigate(Navigation navigation);
 
@@ -14,7 +14,7 @@ public abstract class NavigationUnit<T> {
 
     }
 
-    protected T getNavigationResult(Navigation navigation, int requestCode, int resultCode, Intent data) {
+    protected R getNavigationResult(Navigation navigation, int requestCode, int resultCode, Intent data) {
         return null;
     }
 }

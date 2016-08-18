@@ -23,15 +23,15 @@ public class Navigation {
         navigationUnit.navigate(this);
     }
 
-    public <T> T getData(NavigationUnit<T> navigationUnit) {
+    public <T> T getData(NavigationUnit<T, ?> navigationUnit) {
         return navigationUnit.getNavigationData(this);
     }
 
-    public <T> void setResult(NavigationUnit<T> navigationUnit) {
+    public <R> void setResult(NavigationUnit<?, R> navigationUnit) {
         navigationUnit.setNavigationResult(this);
     }
 
-    public <T> T getResult(NavigationUnit<T> navigationUnit, int requestCode, int resultCode, Intent data) {
+    public <R> R getResult(NavigationUnit<?, R> navigationUnit, int requestCode, int resultCode, Intent data) {
         return navigationUnit.getNavigationResult(this, requestCode, resultCode, data);
     }
 }

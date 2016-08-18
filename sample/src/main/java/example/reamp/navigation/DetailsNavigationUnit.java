@@ -8,7 +8,7 @@ import etr.android.reamp.navigation.NavigationUnit;
 import example.reamp.details.DetailsActivity;
 import example.reamp.tablet.TabletActivity;
 
-public class DetailsNavigationUnit extends NavigationUnit<String> {
+public class DetailsNavigationUnit extends NavigationUnit<String, String> {
     private static final String EXTRA_TEXT = "EXTRA_TEXT";
     private static final int REQUEST_CODE = 1;
     private final String text;
@@ -59,9 +59,12 @@ public class DetailsNavigationUnit extends NavigationUnit<String> {
 
     @Override
     protected String getNavigationResult(Navigation navigation, int requestCode, int resultCode, Intent data) {
-        if (navigation.getActivity() instanceof TabletActivity) {
-            return sharedText;
+        if (data != null && resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
+            if (navigation.getActivity() instanceof TabletActivity) {
+                return sharedText;
+            }
+            return data.getStringExtra(EXTRA_TEXT);
         }
-        return data.getStringExtra(EXTRA_TEXT);
+        return null;
     }
 }
