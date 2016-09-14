@@ -1,4 +1,3 @@
-
 # Как подключить
 
 ## Шаг 1
@@ -24,3 +23,24 @@ keytool -import -file <путь до сертификата сайта> -keystor
 Стандартный пароль к кейстору CHANGEIT
 
 Лучше выполнять импорт с правами администратора
+
+## Шаг 3
+
+Добавить ссылку на репозиторий
+
+```
+allprojects {
+    repositories {
+        jcenter()
+        maven {
+            url "https://nexus.eastbanctech.ru/content/repositories/releases/"
+        }
+    }
+}
+```
+
+Добавить зависимость
+
+```
+compile 'etr.android.reamp:reamp:0.3'
+```
