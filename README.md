@@ -42,5 +42,5 @@ allprojects {
 Добавить зависимость
 
 ```
-compile 'etr.android.reamp:reamp:0.3'
+compile 'etr.android.reamp:reamp:<last-version>'
 ```
