@@ -1,3 +1,10 @@
+[0.6]
+- observe state model on the main thread
+- add "onDestroyPresenter" callback
+- keep presenter's state model when MvpView is recreated
+- bugfix for destroing fragment presenters
+- refactor (de)serialize method of the presenter
+
 [0.5]
 Updated NavigationUnit and new ComplexNavigationUnit
 
