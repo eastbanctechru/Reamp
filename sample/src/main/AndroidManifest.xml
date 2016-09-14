@@ -21,6 +21,8 @@
         </activity>
         <activity android:name=".subject.SubjectActivity">
         </activity>
+        <activity android:name=".lifecycle.LongRunningActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -47,8 +47,8 @@ public abstract class MvpAppCompatActivity<P extends MvpPresenter<SM>, SM extend
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         mvpActivityDelegate.onDestroy(isFinishing());
+        super.onDestroy();
     }
 
     @Override

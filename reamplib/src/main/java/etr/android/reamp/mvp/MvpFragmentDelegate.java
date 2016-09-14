@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 public class MvpFragmentDelegate<P extends MvpPresenter<SM>, SM extends MvpStateModel> {
@@ -33,18 +34,21 @@ public class MvpFragmentDelegate<P extends MvpPresenter<SM>, SM extends MvpState
             fragment.setMvpId(UUID.randomUUID().toString());
         }
 
-        SM stateModel = fragment.onCreateStateModel();
 
         PresenterManager presenterManager = PresenterManager.getInstance();
         P presenter = (P) presenterManager.getPresenter(fragment.getMvpId());
         if (presenter == null){
             presenter = fragment.onCreatePresenter();
             presenterManager.setPresenter(fragment.getMvpId(), presenter);
+            SM stateModel = presenter.deserializeState(presenterState);
+            if (stateModel== null) {
+                stateModel = fragment.onCreateStateModel();
+            }
+            presenter.attachStateModel(stateModel);
         }
 
         MvpAppCompatActivity activity = (MvpAppCompatActivity) fragment.getActivity();
         presenter.setNavigation(activity.getPresenter().getNavigation());
-        presenter.attachStateModel(stateModel);
         presenter.setView(fragment);
         fragment.setPresenter(presenter);
         if (presenterState == null) {
@@ -57,6 +61,7 @@ public class MvpFragmentDelegate<P extends MvpPresenter<SM>, SM extends MvpState
 
     public void onResume() {
         subscriptions.add(fragment.getPresenter().getStateUpdater()
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<SM>() {
                     @Override
                     public void call(SM stateModel) {

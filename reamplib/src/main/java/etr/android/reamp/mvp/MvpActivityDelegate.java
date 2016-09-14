@@ -13,6 +13,7 @@ import java.util.UUID;
 
 import etr.android.reamp.navigation.Navigation;
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 public class MvpActivityDelegate<P extends MvpPresenter<SM>, SM extends MvpStateModel> {
@@ -38,20 +39,29 @@ public class MvpActivityDelegate<P extends MvpPresenter<SM>, SM extends MvpState
             activity.setMvpId(UUID.randomUUID().toString());
         }
 
-        SM stateModel = activity.onCreateStateModel();
-
         PresenterManager presenterManager = PresenterManager.getInstance();
         P presenter = (P) presenterManager.getPresenter(activity.getMvpId());
+
         if (presenter == null) {
             presenter = activity.onCreatePresenter();
             presenterManager.setPresenter(activity.getMvpId(), presenter);
+
+            SM stateModel = presenter.deserializeState(presenterState);
+
+            if (stateModel == null) {
+                stateModel = activity.onCreateStateModel();
+            }
+
+            presenter.attachStateModel(stateModel);
         }
+
         Navigation navigation = new Navigation();
         navigation.setActivity(activity.getActivity());
         presenter.setNavigation(navigation);
+
         activity.setPresenter(presenter);
         presenter.setView(activity);
-        presenter.attachStateModel(stateModel);
+
         if (presenterState == null) {
             presenter.onFirstCreate();
         } else {
@@ -62,6 +72,7 @@ public class MvpActivityDelegate<P extends MvpPresenter<SM>, SM extends MvpState
 
     public void onResume() {
         subscriptions.add(activity.getPresenter().getStateUpdater()
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<SM>() {
                     @Override
                     public void call(SM stateModel) {
@@ -120,6 +131,7 @@ public class MvpActivityDelegate<P extends MvpPresenter<SM>, SM extends MvpState
         presenter.setNavigation(null);
 
         if (finishing) {
+            presenter.onDestroyPresenter();
             PresenterManager.getInstance().destroyPresenter(activity.getMvpId());
 
             if (activity instanceof FragmentActivity) {
@@ -129,6 +141,7 @@ public class MvpActivityDelegate<P extends MvpPresenter<SM>, SM extends MvpState
                     for (Fragment fragment : fragments) {
                         if (fragment instanceof IMvpFragment) {
                             IMvpFragment mvpFragment = (IMvpFragment) fragment;
+                            mvpFragment.getPresenter().onDestroyPresenter();
                             PresenterManager.getInstance().destroyPresenter(mvpFragment.getMvpId());
                         }
                     }
