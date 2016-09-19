@@ -34,14 +34,18 @@ public class MvpFragmentDelegate<P extends MvpPresenter<SM>, SM extends MvpState
             fragment.setMvpId(UUID.randomUUID().toString());
         }
 
-
+        boolean newPresenter = false;
         PresenterManager presenterManager = PresenterManager.getInstance();
         P presenter = (P) presenterManager.getPresenter(fragment.getMvpId());
         if (presenter == null){
+            newPresenter = true;
             presenter = fragment.onCreatePresenter();
             presenterManager.setPresenter(fragment.getMvpId(), presenter);
-            SM stateModel = presenter.deserializeState(presenterState);
-            if (stateModel== null) {
+            SM stateModel = null;
+            if (presenterState != null) {
+                stateModel = presenter.deserializeState(presenterState);
+            }
+            if (stateModel == null) {
                 stateModel = fragment.onCreateStateModel();
             }
             presenter.attachStateModel(stateModel);
@@ -51,7 +55,7 @@ public class MvpFragmentDelegate<P extends MvpPresenter<SM>, SM extends MvpState
         presenter.setNavigation(activity.getPresenter().getNavigation());
         presenter.setView(fragment);
         fragment.setPresenter(presenter);
-        if (presenterState == null) {
+        if (newPresenter) {
             presenter.onFirstCreate();
         } else {
             presenter.onRestore(presenterState);

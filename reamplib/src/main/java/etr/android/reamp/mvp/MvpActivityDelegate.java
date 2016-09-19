@@ -42,11 +42,16 @@ public class MvpActivityDelegate<P extends MvpPresenter<SM>, SM extends MvpState
         PresenterManager presenterManager = PresenterManager.getInstance();
         P presenter = (P) presenterManager.getPresenter(activity.getMvpId());
 
+        boolean newPresenter = false;
         if (presenter == null) {
+            newPresenter = true;
             presenter = activity.onCreatePresenter();
             presenterManager.setPresenter(activity.getMvpId(), presenter);
 
-            SM stateModel = presenter.deserializeState(presenterState);
+            SM stateModel = null;
+            if (presenterState != null) {
+                stateModel = presenter.deserializeState(presenterState);
+            }
 
             if (stateModel == null) {
                 stateModel = activity.onCreateStateModel();
@@ -62,7 +67,7 @@ public class MvpActivityDelegate<P extends MvpPresenter<SM>, SM extends MvpState
         activity.setPresenter(presenter);
         presenter.setView(activity);
 
-        if (presenterState == null) {
+        if (newPresenter) {
             presenter.onFirstCreate();
         } else {
             presenter.onRestore(presenterState);
