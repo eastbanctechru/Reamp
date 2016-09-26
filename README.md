@@ -26,19 +26,6 @@ keytool -import -file <путь до сертификата сайта> -keystor
 
 ## Шаг 3
 
-Добавить ссылку на репозиторий
-
-```
-allprojects {
-    repositories {
-        jcenter()
-        maven {
-            url "https://nexus.eastbanctech.ru/content/repositories/releases/"
-        }
-    }
-}
-```
-
 Добавить зависимость
 
 ```
