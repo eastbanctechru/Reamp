@@ -117,10 +117,8 @@ public class MvpActivityDelegate<P extends MvpPresenter<SM>, SM extends MvpState
                 for (Fragment fragment : fragments) {
                     if (fragment instanceof IMvpFragment) {
                         IMvpFragment mvpFragment = (IMvpFragment) fragment;
-                        if (mvpFragment.getPresenter() != null) { // fix for case of old and dead fragments
-                            MvpFragmentDelegate mvpFragmentDelegate = mvpFragment.getDelegate();
-                            mvpFragmentDelegate.onResult(requestCode, resultCode, data);
-                        }
+                        MvpFragmentDelegate mvpFragmentDelegate = mvpFragment.getDelegate();
+                        mvpFragmentDelegate.onResult(requestCode, resultCode, data);
                     }
                 }
             }
@@ -148,7 +146,9 @@ public class MvpActivityDelegate<P extends MvpPresenter<SM>, SM extends MvpState
                     for (Fragment fragment : fragments) {
                         if (fragment instanceof IMvpFragment) {
                             IMvpFragment mvpFragment = (IMvpFragment) fragment;
-                            mvpFragment.getPresenter().onDestroyPresenter();
+                            if (mvpFragment.getPresenter() != null) {
+                                mvpFragment.getPresenter().onDestroyPresenter();
+                            }
                             PresenterManager.getInstance().destroyPresenter(mvpFragment.getMvpId());
                         }
                     }

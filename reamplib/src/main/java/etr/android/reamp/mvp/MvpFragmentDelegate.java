@@ -90,8 +90,10 @@ public class MvpFragmentDelegate<P extends MvpPresenter<SM>, SM extends MvpState
     }
 
     public void onSaveInstanceState(Bundle outState) {
-        outState.putString(KEY_MVP_ID, fragment.getMvpId());
-        outState.putBundle(KEY_PRESENTER_STATE, fragment.getPresenter().serializeState());
+        if (fragment.getPresenter() != null) {
+            outState.putString(KEY_MVP_ID, fragment.getMvpId());
+            outState.putBundle(KEY_PRESENTER_STATE, fragment.getPresenter().serializeState());
+        }
     }
 
     public void onDestroy() {
@@ -103,7 +105,9 @@ public class MvpFragmentDelegate<P extends MvpPresenter<SM>, SM extends MvpState
     }
 
     public void onResult(int requestCode, int resultCode, Intent data) {
-        P presenter = fragment.getPresenter();
-        presenter.onResult(requestCode, resultCode, data);
+        if (fragment.getPresenter() != null) {
+            P presenter = fragment.getPresenter();
+            presenter.onResult(requestCode, resultCode, data);
+        }
     }
 }
