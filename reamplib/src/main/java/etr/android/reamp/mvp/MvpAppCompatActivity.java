@@ -17,8 +17,8 @@ public abstract class MvpAppCompatActivity<P extends MvpPresenter<SM>, SM extend
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         mvpActivityDelegate.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
     }
 
     @Override
