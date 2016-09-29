@@ -16,8 +16,8 @@ public abstract class MvpFragment<P extends MvpPresenter<SM>, SM extends MvpStat
     private String mvpId;
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         mvpFragmentDelegate.onCreate(savedInstanceState);
     }
 
