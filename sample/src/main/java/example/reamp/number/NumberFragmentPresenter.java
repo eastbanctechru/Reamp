@@ -7,8 +7,8 @@ import example.reamp.navigation.NumberNavigationUnit;
 public class NumberFragmentPresenter extends MvpPresenter<NumberFragmentStateModel> {
 
     @Override
-    public void onFirstCreate() {
-        super.onFirstCreate();
+    public void onPresenterCreated() {
+        super.onPresenterCreated();
         getStateModel().numberText = getNavigation().getData(new DetailsNavigationUnit());
         sendStateModel();
     }

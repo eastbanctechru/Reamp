@@ -56,19 +56,7 @@ public class MvpPresenter<SM extends MvpStateModel> {
         this.view = view;
     }
 
-    public void onFirstCreate() {
-
-    }
-
-    public void onRestore(Bundle savedInstanceState) {
-
-    }
-
-    public void onCreate() {
-
-    }
-
-    public void onResume() {
+    public void onPresenterCreated() {
 
     }
 
@@ -130,15 +118,15 @@ public class MvpPresenter<SM extends MvpStateModel> {
 
     }
 
-    public void onPause() {
-
-    }
-
-    public void onDestroy() {
-
-    }
-
     public void onDestroyPresenter() {
+
+    }
+
+    public void onConnect() {
+
+    }
+
+    public void onDisconnect() {
 
     }
 }

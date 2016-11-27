@@ -14,8 +14,8 @@ public class LongRunningPresenter extends MvpPresenter<LongRunningState> {
     private Subscription subscription;
 
     @Override
-    public void onFirstCreate() {
-        super.onFirstCreate();
+    public void onPresenterCreated() {
+        super.onPresenterCreated();
         subscription = Observable.interval(1, TimeUnit.SECONDS)
                 .subscribe(new Action1<Long>() {
                     @Override
