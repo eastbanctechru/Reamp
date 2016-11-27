@@ -1,3 +1,8 @@
+[0.8]
+- Single MvpDelegate class, delegate has connect() and disconnect() methods
+- onResume(), onPause(), onResore() and onCreate() removed from MvpPresenter
+- inFirstCreate() renamed to onPresenterCreated()
+
 [0.6]
 - observe state model on the main thread
 - add "onDestroyPresenter" callback
