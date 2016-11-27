@@ -6,8 +6,8 @@ import example.reamp.navigation.DetailsNavigationUnit;
 public class DetailsFragmentPresenter extends MvpPresenter<DetailsFragmentStateModel> {
 
     @Override
-    public void onFirstCreate() {
-        super.onFirstCreate();
+    public void onPresenterCreated() {
+        super.onPresenterCreated();
         getStateModel().text = getNavigation().getData(new DetailsNavigationUnit());
         sendStateModel();
     }

@@ -21,7 +21,7 @@
         </activity>
         <activity android:name=".subject.SubjectActivity">
         </activity>
-        <activity android:name=".lifecycle.LongRunningActivity">
+        <activity android:name=".lifecycle.LongRunningActivity" android:exported="true">
         </activity>
     </application>
 

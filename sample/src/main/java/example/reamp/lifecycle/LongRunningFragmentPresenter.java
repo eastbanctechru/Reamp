@@ -14,8 +14,8 @@ public class LongRunningFragmentPresenter extends MvpPresenter<LongRunningFragme
     private Subscription subscription;
 
     @Override
-    public void onFirstCreate() {
-        super.onFirstCreate();
+    public void onPresenterCreated() {
+        super.onPresenterCreated();
         subscription = Observable.interval(500, TimeUnit.MILLISECONDS)
                 .subscribe(new Action1<Long>() {
                     @Override

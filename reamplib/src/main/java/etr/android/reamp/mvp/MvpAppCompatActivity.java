@@ -7,47 +7,48 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import java.util.UUID;
+
 import etr.android.reamp.R;
 
-public abstract class MvpAppCompatActivity<P extends MvpPresenter<SM>, SM extends MvpStateModel> extends AppCompatActivity implements IMvpActivity<P, SM> {
+public class MvpAppCompatActivity<P extends MvpPresenter<SM>, SM extends MvpStateModel> extends AppCompatActivity implements MvpView<SM> {
 
     private P presenter;
-    private String mvpId;
-    private MvpActivityDelegate<P, SM> mvpActivityDelegate = new MvpActivityDelegate<>(this);
+    private MvpDelegate delegate = new MvpDelegate(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mvpActivityDelegate.onCreate(savedInstanceState);
+        delegate.onCreate(savedInstanceState);
         super.onCreate(savedInstanceState);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mvpActivityDelegate.onResume();
+        delegate.connect();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mvpActivityDelegate.onPause();
+        delegate.disconnect();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        mvpActivityDelegate.onSaveInstanceState(outState);
+        delegate.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mvpActivityDelegate.onResult(requestCode, resultCode, data);
+        delegate.onResult(requestCode, resultCode, data);
     }
 
     @Override
     protected void onDestroy() {
-        mvpActivityDelegate.onDestroy(isFinishing());
+        delegate.onDestroy();
         super.onDestroy();
     }
 
@@ -56,10 +57,15 @@ public abstract class MvpAppCompatActivity<P extends MvpPresenter<SM>, SM extend
         return this;
     }
 
-    public void setPresenter(P presenter) {
-        this.presenter = presenter;
+    @Override
+    public void onStateChanged(SM stateModel) {
+
     }
 
+    @Override
+    public void setPresenter(MvpPresenter<SM> presenter) {
+        this.presenter = (P) presenter;
+    }
 
     public P getPresenter() {
         return presenter;
@@ -75,15 +81,16 @@ public abstract class MvpAppCompatActivity<P extends MvpPresenter<SM>, SM extend
     }
 
     public String getMvpId() {
-        return mvpId;
-    }
-
-    public void setMvpId(String mvpId) {
-        this.mvpId = mvpId;
+        return delegate.generateId(this);
     }
 
     @Override
-    public MvpAppCompatActivity getActivity() {
-        return this;
+    public SM onCreateStateModel() {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
+    @Override
+    public MvpPresenter<SM> onCreatePresenter() {
+        throw new UnsupportedOperationException("Not implemented");
     }
 }

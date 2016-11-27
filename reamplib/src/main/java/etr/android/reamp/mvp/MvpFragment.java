@@ -1,6 +1,5 @@
 package etr.android.reamp.mvp;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,45 +8,44 @@ import android.util.Log;
 
 import etr.android.reamp.R;
 
-public abstract class MvpFragment<P extends MvpPresenter<SM>, SM extends MvpStateModel> extends Fragment implements IMvpFragment<P, SM> {
+public class MvpFragment<P extends MvpPresenter<SM>, SM extends MvpStateModel> extends Fragment implements MvpView<SM> {
 
-    private MvpFragmentDelegate<P, SM> mvpFragmentDelegate = new MvpFragmentDelegate<>(this);
+    private MvpDelegate delegate = new MvpDelegate(this);
     private P presenter;
-    private String mvpId;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mvpFragmentDelegate.onCreate(savedInstanceState);
+        delegate.onCreate(savedInstanceState);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mvpFragmentDelegate.onResume();
+        delegate.connect();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mvpFragmentDelegate.onPause();
+        delegate.disconnect();
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        mvpFragmentDelegate.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        delegate.onSaveInstanceState(outState);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mvpFragmentDelegate.onDestroy();
+        delegate.onDestroy();
+    }
+
+    @Override
+    public void onStateChanged(SM stateModel) {
+
     }
 
     @Override
@@ -64,22 +62,22 @@ public abstract class MvpFragment<P extends MvpPresenter<SM>, SM extends MvpStat
     }
 
     @Override
-    public void setPresenter(P presenter) {
-        this.presenter = presenter;
-    }
-
-    @Override
-    public void setMvpId(String mvpId) {
-        this.mvpId = mvpId;
+    public void setPresenter(MvpPresenter<SM> presenter) {
+        this.presenter = (P) presenter;
     }
 
     @Override
     public String getMvpId() {
-        return mvpId;
+        return delegate.generateId(this);
     }
 
     @Override
-    public MvpFragmentDelegate getDelegate() {
-        return mvpFragmentDelegate;
+    public SM onCreateStateModel() {
+        throw new UnsupportedOperationException("not implemented");
+    }
+
+    @Override
+    public MvpPresenter<SM> onCreatePresenter() {
+        throw new UnsupportedOperationException("not implemented");
     }
 }
