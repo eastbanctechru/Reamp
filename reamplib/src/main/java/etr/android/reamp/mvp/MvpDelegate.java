@@ -148,7 +148,8 @@ public class MvpDelegate {
 
             MvpPresenter presenter = view.getPresenter();
             presenter.onResult(requestCode, resultCode, data);
-            Activity activity = (Activity) view.getContext();
+            Activity activity = (Activity) view;
+            //TODO do the same for non-support FragmentActivity
             if (activity instanceof FragmentActivity) {
                 FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
                 List<Fragment> fragments = fragmentManager.getFragments();
