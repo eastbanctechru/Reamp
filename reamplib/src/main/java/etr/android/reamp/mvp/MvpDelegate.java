@@ -11,7 +11,6 @@ import android.util.Log;
 import java.util.List;
 import java.util.UUID;
 
-import etr.android.reamp.navigation.Navigation;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -61,11 +60,6 @@ public class MvpDelegate {
             presenter.attachStateModel(stateModel);
         }
 
-        Navigation navigation = new Navigation();
-        //TODO: check if view is always an Activity
-        navigation.setActivity((Activity) view.getContext());
-        presenter.setNavigation(navigation);
-
         view.setPresenter(presenter);
         presenter.setView(view);
 
@@ -112,10 +106,6 @@ public class MvpDelegate {
         MvpPresenter presenter = view.getPresenter();
         presenter.setView(null);
         view.setPresenter(null);
-
-        Navigation navigation = presenter.getNavigation();
-        navigation.setActivity(null);
-        presenter.setNavigation(null);
 
         if (view instanceof Activity && ((Activity) view).isFinishing()) {
             presenter.onDestroyPresenter();

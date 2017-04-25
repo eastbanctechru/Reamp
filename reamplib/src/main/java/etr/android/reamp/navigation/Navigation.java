@@ -5,9 +5,9 @@ import android.content.Intent;
 
 public class Navigation {
 
-    private Activity activity;
+    private final Activity activity;
 
-    public void setActivity(Activity activity) {
+    public Navigation(Activity activity) {
         this.activity = activity;
     }
 

@@ -1,6 +1,6 @@
 package example.reamp.main;
 
-import etr.android.reamp.mvp.MvpPresenter;
+import etr.android.reamp.navigation.NavigationPresenter;
 
-public class MainActivityPresenter extends MvpPresenter<MainActivityStateModel> {
+public class MainActivityPresenter extends NavigationPresenter<MainActivityStateModel> {
 }

@@ -14,7 +14,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import etr.android.reamp.BuildConfig;
-import etr.android.reamp.navigation.Navigation;
 import rx.subjects.BehaviorSubject;
 
 public class MvpPresenter<SM extends MvpStateModel> {
@@ -25,19 +24,10 @@ public class MvpPresenter<SM extends MvpStateModel> {
 
     private SM stateModel;
     private MvpView view;
-    private Navigation navigation;
 
     public void attachStateModel(SM stateModel) {
         stateSubject = BehaviorSubject.create(stateModel);
         this.stateModel = stateModel;
-    }
-
-    public void setNavigation(Navigation navigation) {
-        this.navigation = navigation;
-    }
-
-    public Navigation getNavigation() {
-        return navigation;
     }
 
     public SM getStateModel() {
