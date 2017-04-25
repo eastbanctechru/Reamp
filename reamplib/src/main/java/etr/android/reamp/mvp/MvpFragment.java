@@ -11,7 +11,6 @@ import etr.android.reamp.R;
 public class MvpFragment<P extends MvpPresenter<SM>, SM extends MvpStateModel> extends Fragment implements MvpView<SM> {
 
     private MvpDelegate delegate = new MvpDelegate(this);
-    private P presenter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,12 +57,7 @@ public class MvpFragment<P extends MvpPresenter<SM>, SM extends MvpStateModel> e
 
     @Override
     public P getPresenter() {
-        return presenter;
-    }
-
-    @Override
-    public void setPresenter(MvpPresenter<SM> presenter) {
-        this.presenter = (P) presenter;
+        return delegate.<P, SM>getPresenter();
     }
 
     @Override

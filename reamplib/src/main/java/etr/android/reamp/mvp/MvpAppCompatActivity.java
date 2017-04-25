@@ -7,13 +7,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import java.util.UUID;
-
 import etr.android.reamp.R;
 
 public class MvpAppCompatActivity<P extends MvpPresenter<SM>, SM extends MvpStateModel> extends AppCompatActivity implements MvpView<SM> {
 
-    private P presenter;
     private MvpDelegate delegate = new MvpDelegate(this);
 
     @Override
@@ -62,13 +59,8 @@ public class MvpAppCompatActivity<P extends MvpPresenter<SM>, SM extends MvpStat
 
     }
 
-    @Override
-    public void setPresenter(MvpPresenter<SM> presenter) {
-        this.presenter = (P) presenter;
-    }
-
     public P getPresenter() {
-        return presenter;
+        return delegate.<P, SM>getPresenter();
     }
 
     @Override

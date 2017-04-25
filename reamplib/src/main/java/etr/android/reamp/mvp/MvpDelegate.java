@@ -24,9 +24,14 @@ public class MvpDelegate {
     private final MvpView view;
     private Subscription subscription;
     private String mvpId;
+    private MvpPresenter presenter;
 
     public MvpDelegate(MvpView view) {
         this.view = view;
+    }
+
+    public <P extends MvpPresenter<SM>, SM extends MvpStateModel> P getPresenter() {
+        return (P) presenter;
     }
 
     public void onCreate(Bundle savedInstanceState) {
@@ -60,14 +65,13 @@ public class MvpDelegate {
             presenter.attachStateModel(stateModel);
         }
 
-        view.setPresenter(presenter);
         presenter.setView(view);
+        this.presenter = presenter;
 
         if (newPresenter) {
             presenter.onPresenterCreated();
         }
     }
-
 
     public String generateId(MvpView view) {
         return UUID.randomUUID().toString();
@@ -105,7 +109,7 @@ public class MvpDelegate {
     public void onDestroy() {
         MvpPresenter presenter = view.getPresenter();
         presenter.setView(null);
-        view.setPresenter(null);
+        this.presenter = null;
 
         if (view instanceof Activity && ((Activity) view).isFinishing()) {
             presenter.onDestroyPresenter();
