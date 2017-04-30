@@ -23,6 +23,8 @@
         </activity>
         <activity android:name=".lifecycle.LongRunningActivity" android:exported="true">
         </activity>
+        <activity android:name=".view.CustomViewActivity" android:exported="true">
+        </activity>
     </application>
 
 </manifest>

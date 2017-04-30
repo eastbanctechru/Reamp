@@ -7,6 +7,7 @@ public class PresenterManager {
     private static PresenterManager instance;
 
     final private HashMap<String, MvpPresenter> presenters = new HashMap<>();
+    private ReampStrategy strategy = new ReampStrategy();
 
     private PresenterManager() {
     }
@@ -28,5 +29,15 @@ public class PresenterManager {
 
     public void destroyPresenter(String mvpId) {
         presenters.remove(mvpId);
+    }
+
+    public ReampStrategy getStrategy() {
+        return strategy;
+    }
+
+    public void setStrategy(ReampStrategy strategy) {
+        if (strategy != null) {
+            this.strategy = strategy;
+        }
     }
 }

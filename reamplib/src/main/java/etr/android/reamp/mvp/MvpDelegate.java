@@ -74,6 +74,7 @@ public class MvpDelegate {
     }
 
     public String generateId(MvpView view) {
+        //TODO remove view param, we have it as a field
         return UUID.randomUUID().toString();
     }
 
@@ -110,33 +111,13 @@ public class MvpDelegate {
         MvpPresenter presenter = view.getPresenter();
         presenter.setView(null);
         this.presenter = null;
-
-        if (view instanceof Activity && ((Activity) view).isFinishing()) {
-            presenter.onDestroyPresenter();
-            PresenterManager.getInstance().destroyPresenter(view.getMvpId());
-
-            if (view instanceof FragmentActivity) {
-                FragmentManager fragmentManager = ((FragmentActivity) view).getSupportFragmentManager();
-                List<Fragment> fragments = fragmentManager.getFragments();
-                if (fragments != null) {
-                    for (Fragment fragment : fragments) {
-                        if (fragment instanceof MvpView) {
-                            MvpView mvpFragment = (MvpView) fragment;
-                            if (mvpFragment.getPresenter() != null) {
-                                mvpFragment.getPresenter().onDestroyPresenter();
-                            } else {
-                                Log.w(TAG, "onDestroy: fragment presenter is null");
-                            }
-                            PresenterManager.getInstance().destroyPresenter(mvpFragment.getMvpId());
-                        }
-                    }
-                }
-            }
-
-            //TODO: do the same for simple Activity from standard package
-        }
     }
 
+    /**
+     * Helper method that forwards onResult of an Activity to all fragments
+     * @deprecated
+     */
+    @Deprecated()
     public void onResult(int requestCode, int resultCode, Intent data) {
         if (view instanceof Activity) {
 
