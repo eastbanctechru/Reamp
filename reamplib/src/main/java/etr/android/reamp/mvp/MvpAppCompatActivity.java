@@ -9,7 +9,7 @@ import android.util.Log;
 
 import etr.android.reamp.R;
 
-public class MvpAppCompatActivity<P extends MvpPresenter<SM>, SM extends MvpStateModel> extends AppCompatActivity implements MvpView<SM> {
+public abstract class MvpAppCompatActivity<P extends MvpPresenter<SM>, SM extends MvpStateModel> extends AppCompatActivity implements MvpView<SM> {
 
     private MvpDelegate delegate = new MvpDelegate(this);
 
@@ -54,11 +54,6 @@ public class MvpAppCompatActivity<P extends MvpPresenter<SM>, SM extends MvpStat
         return this;
     }
 
-    @Override
-    public void onStateChanged(SM stateModel) {
-
-    }
-
     public P getPresenter() {
         return delegate.<P, SM>getPresenter();
     }
@@ -74,15 +69,5 @@ public class MvpAppCompatActivity<P extends MvpPresenter<SM>, SM extends MvpStat
 
     public String getMvpId() {
         return delegate.getId();
-    }
-
-    @Override
-    public SM onCreateStateModel() {
-        throw new UnsupportedOperationException("Not implemented");
-    }
-
-    @Override
-    public MvpPresenter<SM> onCreatePresenter() {
-        throw new UnsupportedOperationException("Not implemented");
     }
 }

@@ -9,7 +9,7 @@ import android.util.Log;
 
 import etr.android.reamp.R;
 
-public class MvpFragment<P extends MvpPresenter<SM>, SM extends MvpStateModel> extends Fragment implements MvpView<SM> {
+public abstract class MvpFragment<P extends MvpPresenter<SM>, SM extends MvpStateModel> extends Fragment implements MvpView<SM> {
 
     private MvpDelegate delegate = new MvpDelegate(this);
 
@@ -50,11 +50,6 @@ public class MvpFragment<P extends MvpPresenter<SM>, SM extends MvpStateModel> e
     }
 
     @Override
-    public void onStateChanged(SM stateModel) {
-
-    }
-
-    @Override
     public void onError(Throwable throwable) {
         new AlertDialog.Builder(getContext())
                 .setTitle(R.string.reamp_common_error_title)
@@ -72,13 +67,4 @@ public class MvpFragment<P extends MvpPresenter<SM>, SM extends MvpStateModel> e
         return delegate.getId();
     }
 
-    @Override
-    public SM onCreateStateModel() {
-        throw new UnsupportedOperationException("not implemented");
-    }
-
-    @Override
-    public MvpPresenter<SM> onCreatePresenter() {
-        throw new UnsupportedOperationException("not implemented");
-    }
 }
