@@ -3,6 +3,8 @@ package etr.android.reamp.mvp;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import java.io.ByteArrayInputStream;
@@ -16,19 +18,18 @@ import java.io.Serializable;
 
 import etr.android.reamp.BuildConfig;
 import etr.android.reamp.navigation.Navigation;
-import rx.subjects.BehaviorSubject;
 
 public class MvpPresenter<SM extends MvpStateModel> {
 
     private static final String TAG = "MvpPresenter";
     private static final String EXTRA_INSTANCE_STATE = "EXTRA_INSTANCE_STATE";
-    private BehaviorSubject<SM> stateSubject;
+    private final Handler uiHandler = new Handler(Looper.getMainLooper());
 
     private SM stateModel;
     private MvpView view;
+    private StateChanges stateChanges;
 
     public void attachStateModel(SM stateModel) {
-        stateSubject = BehaviorSubject.create(stateModel);
         this.stateModel = stateModel;
     }
 
@@ -36,8 +37,24 @@ public class MvpPresenter<SM extends MvpStateModel> {
         return stateModel;
     }
 
-    public final void sendStateModel(SM stateModel) {
-        stateSubject.onNext(stateModel);
+    public final void sendStateModel(final SM stateModel) {
+        if (stateChanges == null) {
+            return;
+        }
+        if (Looper.myLooper() != Looper.getMainLooper()) {
+            uiHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    sendStateModel(stateModel);
+                }
+            });
+        } else {
+            try {
+                stateChanges.onNewState(stateModel);
+            } catch (Throwable e) {
+                stateChanges.onError(e);
+            }
+        }
     }
 
     public final void sendStateModel() {
@@ -54,10 +71,6 @@ public class MvpPresenter<SM extends MvpStateModel> {
 
     public MvpView getView() {
         return view;
-    }
-
-    public BehaviorSubject<SM> getStateUpdater() {
-        return stateSubject;
     }
 
     public SM deserializeState(Bundle savedInstance) {
@@ -129,5 +142,15 @@ public class MvpPresenter<SM extends MvpStateModel> {
 
     public Navigation getNavigation() {
         return new Navigation((Activity) getView().getContext());
+    }
+
+    public void connect(StateChanges stateChanges) {
+        this.stateChanges = stateChanges;
+        sendStateModel();
+    }
+
+    public void disconnect() {
+        stateChanges = null;
+        uiHandler.removeCallbacks(null);
     }
 }
