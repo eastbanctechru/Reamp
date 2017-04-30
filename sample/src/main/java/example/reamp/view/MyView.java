@@ -77,7 +77,7 @@ public class MyView extends View implements MvpView<MyState> {
 
     @Override
     public String getMvpId() {
-        return mvpDelegate.generateId();
+        return mvpDelegate.getId();
     }
 
     @Override

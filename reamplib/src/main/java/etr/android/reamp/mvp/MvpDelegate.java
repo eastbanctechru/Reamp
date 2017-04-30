@@ -73,8 +73,11 @@ public class MvpDelegate {
         }
     }
 
-    public String generateId() {
-        return UUID.randomUUID().toString();
+    public String getId() {
+        if (this.mvpId == null) {
+            this.mvpId = UUID.randomUUID().toString();
+        }
+        return this.mvpId;
     }
 
     public void connect() {

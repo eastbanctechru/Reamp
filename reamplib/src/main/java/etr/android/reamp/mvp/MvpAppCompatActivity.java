@@ -73,7 +73,7 @@ public class MvpAppCompatActivity<P extends MvpPresenter<SM>, SM extends MvpStat
     }
 
     public String getMvpId() {
-        return delegate.generateId();
+        return delegate.getId();
     }
 
     @Override
