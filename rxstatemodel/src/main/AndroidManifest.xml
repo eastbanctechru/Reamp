@@ -1,8 +1,9 @@
 <manifest
 
-    package="etr.android.reamp.rxstatemodel">
+    package="etr.android.reamp.rxstatemodel"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <application>
+    <application android:label="">
 
     </application>
 
