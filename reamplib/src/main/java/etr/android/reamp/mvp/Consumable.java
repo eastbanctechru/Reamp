@@ -2,6 +2,10 @@ package etr.android.reamp.mvp;
 
 import java.io.Serializable;
 
+/**
+ * @deprecated Use {@link Action}
+ */
+@Deprecated
 public class Consumable<T> implements Serializable {
 
     private final T defaultValue;
