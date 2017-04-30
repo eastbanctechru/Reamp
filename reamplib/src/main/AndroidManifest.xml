@@ -1,11 +1,11 @@
-<manifest package="etr.android.reamp"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="etr.android.reamp">
 
-    <application
-        android:allowBackup="true"
-        android:label="@string/app_name"
-        android:supportsRtl="true"
-        >
+    <application>
+
+        <provider
+            android:name=".mvp.ReampProvider"
+            android:authorities="etr.android.reamp.provider" />
 
     </application>
 

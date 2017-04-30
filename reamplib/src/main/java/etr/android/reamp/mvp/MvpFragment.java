@@ -1,5 +1,6 @@
 package etr.android.reamp.mvp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,10 +9,9 @@ import android.util.Log;
 
 import etr.android.reamp.R;
 
-public class MvpFragment<P extends MvpPresenter<SM>, SM extends MvpStateModel> extends Fragment implements MvpView<SM> {
+public abstract class MvpFragment<P extends MvpPresenter<SM>, SM extends MvpStateModel> extends Fragment implements MvpView<SM> {
 
     private MvpDelegate delegate = new MvpDelegate(this);
-    private P presenter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -20,14 +20,14 @@ public class MvpFragment<P extends MvpPresenter<SM>, SM extends MvpStateModel> e
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
         delegate.connect();
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onStop() {
+        super.onStop();
         delegate.disconnect();
     }
 
@@ -44,8 +44,9 @@ public class MvpFragment<P extends MvpPresenter<SM>, SM extends MvpStateModel> e
     }
 
     @Override
-    public void onStateChanged(SM stateModel) {
-
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        delegate.onResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -58,26 +59,12 @@ public class MvpFragment<P extends MvpPresenter<SM>, SM extends MvpStateModel> e
 
     @Override
     public P getPresenter() {
-        return presenter;
-    }
-
-    @Override
-    public void setPresenter(MvpPresenter<SM> presenter) {
-        this.presenter = (P) presenter;
+        return delegate.<P, SM>getPresenter();
     }
 
     @Override
     public String getMvpId() {
-        return delegate.generateId(this);
+        return delegate.getId();
     }
 
-    @Override
-    public SM onCreateStateModel() {
-        throw new UnsupportedOperationException("not implemented");
-    }
-
-    @Override
-    public MvpPresenter<SM> onCreatePresenter() {
-        throw new UnsupportedOperationException("not implemented");
-    }
 }

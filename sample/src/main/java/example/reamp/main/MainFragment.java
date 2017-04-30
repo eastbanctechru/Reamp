@@ -4,6 +4,7 @@ package example.reamp.main;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,5 +76,12 @@ public class MainFragment extends MvpFragment<MainFragmentPresenter, MainFragmen
     public void onStateChanged(MainFragmentStateModel stateModel) {
         mainEditText.setText(stateModel.mainText);
         textFromDetails.setText(stateModel.resultText);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        boolean finishing = getActivity().isFinishing();
+        Log.d("^^^^", "onDestroy: " + finishing);
     }
 }

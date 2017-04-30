@@ -66,8 +66,8 @@ public class NumberFragment extends MvpFragment<NumberFragmentPresenter, NumberF
     public void onStateChanged(NumberFragmentStateModel stateModel) {
         editText.setText(stateModel.numberText);
 
-        String toastError = stateModel.showErrorToast.get();
-        if (!TextUtils.isEmpty(toastError)) {
+        if (stateModel.showErrorToast.hasAction()) {
+            String toastError = stateModel.showErrorToast.get();
             Toast.makeText(getContext(), toastError, Toast.LENGTH_SHORT).show();
         }
     }

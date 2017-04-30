@@ -11,11 +11,6 @@ import android.util.Log;
 import java.util.List;
 import java.util.UUID;
 
-import etr.android.reamp.navigation.Navigation;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-
 public class MvpDelegate {
 
     private static final String KEY_PRESENTER_STATE = "KEY_PRESENTER_STATE";
@@ -23,11 +18,15 @@ public class MvpDelegate {
     private static final String TAG = "MvpDelegate";
 
     private final MvpView view;
-    private Subscription subscription;
     private String mvpId;
+    private MvpPresenter presenter;
 
     public MvpDelegate(MvpView view) {
         this.view = view;
+    }
+
+    public <P extends MvpPresenter<SM>, SM extends MvpStateModel> P getPresenter() {
+        return (P) presenter;
     }
 
     public void onCreate(Bundle savedInstanceState) {
@@ -61,46 +60,41 @@ public class MvpDelegate {
             presenter.attachStateModel(stateModel);
         }
 
-        Navigation navigation = new Navigation();
-        //TODO: check if view is always an Activity
-        navigation.setActivity((Activity) view.getContext());
-        presenter.setNavigation(navigation);
-
-        view.setPresenter(presenter);
         presenter.setView(view);
+        this.presenter = presenter;
 
         if (newPresenter) {
             presenter.onPresenterCreated();
         }
     }
 
-
-    public String generateId(MvpView view) {
-        return UUID.randomUUID().toString();
+    public String getId() {
+        if (this.mvpId == null) {
+            this.mvpId = UUID.randomUUID().toString();
+        }
+        return this.mvpId;
     }
 
     public void connect() {
 
         view.getPresenter().onConnect();
 
-        subscription = view.getPresenter().getStateUpdater()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<MvpStateModel>() {
-                    @Override
-                    public void call(MvpStateModel stateModel) {
-                        view.onStateChanged(stateModel);
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        view.onError(throwable);
-                    }
-                });
+        view.getPresenter().connect(new StateChanges() {
+            @Override
+            public void onNewState(MvpStateModel state) {
+                view.onStateChanged(state);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                view.onError(e);
+            }
+        });
     }
 
     public void disconnect() {
         view.getPresenter().onDisconnect();
-        subscription.unsubscribe();
+        view.getPresenter().disconnect();
     }
 
     public void onSaveInstanceState(Bundle outState) {
@@ -111,41 +105,17 @@ public class MvpDelegate {
     public void onDestroy() {
         MvpPresenter presenter = view.getPresenter();
         presenter.setView(null);
-        view.setPresenter(null);
-
-        Navigation navigation = presenter.getNavigation();
-        navigation.setActivity(null);
-        presenter.setNavigation(null);
-
-        if (view instanceof Activity && ((Activity) view).isFinishing()) {
-            presenter.onDestroyPresenter();
-            PresenterManager.getInstance().destroyPresenter(view.getMvpId());
-
-            if (view instanceof FragmentActivity) {
-                FragmentManager fragmentManager = ((FragmentActivity) view).getSupportFragmentManager();
-                List<Fragment> fragments = fragmentManager.getFragments();
-                if (fragments != null) {
-                    for (Fragment fragment : fragments) {
-                        if (fragment instanceof MvpView) {
-                            MvpView mvpFragment = (MvpView) fragment;
-                            if (mvpFragment.getPresenter() != null) {
-                                mvpFragment.getPresenter().onDestroyPresenter();
-                            } else {
-                                Log.w(TAG, "onDestroy: fragment presenter is null");
-                            }
-                            PresenterManager.getInstance().destroyPresenter(mvpFragment.getMvpId());
-                        }
-                    }
-                }
-            }
-
-            //TODO: do the same for simple Activity from standard package
-        }
+        this.presenter = null;
     }
 
+    /**
+     * Helper method that forwards onResult of an Activity to all fragments
+     *
+     * @deprecated
+     */
+    @Deprecated()
     public void onResult(int requestCode, int resultCode, Intent data) {
         if (view instanceof Activity) {
-
             MvpPresenter presenter = view.getPresenter();
             presenter.onResult(requestCode, resultCode, data);
             Activity activity = (Activity) view;

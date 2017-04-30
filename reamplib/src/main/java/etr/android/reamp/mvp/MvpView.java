@@ -17,7 +17,5 @@ public interface MvpView<SM extends MvpStateModel> {
 
     MvpPresenter<SM> onCreatePresenter();
 
-    void setPresenter(MvpPresenter<SM> presenter);
-
     MvpPresenter<SM> getPresenter();
 }

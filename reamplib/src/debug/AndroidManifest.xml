@@ -1,0 +1,10 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="etr.android.reamp">
+
+    <application android:theme="@style/Theme.AppCompat">
+
+        <activity android:name=".mvp.test.TestActivity" android:exported="true"/>
+
+    </application>
+
+</manifest>
