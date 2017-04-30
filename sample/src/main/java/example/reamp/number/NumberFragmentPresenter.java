@@ -1,10 +1,10 @@
 package example.reamp.number;
 
-import etr.android.reamp.navigation.NavigationPresenter;
+import etr.android.reamp.mvp.MvpPresenter;
 import example.reamp.navigation.DetailsNavigationUnit;
 import example.reamp.navigation.NumberNavigationUnit;
 
-public class NumberFragmentPresenter extends NavigationPresenter<NumberFragmentStateModel> {
+public class NumberFragmentPresenter extends MvpPresenter<NumberFragmentStateModel> {
 
     @Override
     public void onPresenterCreated() {

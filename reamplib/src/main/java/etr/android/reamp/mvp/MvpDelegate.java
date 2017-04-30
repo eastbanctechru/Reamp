@@ -120,7 +120,6 @@ public class MvpDelegate {
     @Deprecated()
     public void onResult(int requestCode, int resultCode, Intent data) {
         if (view instanceof Activity) {
-
             MvpPresenter presenter = view.getPresenter();
             presenter.onResult(requestCode, resultCode, data);
             Activity activity = (Activity) view;

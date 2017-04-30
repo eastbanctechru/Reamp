@@ -1,5 +1,6 @@
 package etr.android.reamp.mvp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import etr.android.reamp.BuildConfig;
+import etr.android.reamp.navigation.Navigation;
 import rx.subjects.BehaviorSubject;
 
 public class MvpPresenter<SM extends MvpStateModel> {
@@ -104,6 +106,11 @@ public class MvpPresenter<SM extends MvpStateModel> {
 
     }
 
+    /**
+     * @deprecated Leave result parsing to the activity/fragment and make a presenter's method
+     * to handle the result. Do not use this callback in a fragment's presenters if the host activity is not an MvpView
+     */
+    @Deprecated
     public void onResult(int requestCode, int resultCode, Intent data) {
 
     }
@@ -118,5 +125,9 @@ public class MvpPresenter<SM extends MvpStateModel> {
 
     public void onDisconnect() {
 
+    }
+
+    public Navigation getNavigation() {
+        return new Navigation((Activity) getView().getContext());
     }
 }

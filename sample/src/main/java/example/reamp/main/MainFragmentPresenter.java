@@ -2,11 +2,11 @@ package example.reamp.main;
 
 import android.content.Intent;
 
-import etr.android.reamp.navigation.NavigationPresenter;
+import etr.android.reamp.mvp.MvpPresenter;
 import example.reamp.navigation.DetailsNavigationUnit;
 import example.reamp.navigation.NumberNavigationUnit;
 
-public class MainFragmentPresenter extends NavigationPresenter<MainFragmentStateModel> {
+public class MainFragmentPresenter extends MvpPresenter<MainFragmentStateModel> {
 
     @Override
     public void onResult(int requestCode, int resultCode, Intent data) {

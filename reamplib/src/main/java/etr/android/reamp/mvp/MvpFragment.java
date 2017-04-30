@@ -1,5 +1,6 @@
 package etr.android.reamp.mvp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -40,6 +41,12 @@ public class MvpFragment<P extends MvpPresenter<SM>, SM extends MvpStateModel> e
     public void onDestroy() {
         super.onDestroy();
         delegate.onDestroy();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        delegate.onResult(requestCode, resultCode, data);
     }
 
     @Override
