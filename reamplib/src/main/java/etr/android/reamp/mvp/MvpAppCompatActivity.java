@@ -20,14 +20,14 @@ public class MvpAppCompatActivity<P extends MvpPresenter<SM>, SM extends MvpStat
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
         delegate.connect();
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onStop() {
+        super.onStop();
         delegate.disconnect();
     }
 
