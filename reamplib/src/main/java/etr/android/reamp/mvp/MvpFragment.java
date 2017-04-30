@@ -19,14 +19,14 @@ public class MvpFragment<P extends MvpPresenter<SM>, SM extends MvpStateModel> e
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
         delegate.connect();
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onStop() {
+        super.onStop();
         delegate.disconnect();
     }
 
