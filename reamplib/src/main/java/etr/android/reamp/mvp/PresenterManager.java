@@ -28,7 +28,10 @@ public class PresenterManager {
     }
 
     public void destroyPresenter(String mvpId) {
-        presenters.remove(mvpId);
+        MvpPresenter presenter = presenters.remove(mvpId);
+        if (presenter != null) {
+            presenter.onDestroyPresenter();
+        }
     }
 
     public ReampStrategy getStrategy() {

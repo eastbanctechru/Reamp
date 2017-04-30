@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.List;
 
@@ -34,7 +36,24 @@ public class ReampStrategy {
 
             //TODO: do the same for simple Activity from standard package
 
-            //TODO: do the same for all views of the activity
+            View root = activity.getWindow().getDecorView();
+            releaseViewPresenters(root);
+        }
+    }
+
+    private void releaseViewPresenters(View view) {
+        if (view instanceof MvpView) {
+            MvpView mvpView = (MvpView) view;
+            String mvpId = mvpView.getMvpId();
+            releasePresenter(mvpId);
+        }
+        if (view instanceof ViewGroup) {
+            ViewGroup viewGroup = (ViewGroup) view;
+            int count = viewGroup.getChildCount();
+            for (int i = 0; i < count; i++) {
+                View child = viewGroup.getChildAt(i);
+                releaseViewPresenters(child);
+            }
         }
     }
 
@@ -42,7 +61,6 @@ public class ReampStrategy {
         MvpPresenter presenter = PresenterManager.getInstance().getPresenter(mvpId);
         if (presenter != null) {
             presenter.setView(null);
-            presenter.onDestroyPresenter();
             PresenterManager.getInstance().destroyPresenter(mvpId);
         }
     }
