@@ -73,8 +73,7 @@ public class MvpDelegate {
         }
     }
 
-    public String generateId(MvpView view) {
-        //TODO remove view param, we have it as a field
+    public String generateId() {
         return UUID.randomUUID().toString();
     }
 

@@ -69,7 +69,7 @@ public class MvpFragment<P extends MvpPresenter<SM>, SM extends MvpStateModel> e
 
     @Override
     public String getMvpId() {
-        return delegate.generateId(this);
+        return delegate.generateId();
     }
 
     @Override
