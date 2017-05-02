@@ -33,11 +33,20 @@ public class MvpPresenter<SM extends MvpStateModel> {
         this.stateModel = stateModel;
     }
 
+    /**
+     * @return current state model
+     */
     public SM getStateModel() {
         return stateModel;
     }
 
+    /**
+     * Send a state model to a view and save it as a current.
+     * If the view is attached, {@link MvpView#onStateChanged(MvpStateModel)} is called.
+     * If the view is not attached, {@link MvpView#onStateChanged(MvpStateModel)} will be called when the view is attached
+     */
     public final void sendStateModel(final SM stateModel) {
+        this.stateModel = stateModel;
         if (stateChanges == null) {
             return;
         }
@@ -57,6 +66,10 @@ public class MvpPresenter<SM extends MvpStateModel> {
         }
     }
 
+    /**
+     * Send the current state model
+     * @see MvpPresenter#sendStateModel(MvpStateModel)
+     */
     public final void sendStateModel() {
         sendStateModel(getStateModel());
     }
@@ -65,6 +78,11 @@ public class MvpPresenter<SM extends MvpStateModel> {
         this.view = view;
     }
 
+    /**
+     * Called when the presenter first created
+     * <br/>
+     * <i>Note: this method is not called when a view is re-attached</i>
+     */
     public void onPresenterCreated() {
 
     }
@@ -73,6 +91,12 @@ public class MvpPresenter<SM extends MvpStateModel> {
         return view;
     }
 
+    /**
+     * Restores a state model from the bundle
+     * @param savedInstance a bundle the state model saved into
+     * @return restored {@link MvpStateModel} or null
+     * @see MvpPresenter#serializeState()
+     */
     public SM deserializeState(Bundle savedInstance) {
         try {
             Serializable serializable = fromByteArray(savedInstance.getByteArray(EXTRA_INSTANCE_STATE));
@@ -86,6 +110,13 @@ public class MvpPresenter<SM extends MvpStateModel> {
         }
     }
 
+    /**
+     * Saves the current state model to a Bundle when the view serializes its' state
+     * The default implementation attempts to serialize the current state if the state is {@link Serializable}
+     * and does nothing otherwise
+     * @return a bundle with saved state model or null
+     * @see MvpPresenter#deserializeState(Bundle)
+     */
     public Bundle serializeState() {
         if (stateModel instanceof Serializable) {
             try {
@@ -128,14 +159,27 @@ public class MvpPresenter<SM extends MvpStateModel> {
 
     }
 
+    /**
+     * Called when the presenter is going to be completely destroyed
+     */
     public void onDestroyPresenter() {
 
     }
 
+    /**
+     * Called when the presenter's view is ready to receive updates ({@link MvpStateModel})
+     * In general, this means that the view is visible to a user and ready to show some data
+     * @see MvpPresenter#onDisconnect()
+     */
     public void onConnect() {
 
     }
 
+    /**
+     * Called when the view stops receiving updates from its' presenter
+     * In general, this means that the view is not visible to a user and
+     * @see MvpPresenter#onConnect()
+     */
     public void onDisconnect() {
 
     }

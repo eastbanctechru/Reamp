@@ -9,6 +9,9 @@ import android.util.Log;
 
 import etr.android.reamp.R;
 
+/**
+ * A base Activity which is {@link MvpView}.
+ */
 public abstract class MvpAppCompatActivity<P extends MvpPresenter<SM>, SM extends MvpStateModel> extends AppCompatActivity implements MvpView<SM> {
 
     private MvpDelegate delegate = new MvpDelegate(this);

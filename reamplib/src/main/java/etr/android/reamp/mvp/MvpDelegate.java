@@ -11,6 +11,10 @@ import android.util.Log;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * A proxy class between {@link MvpView} and {@link MvpPresenter} which should be used
+ * while implementing a custom {@link MvpView}.
+ */
 public class MvpDelegate {
 
     private static final String KEY_PRESENTER_STATE = "KEY_PRESENTER_STATE";

@@ -9,6 +9,9 @@ import android.util.Log;
 
 import etr.android.reamp.R;
 
+/**
+ * A base Fragment which is {@link MvpView}.
+ */
 public abstract class MvpFragment<P extends MvpPresenter<SM>, SM extends MvpStateModel> extends Fragment implements MvpView<SM> {
 
     private MvpDelegate delegate = new MvpDelegate(this);
