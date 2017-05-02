@@ -3,7 +3,7 @@ Small fix for MvpPresenter keeping state
 
 [0.9]
 New class Action to replace Consumable
-In MvpAppCompatActivity and MvpFragment connect() and disconnect() moved to onStart() and onStop()
+In MvpAppCompatActivity and MvpFragment, connect() and disconnect() moved to onStart() and onStop()
 New PresenterManager stategy to destory presenters
 New MvpDelegate contract
 RxJava dependency is removed
@@ -11,7 +11,7 @@ RxJava dependency is removed
 [0.8]
 - Single MvpDelegate class, delegate has connect() and disconnect() methods
 - onResume(), onPause(), onResore() and onCreate() removed from MvpPresenter
-- inFirstCreate() renamed to onPresenterCreated()
+- onFirstCreate() renamed to onPresenterCreated()
 
 [0.6]
 - observe state model on the main thread
