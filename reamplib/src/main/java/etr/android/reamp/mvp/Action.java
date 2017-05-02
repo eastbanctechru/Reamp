@@ -2,6 +2,15 @@ package etr.android.reamp.mvp;
 
 import java.io.Serializable;
 
+/**
+ * A handy container-class which can be used to store "one-shot" data into {@link MvpStateModel}
+ * <br/>
+ * Use {@link Action#set(Serializable)} to store the value
+ * <br/>
+ * Use {@link Action#hasAction()} to check if there is an available value
+ * <br/>
+ * Use {@link Action#get()} to retrieve the value and remove it from the container
+ */
 public class Action<T extends Serializable> implements Serializable {
 
     private T value;
