@@ -8,5 +8,6 @@ import etr.android.reamp.BuildConfig;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class)
-public class BaseTest {
+public abstract class BaseTest {
+
 }

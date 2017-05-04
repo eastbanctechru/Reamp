@@ -1,16 +1,14 @@
-package etr.android.reamp.mvp.test;
+package etr.android.reamp.mvp;
 
 import android.os.Bundle;
 import android.view.View;
 
 import etr.android.reamp.R;
-import etr.android.reamp.mvp.MvpAppCompatActivity;
-import etr.android.reamp.mvp.MvpPresenter;
 
-public class TestActivity extends MvpAppCompatActivity<TestPresenter, TestState> {
+public class TestMvpActivity extends MvpAppCompatActivity<TestActivityPresenter, TestActivityState> {
 
-    boolean clicked;
-    int count;
+    public boolean clicked;
+    public int count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,18 +23,18 @@ public class TestActivity extends MvpAppCompatActivity<TestPresenter, TestState>
     }
 
     @Override
-    public void onStateChanged(TestState stateModel) {
+    public void onStateChanged(TestActivityState stateModel) {
         clicked = stateModel.clicked;
         count = stateModel.count;
     }
 
     @Override
-    public TestState onCreateStateModel() {
-        return new TestState();
+    public TestActivityState onCreateStateModel() {
+        return new TestActivityState();
     }
 
     @Override
-    public MvpPresenter<TestState> onCreatePresenter() {
-        return new TestPresenter();
+    public MvpPresenter<TestActivityState> onCreatePresenter() {
+        return new TestActivityPresenter();
     }
 }

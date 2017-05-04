@@ -15,6 +15,9 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven {
+            url "https://nexus.eastbanctech.ru/content/repositories/releases/"
+        }
     }
 }
 

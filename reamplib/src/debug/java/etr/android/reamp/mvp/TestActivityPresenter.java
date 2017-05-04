@@ -1,8 +1,6 @@
-package etr.android.reamp.mvp.test;
+package etr.android.reamp.mvp;
 
-import etr.android.reamp.mvp.MvpPresenter;
-
-public class TestPresenter extends MvpPresenter<TestState> {
+public class TestActivityPresenter extends MvpPresenter<TestActivityState> {
 
     @Override
     public void onPresenterCreated() {

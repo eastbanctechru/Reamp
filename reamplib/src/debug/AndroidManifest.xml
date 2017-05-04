@@ -3,7 +3,8 @@
 
     <application android:theme="@style/Theme.AppCompat">
 
-        <activity android:name=".mvp.test.TestActivity" android:exported="true"/>
+        <activity android:name=".mvp.TestMvpActivity" android:exported="true"/>
+        <activity android:name=".mvp.SimpleAppCompatActivity" android:exported="true"/>
 
     </application>
 
