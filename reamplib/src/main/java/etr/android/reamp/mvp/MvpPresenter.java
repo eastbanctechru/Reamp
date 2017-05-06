@@ -28,6 +28,7 @@ public class MvpPresenter<SM extends MvpStateModel> {
     private SM stateModel;
     private MvpView view;
     private StateChanges stateChanges;
+    private boolean throwOnSerializationError = BuildConfig.DEBUG;
 
     public void attachStateModel(SM stateModel) {
         this.stateModel = stateModel;
@@ -103,7 +104,7 @@ public class MvpPresenter<SM extends MvpStateModel> {
             return (SM) serializable;
         } catch (Exception e) {
             Log.e(TAG, "Can not deserialize state model: ", e);
-            if (BuildConfig.DEBUG) {
+            if (throwOnSerializationError()) {
                 throw new RuntimeException("Can not deserialize state model", e);
             }
             return null;
@@ -125,7 +126,7 @@ public class MvpPresenter<SM extends MvpStateModel> {
                 return bundle;
             } catch (Exception e) {
                 Log.e(TAG, "Can not serialize state model: ", e);
-                if (BuildConfig.DEBUG) {
+                if (throwOnSerializationError()) {
                     throw new RuntimeException("Can not serialize state model", e);
                 }
                 return null;
@@ -196,5 +197,13 @@ public class MvpPresenter<SM extends MvpStateModel> {
     public void disconnect() {
         stateChanges = null;
         uiHandler.removeCallbacks(null);
+    }
+
+    protected boolean throwOnSerializationError() {
+        return throwOnSerializationError;
+    }
+
+    public void setThrowOnSerializationError(boolean throwOnSerializationError) {
+        this.throwOnSerializationError = throwOnSerializationError;
     }
 }

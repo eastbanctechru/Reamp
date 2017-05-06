@@ -1,5 +1,6 @@
 package etr.android.reamp.mvp.integrations;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -17,7 +18,7 @@ import etr.android.reamp.mvp.ReampProvider;
 import etr.android.reamp.debug.TestActivityPresenter;
 import etr.android.reamp.debug.TestMvpActivity;
 
-public class TestActivityTest extends BaseTest {
+public class ActivityTest extends BaseTest {
 
     @Before
     public void setUp() throws Exception {
@@ -116,4 +117,20 @@ public class TestActivityTest extends BaseTest {
         activity = Robolectric.buildActivity(TestMvpActivity.class).create(bundle).start().restoreInstanceState(bundle).resume().get();
         Assert.assertEquals(activity.count, 1);
     }
+
+    @Test
+    public void errorMessage() throws Exception {
+        TestMvpActivity activity = Robolectric.setupActivity(TestMvpActivity.class);
+        TestActivityPresenter presenter = activity.getPresenter();
+        presenter.sendError();
+        Assert.assertNotNull(activity.throwable);
+    }
+
+    @Test
+    public void context() throws Exception {
+        TestMvpActivity activity = Robolectric.setupActivity(TestMvpActivity.class);
+        Context context = activity.getContext();
+        Assert.assertNotNull(context);
+    }
+
 }

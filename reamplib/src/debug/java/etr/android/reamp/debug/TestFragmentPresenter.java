@@ -7,4 +7,8 @@ public class TestFragmentPresenter extends MvpPresenter<TestFragmentState> {
         getStateModel().counter++;
         sendStateModel();
     }
+
+    public void sendError() {
+        getView().onError(new RuntimeException());
+    }
 }

@@ -1,5 +1,6 @@
 package etr.android.reamp.mvp.integrations;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import org.junit.Assert;
@@ -8,6 +9,8 @@ import org.junit.Test;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
 
+import etr.android.reamp.debug.TestActivityPresenter;
+import etr.android.reamp.debug.TestMvpActivity;
 import etr.android.reamp.mvp.BaseTest;
 import etr.android.reamp.mvp.MvpPresenter;
 import etr.android.reamp.mvp.PresenterManager;
@@ -167,4 +170,20 @@ public class StandAloneFragmentTest extends BaseTest {
         Assert.assertEquals(fragment.counter, 10);
     }
 
+    @Test
+    public void errorMessage() throws Exception {
+        SimpleAppCompatActivity activity = Robolectric.setupActivity(SimpleAppCompatActivity.class);
+        TestMvpFragment fragment = activity.getEmbeddedFragment();
+        TestFragmentPresenter presenter = fragment.getPresenter();
+        presenter.sendError();
+        Assert.assertNotNull(fragment.throwable);
+    }
+
+
+    @Test
+    public void context() throws Exception {
+        SimpleAppCompatActivity activity = Robolectric.setupActivity(SimpleAppCompatActivity.class);
+        TestMvpFragment fragment = activity.getEmbeddedFragment();
+        Assert.assertNotNull(fragment.getContext());
+    }
 }

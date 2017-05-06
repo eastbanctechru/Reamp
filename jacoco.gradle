@@ -33,6 +33,7 @@ project.afterEvaluate {
                         excludes: ['**/R.class',
                                    '**/R$*.class',
                                    '**/*$ViewInjector*.*',
+                                   'etr/android/reamp/debug/**/*',
                                    '**/*$ViewBinder*.*',
                                    '**/BuildConfig.*',
                                    '**/Manifest*.*']

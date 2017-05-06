@@ -23,4 +23,8 @@ public class TestActivityPresenter extends MvpPresenter<TestActivityState> {
         getStateModel().object = object;
         sendStateModel();
     }
+
+    public void sendError() {
+        getView().onError(new RuntimeException());
+    }
 }

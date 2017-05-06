@@ -21,4 +21,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <fragment
+        android:name="etr.android.reamp.debug.SimpleFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </LinearLayout>

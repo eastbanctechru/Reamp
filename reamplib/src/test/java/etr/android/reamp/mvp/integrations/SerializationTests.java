@@ -92,8 +92,32 @@ public class SerializationTests extends BaseTest {
         Assert.assertNotNull(container.e);
     }
 
+    @Test
+    public void badSerialization() throws Exception {
+        ActivityController<TestMvpActivity> controller = Robolectric.buildActivity(TestMvpActivity.class);
+        TestMvpActivity activity = controller.setup().get();
+        String mvpId = activity.getMvpId();
+        activity.getPresenter().setObj(new Object());
+        activity.getPresenter().setThrowOnSerializationError(false);
+        Bundle bundle = new Bundle();
+        controller.saveInstanceState(bundle).pause().stop().destroy();
+
+        PresenterManager.getInstance().setPresenter(mvpId, null);
+        makeBundleBad(bundle);
+
+        controller = Robolectric.buildActivity(TestMvpActivity.class);
+        controller.get().setThrowOnSerializationError(false);
+        activity = controller.create(bundle).start().restoreInstanceState(bundle).resume().get();
+        Assert.assertNull(activity.getPresenter().getStateModel().object);
+    }
+
+
     private void makeBundleBad(Bundle bundle) {
         Bundle presenterBundle = bundle.getBundle("KEY_PRESENTER_STATE");
+        if (presenterBundle == null) {
+            presenterBundle = new Bundle();
+            bundle.putBundle("KEY_PRESENTER_STATE", presenterBundle);
+        }
         presenterBundle.putByteArray("EXTRA_INSTANCE_STATE", new byte[]{1, 2, 3});
     }
 }

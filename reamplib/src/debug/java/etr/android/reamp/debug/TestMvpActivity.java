@@ -11,6 +11,8 @@ public class TestMvpActivity extends MvpAppCompatActivity<TestActivityPresenter,
 
     public boolean clicked;
     public int count;
+    public Throwable throwable;
+    private boolean throwOnSerializationError = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,18 @@ public class TestMvpActivity extends MvpAppCompatActivity<TestActivityPresenter,
 
     @Override
     public MvpPresenter<TestActivityState> onCreatePresenter() {
-        return new TestActivityPresenter();
+        TestActivityPresenter testActivityPresenter = new TestActivityPresenter();
+        testActivityPresenter.setThrowOnSerializationError(throwOnSerializationError);
+        return testActivityPresenter;
+    }
+
+    @Override
+    public void onError(Throwable throwable) {
+        super.onError(throwable);
+        this.throwable = throwable;
+    }
+
+    public void setThrowOnSerializationError(boolean throwOnSerializationError) {
+        this.throwOnSerializationError = throwOnSerializationError;
     }
 }
