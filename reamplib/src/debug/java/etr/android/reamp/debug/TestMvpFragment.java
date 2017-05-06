@@ -1,10 +1,13 @@
-package etr.android.reamp.mvp;
+package etr.android.reamp.debug;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import etr.android.reamp.mvp.MvpFragment;
+import etr.android.reamp.mvp.MvpPresenter;
 
 public class TestMvpFragment extends MvpFragment<TestFragmentPresenter, TestFragmentState> {
 

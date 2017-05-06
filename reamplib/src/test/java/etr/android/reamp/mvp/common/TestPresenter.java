@@ -7,4 +7,8 @@ public class TestPresenter extends MvpPresenter<TestState> {
         getStateModel().counter++;
         sendStateModel();
     }
+
+    public void makeErrorMessage() {
+        getView().onError(new RuntimeException());
+    }
 }

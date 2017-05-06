@@ -1,4 +1,6 @@
-package etr.android.reamp.mvp;
+package etr.android.reamp.debug;
+
+import etr.android.reamp.mvp.MvpPresenter;
 
 public class TestActivityPresenter extends MvpPresenter<TestActivityState> {
 
@@ -14,6 +16,11 @@ public class TestActivityPresenter extends MvpPresenter<TestActivityState> {
 
     public void increment() {
         getStateModel().count++;
+        sendStateModel();
+    }
+
+    public void setObj(Object object) {
+        getStateModel().object = object;
         sendStateModel();
     }
 }

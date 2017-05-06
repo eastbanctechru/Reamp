@@ -8,15 +8,14 @@ import org.junit.Test;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
 
-import etr.android.reamp.R;
 import etr.android.reamp.mvp.BaseTest;
 import etr.android.reamp.mvp.MvpPresenter;
 import etr.android.reamp.mvp.PresenterManager;
 import etr.android.reamp.mvp.ReampProvider;
-import etr.android.reamp.mvp.SimpleAppCompatActivity;
-import etr.android.reamp.mvp.TestFragmentPresenter;
-import etr.android.reamp.mvp.TestFragmentState;
-import etr.android.reamp.mvp.TestMvpFragment;
+import etr.android.reamp.debug.SimpleAppCompatActivity;
+import etr.android.reamp.debug.TestFragmentPresenter;
+import etr.android.reamp.debug.TestFragmentState;
+import etr.android.reamp.debug.TestMvpFragment;
 
 public class StandAloneFragmentTest extends BaseTest {
 

@@ -1,8 +1,9 @@
-package etr.android.reamp.mvp;
+package etr.android.reamp.debug;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ViewGroup;
 
 import etr.android.reamp.R;
 
@@ -19,6 +20,10 @@ public class SimpleAppCompatActivity extends AppCompatActivity {
         } else {
             dynamicFragment = new TestMvpFragment();
         }
+    }
+
+    public TestCustomView getCustomView() {
+        return (TestCustomView) findViewById(R.id.custom_view);
     }
 
     public TestMvpFragment getEmbeddedFragment() {
@@ -42,5 +47,9 @@ public class SimpleAppCompatActivity extends AppCompatActivity {
                 .beginTransaction()
                 .remove(fragment)
                 .commitNow();
+    }
+
+    public void removeView() {
+        ((ViewGroup) findViewById(R.id.root)).removeView(findViewById(R.id.custom_view));
     }
 }

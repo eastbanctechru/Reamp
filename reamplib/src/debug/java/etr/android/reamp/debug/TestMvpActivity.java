@@ -1,9 +1,11 @@
-package etr.android.reamp.mvp;
+package etr.android.reamp.debug;
 
 import android.os.Bundle;
 import android.view.View;
 
 import etr.android.reamp.R;
+import etr.android.reamp.mvp.MvpAppCompatActivity;
+import etr.android.reamp.mvp.MvpPresenter;
 
 public class TestMvpActivity extends MvpAppCompatActivity<TestActivityPresenter, TestActivityState> {
 

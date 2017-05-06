@@ -14,8 +14,8 @@ import etr.android.reamp.mvp.BaseTest;
 import etr.android.reamp.mvp.MvpPresenter;
 import etr.android.reamp.mvp.PresenterManager;
 import etr.android.reamp.mvp.ReampProvider;
-import etr.android.reamp.mvp.TestActivityPresenter;
-import etr.android.reamp.mvp.TestMvpActivity;
+import etr.android.reamp.debug.TestActivityPresenter;
+import etr.android.reamp.debug.TestMvpActivity;
 
 public class TestActivityTest extends BaseTest {
 
@@ -101,5 +101,19 @@ public class TestActivityTest extends BaseTest {
         controller.pause().stop().destroy();
         Assert.assertNull(testMvpActivity.getPresenter());
         Assert.assertNull(presenter.getView());
+    }
+
+    @Test
+    public void restoreState() throws Exception {
+        ActivityController<TestMvpActivity> controller = Robolectric.buildActivity(TestMvpActivity.class);
+        TestMvpActivity activity = controller.setup().get();
+        Assert.assertEquals(activity.count, 0);
+        activity.getPresenter().increment();
+        String mvpId = activity.getMvpId();
+        Bundle bundle = new Bundle();
+        controller.saveInstanceState(bundle).pause().stop().destroy();
+        PresenterManager.getInstance().destroyPresenter(mvpId); // kill the presenter's instance to force the state to beresored
+        activity = Robolectric.buildActivity(TestMvpActivity.class).create(bundle).start().restoreInstanceState(bundle).resume().get();
+        Assert.assertEquals(activity.count, 1);
     }
 }
