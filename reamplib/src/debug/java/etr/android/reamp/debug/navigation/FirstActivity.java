@@ -13,6 +13,13 @@ public class FirstActivity extends MvpAppCompatActivity<FirstPresenter, FirstSta
         setContentView(R.layout.activity_first);
     }
 
+    public void addFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.test_fragment, new NavFragment())
+                .commitNow();
+    }
+
     @Override
     public void onStateChanged(FirstState stateModel) {
 

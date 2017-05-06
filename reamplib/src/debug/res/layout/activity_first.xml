@@ -5,10 +5,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <fragment
+    <FrameLayout
         android:id="@+id/test_fragment"
-        android:name="etr.android.reamp.debug.navigation.NavFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+    </FrameLayout>
 
 </LinearLayout>

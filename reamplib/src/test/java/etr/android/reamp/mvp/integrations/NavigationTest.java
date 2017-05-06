@@ -11,13 +11,12 @@ import org.robolectric.android.controller.ActivityController;
 import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowIntent;
 
-import java.lang.reflect.Field;
-
 import etr.android.reamp.R;
 import etr.android.reamp.debug.navigation.FirstActivity;
 import etr.android.reamp.debug.navigation.FirstPresenter;
 import etr.android.reamp.debug.navigation.NavFragment;
 import etr.android.reamp.debug.navigation.NavFragmentPresenter;
+import etr.android.reamp.debug.navigation.RegularFragment;
 import etr.android.reamp.debug.navigation.SecondActivity;
 import etr.android.reamp.mvp.BaseTest;
 import etr.android.reamp.navigation.ComplexNavigationUnit;
@@ -78,6 +77,7 @@ public class NavigationTest extends BaseTest {
     @Test
     public void simpleNavigationWithFragments() throws Exception {
         FirstActivity activity = Robolectric.setupActivity(FirstActivity.class);
+        activity.addFragment();
         NavFragment fragment = (NavFragment) activity.getSupportFragmentManager().findFragmentById(R.id.test_fragment);
         NavFragmentPresenter presenter = fragment.getPresenter();
         presenter.getNavigation().open(new ForResultUnit());
@@ -93,6 +93,7 @@ public class NavigationTest extends BaseTest {
     public void fragmentNavigationNoPresenter() throws Exception {
         //the case when somehow the presenter is missing
         FirstActivity activity = Robolectric.setupActivity(FirstActivity.class);
+        activity.addFragment();
         NavFragment fragment = (NavFragment) activity.getSupportFragmentManager().findFragmentById(R.id.test_fragment);
         NavFragmentPresenter presenter = fragment.getPresenter();
         presenter.getNavigation().open(new ForResultUnit());
@@ -107,6 +108,7 @@ public class NavigationTest extends BaseTest {
     @Test
     public void checkRegularFragmentNavigation() throws Exception {
         FirstActivity activity = Robolectric.setupActivity(FirstActivity.class);
+        activity.addFragment();
         NavFragment fragment = (NavFragment) activity.getSupportFragmentManager().findFragmentById(R.id.test_fragment);
         NavFragmentPresenter presenter = fragment.getPresenter();
         fragment.startActivityForResult(new Intent(activity, SecondActivity.class), 1);
@@ -115,6 +117,19 @@ public class NavigationTest extends BaseTest {
         Assert.assertEquals(presenter.requestCode, 0);
         Assert.assertEquals(presenter.resultCode, 0);
         Assert.assertEquals(presenter.data, null);
+    }
+
+    @Test
+    public void checkBehaviorRegularFragment() throws Exception {
+        FirstActivity activity = Robolectric.setupActivity(FirstActivity.class);
+        activity.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.test_fragment, new RegularFragment())
+                .commitNow();
+
+        activity.startActivityForResult(new Intent(activity, SecondActivity.class), 1);
+        ShadowActivity.IntentForResult forResult = shadowOf(activity).getNextStartedActivityForResult();
+        shadowOf(activity).receiveResult(forResult.intent, Activity.RESULT_OK, new Intent().putExtra(ForResultUnit.EXTRA_DATA, 10));
     }
 
     @NonNull
