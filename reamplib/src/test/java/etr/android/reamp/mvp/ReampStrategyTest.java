@@ -1,10 +1,15 @@
 package etr.android.reamp.mvp;
 
+import android.app.Activity;
+import android.os.Bundle;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
+
+import java.util.List;
 
 import etr.android.reamp.mvp.internal.TestMvpActivity;
 import etr.android.reamp.mvp.internal.RegularActivity;
@@ -54,6 +59,36 @@ public class ReampStrategyTest extends BaseTest {
         PresenterManager.getInstance().setStrategy(null);
         ReampStrategy strategy2 = PresenterManager.getInstance().getStrategy();
         Assert.assertEquals(strategy, strategy2);
+    }
+
+    @Test
+    public void customStrategy() throws Exception {
+        ReampStrategy reampStrategy = new ReampStrategy() {
+            @Override
+            public void onActivityDestroyed(Activity activity) {
+
+                if (activity.isFinishing()) {
+                    List<MvpView> views = PresenterManager.getInstance().getViewsOf(activity);
+                    for (MvpView view : views) {
+                        if (!(view.getContext() instanceof TestMvpActivity)) {
+                            PresenterManager.getInstance().destroyPresenter(view.getMvpId());
+                        }
+                    }
+                }
+
+                PresenterManager.getInstance().unregisterViewsOf(activity);
+            }
+        };
+
+        PresenterManager.getInstance().setStrategy(reampStrategy);
+
+        ActivityController<TestMvpActivity> controller = Robolectric.buildActivity(TestMvpActivity.class);
+        TestMvpActivity activity = controller.setup().get();
+        String mvpId = activity.getMvpId();
+        activity.finish();
+        controller.pause().stop().destroy();
+        MvpPresenter presenter = PresenterManager.getInstance().getPresenter(mvpId);
+        Assert.assertNotNull(presenter);
     }
 
     private class MockStrategy extends ReampStrategy {
