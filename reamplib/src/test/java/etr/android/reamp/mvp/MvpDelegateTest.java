@@ -19,7 +19,7 @@ public class MvpDelegateTest extends BaseTest {
 
         @Override
         public Context getContext() {
-            return null;
+            return this;
         }
 
         @Override

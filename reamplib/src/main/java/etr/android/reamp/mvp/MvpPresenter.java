@@ -186,7 +186,7 @@ public class MvpPresenter<SM extends MvpStateModel> {
     }
 
     public Navigation getNavigation() {
-        return new Navigation((Activity) getView().getContext());
+        return new Navigation(getView());
     }
 
     public void connect(StateChanges stateChanges) {

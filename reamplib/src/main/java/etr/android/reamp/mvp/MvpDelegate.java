@@ -122,26 +122,16 @@ public class MvpDelegate {
     @Deprecated()
     public void onResult(int requestCode, int resultCode, Intent data) {
         if (view instanceof Activity) {
-            MvpPresenter presenter = view.getPresenter();
-            presenter.onResult(requestCode, resultCode, data);
-            Activity activity = (Activity) view;
-            //TODO do the same for non-support FragmentActivity
-            if (activity instanceof FragmentActivity) {
-                FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
-                List<Fragment> fragments = fragmentManager.getFragments();
-                if (fragments != null) {
-                    for (Fragment fragment : fragments) {
-                        if (fragment instanceof MvpView) {
-                            MvpView mvpFragment = (MvpView) fragment;
-                            MvpPresenter fragmentPresenter = mvpFragment.getPresenter();
-                            if (fragmentPresenter != null) {
-                                fragmentPresenter.onResult(requestCode, resultCode, data);
-                            } else {
-                                Log.w(TAG, "onResult: fragment presenter is null");
-                            }
-                        }
-                    }
-                }
+            dispatchResult(requestCode, resultCode, data);
+        }
+    }
+
+    private void dispatchResult(int requestCode, int resultCode, Intent data) {
+        List<MvpView> views = PresenterManager.getInstance().getViewsOf(view.getContext());
+        for (MvpView mvpView : views) {
+            MvpPresenter presenter = mvpView.getPresenter();
+            if (presenter != null) {
+                presenter.onResult(requestCode, resultCode, data);
             }
         }
     }
