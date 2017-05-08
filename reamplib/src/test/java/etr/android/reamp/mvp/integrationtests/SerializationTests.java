@@ -1,4 +1,4 @@
-package etr.android.reamp.mvp.integrations;
+package etr.android.reamp.mvp.integrationtests;
 
 import android.os.Bundle;
 
@@ -9,10 +9,10 @@ import org.robolectric.android.controller.ActivityController;
 
 import etr.android.reamp.BuildConfig;
 import etr.android.reamp.mvp.BaseTest;
-import etr.android.reamp.debug.NotSerializableActivity;
-import etr.android.reamp.debug.NotSerializablePresenter;
+import etr.android.reamp.mvp.internal.NotSerializableActivity;
+import etr.android.reamp.mvp.MvpPresenter;
 import etr.android.reamp.mvp.PresenterManager;
-import etr.android.reamp.debug.TestMvpActivity;
+import etr.android.reamp.mvp.internal.TestMvpActivity;
 
 public class SerializationTests extends BaseTest {
 
@@ -20,11 +20,11 @@ public class SerializationTests extends BaseTest {
     public void keepPresenterWithNotSerializableState() throws Exception {
         ActivityController<NotSerializableActivity> controller = Robolectric.buildActivity(NotSerializableActivity.class);
         NotSerializableActivity activity = controller.setup().get();
-        NotSerializablePresenter presenter = activity.getPresenter();
+        MvpPresenter presenter = activity.getPresenter();
         Bundle bundle = new Bundle();
         controller.saveInstanceState(bundle).pause().stop().destroy();
         activity = Robolectric.buildActivity(NotSerializableActivity.class).create(bundle).start().restoreInstanceState(bundle).resume().get();
-        NotSerializablePresenter newPresenter = activity.getPresenter();
+        MvpPresenter newPresenter = activity.getPresenter();
         Assert.assertEquals(presenter, newPresenter);
         Assert.assertNotNull(newPresenter.getStateModel());
     }
@@ -38,7 +38,7 @@ public class SerializationTests extends BaseTest {
         controller.saveInstanceState(bundle).pause().stop().destroy();
         PresenterManager.getInstance().destroyPresenter(mvpId);
         activity = Robolectric.buildActivity(NotSerializableActivity.class).create(bundle).start().restoreInstanceState(bundle).resume().get();
-        NotSerializablePresenter newPresenter = activity.getPresenter();
+        MvpPresenter newPresenter = activity.getPresenter();
         Assert.assertNotNull(newPresenter);
         Assert.assertNotNull(newPresenter.getStateModel());
     }

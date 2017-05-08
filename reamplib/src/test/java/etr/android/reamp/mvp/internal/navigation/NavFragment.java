@@ -1,4 +1,4 @@
-package etr.android.reamp.debug.navigation;
+package etr.android.reamp.mvp.internal.navigation;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,24 +8,25 @@ import android.view.ViewGroup;
 
 import etr.android.reamp.mvp.MvpFragment;
 import etr.android.reamp.mvp.MvpPresenter;
+import etr.android.reamp.mvp.SerializableStateModel;
 
-public class NavFragment extends MvpFragment<NavFragmentPresenter, NavFragmentState> {
+public class NavFragment extends MvpFragment<NavigationPresenter, SerializableStateModel> {
 
     private boolean spoilPresenter;
 
     @Override
-    public void onStateChanged(NavFragmentState stateModel) {
+    public void onStateChanged(SerializableStateModel stateModel) {
 
     }
 
     @Override
-    public NavFragmentState onCreateStateModel() {
-        return new NavFragmentState();
+    public SerializableStateModel onCreateStateModel() {
+        return new SerializableStateModel();
     }
 
     @Override
-    public MvpPresenter<NavFragmentState> onCreatePresenter() {
-        return new NavFragmentPresenter();
+    public NavigationPresenter onCreatePresenter() {
+        return new NavigationPresenter();
     }
 
     @Nullable
@@ -39,7 +40,7 @@ public class NavFragment extends MvpFragment<NavFragmentPresenter, NavFragmentSt
     }
 
     @Override
-    public NavFragmentPresenter getPresenter() {
+    public NavigationPresenter getPresenter() {
         if (spoilPresenter) {
             return null;
         }

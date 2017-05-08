@@ -3,9 +3,9 @@ package etr.android.reamp.mvp;
 import org.junit.Assert;
 import org.junit.Test;
 
-import etr.android.reamp.mvp.common.TestPresenter;
-import etr.android.reamp.mvp.common.TestState;
-import etr.android.reamp.mvp.common.TestView;
+import etr.android.reamp.mvp.internal.SimpleView;
+import etr.android.reamp.mvp.internal.TesteePresenter;
+import etr.android.reamp.mvp.internal.TesteeState;
 
 public class ErrorsTest extends BaseTest {
 
@@ -18,17 +18,17 @@ public class ErrorsTest extends BaseTest {
 
         final Container container = new Container();
 
-        TestView testView = new TestView() {
+        SimpleView simpleView = new SimpleView() {
             @Override
             public void onError(Throwable throwable) {
                 super.onError(throwable);
                 container.error = throwable;
             }
         };
-        testView.onCreate();
-        testView.connect();
-        final TestPresenter presenter = testView.getPresenter();
-        presenter.makeErrorMessage();
+        simpleView.onCreate();
+        simpleView.connect();
+        final TesteePresenter presenter = simpleView.getPresenter();
+        presenter.sendError();
         Assert.assertNotNull(container.error);
     }
 
@@ -41,7 +41,7 @@ public class ErrorsTest extends BaseTest {
 
         final Container container = new Container();
 
-        TestView testView = new TestView() {
+        SimpleView simpleView = new SimpleView() {
             @Override
             public void onError(Throwable throwable) {
                 super.onError(throwable);
@@ -49,13 +49,13 @@ public class ErrorsTest extends BaseTest {
             }
 
             @Override
-            public void onStateChanged(TestState stateModel) {
+            public void onStateChanged(TesteeState stateModel) {
                 super.onStateChanged(stateModel);
                 throw new RuntimeException("AMA Bad view");
             }
         };
-        testView.onCreate();
-        testView.connect();
+        simpleView.onCreate();
+        simpleView.connect();
         Assert.assertNotNull(container.error);
     }
 }

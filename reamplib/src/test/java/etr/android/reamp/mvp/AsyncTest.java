@@ -8,9 +8,9 @@ import org.robolectric.Robolectric;
 
 import java.util.concurrent.CountDownLatch;
 
-import etr.android.reamp.mvp.common.TestPresenter;
-import etr.android.reamp.mvp.common.TestState;
-import etr.android.reamp.mvp.common.TestView;
+import etr.android.reamp.mvp.internal.SimpleView;
+import etr.android.reamp.mvp.internal.TesteePresenter;
+import etr.android.reamp.mvp.internal.TesteeState;
 
 public class AsyncTest extends BaseTest {
 
@@ -19,9 +19,9 @@ public class AsyncTest extends BaseTest {
 
         final CountDownLatch cdl = new CountDownLatch(1);
 
-        TestView testView = new TestView() {
+        SimpleView simpleView = new SimpleView() {
             @Override
-            public void onStateChanged(TestState stateModel) {
+            public void onStateChanged(TesteeState stateModel) {
                 super.onStateChanged(stateModel);
                 Assert.assertTrue(Looper.myLooper() == Looper.getMainLooper());
                 if (stateModel.counter == 1) {
@@ -30,15 +30,15 @@ public class AsyncTest extends BaseTest {
             }
         };
 
-        testView.onCreate();
-        testView.connect();
-        final TestPresenter presenter = testView.getPresenter();
+        simpleView.onCreate();
+        simpleView.connect();
+        final TesteePresenter presenter = simpleView.getPresenter();
 
         new Thread() {
             @Override
             public void run() {
                 super.run();
-                presenter.count();
+                presenter.increment();
             }
         }.start();
 

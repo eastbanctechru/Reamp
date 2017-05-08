@@ -1,4 +1,4 @@
-package etr.android.reamp.mvp.common;
+package etr.android.reamp.mvp.internal;
 
 import android.content.Context;
 
@@ -6,7 +6,7 @@ import etr.android.reamp.mvp.MvpDelegate;
 import etr.android.reamp.mvp.MvpPresenter;
 import etr.android.reamp.mvp.MvpView;
 
-public class TestView implements MvpView<TestState> {
+public class SimpleView implements MvpView<TesteeState> {
 
     private MvpDelegate delegate = new MvpDelegate(this);
 
@@ -16,7 +16,7 @@ public class TestView implements MvpView<TestState> {
     }
 
     @Override
-    public void onStateChanged(TestState stateModel) {
+    public void onStateChanged(TesteeState stateModel) {
 
     }
 
@@ -31,19 +31,19 @@ public class TestView implements MvpView<TestState> {
     }
 
     @Override
-    public TestState onCreateStateModel() {
-        return new TestState();
+    public TesteeState onCreateStateModel() {
+        return new TesteeState();
     }
 
     @Override
-    public MvpPresenter<TestState> onCreatePresenter() {
-        return new TestPresenter();
+    public TesteePresenter onCreatePresenter() {
+        return new TesteePresenter();
     }
 
     @Override
-    public TestPresenter getPresenter() {
+    public TesteePresenter getPresenter() {
         MvpPresenter presenter = delegate.getPresenter();
-        return (TestPresenter) presenter;
+        return (TesteePresenter) presenter;
     }
 
     public void onCreate() {

@@ -1,4 +1,4 @@
-package etr.android.reamp.debug.navigation;
+package etr.android.reamp.mvp.internal;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,6 +14,4 @@ public class RegularFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return new View(getContext());
     }
-
-
 }

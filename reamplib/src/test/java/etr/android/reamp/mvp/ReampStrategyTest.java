@@ -6,8 +6,8 @@ import org.junit.Test;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
 
-import etr.android.reamp.debug.TestMvpActivity;
-import etr.android.reamp.mvp.common.RegularActivity;
+import etr.android.reamp.mvp.internal.TestMvpActivity;
+import etr.android.reamp.mvp.internal.RegularActivity;
 
 public class ReampStrategyTest extends BaseTest {
 

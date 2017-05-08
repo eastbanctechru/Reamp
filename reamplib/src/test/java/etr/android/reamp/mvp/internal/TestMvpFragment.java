@@ -1,4 +1,4 @@
-package etr.android.reamp.debug;
+package etr.android.reamp.mvp.internal;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,26 +7,25 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import etr.android.reamp.mvp.MvpFragment;
-import etr.android.reamp.mvp.MvpPresenter;
 
-public class TestMvpFragment extends MvpFragment<TestFragmentPresenter, TestFragmentState> {
+public class TestMvpFragment extends MvpFragment<TesteePresenter, TesteeState> {
 
     public int counter;
     public Throwable throwable;
 
     @Override
-    public void onStateChanged(TestFragmentState stateModel) {
+    public void onStateChanged(TesteeState stateModel) {
         this.counter = stateModel.counter;
     }
 
     @Override
-    public TestFragmentState onCreateStateModel() {
-        return new TestFragmentState();
+    public TesteeState onCreateStateModel() {
+        return new TesteeState();
     }
 
     @Override
-    public MvpPresenter<TestFragmentState> onCreatePresenter() {
-        return new TestFragmentPresenter();
+    public TesteePresenter onCreatePresenter() {
+        return new TesteePresenter();
     }
 
     @Nullable

@@ -1,6 +1,5 @@
-package etr.android.reamp.mvp.integrations;
+package etr.android.reamp.mvp.integrationtests;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import org.junit.Assert;
@@ -9,16 +8,14 @@ import org.junit.Test;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
 
-import etr.android.reamp.debug.TestActivityPresenter;
-import etr.android.reamp.debug.TestMvpActivity;
+import etr.android.reamp.mvp.internal.TesteePresenter;
+import etr.android.reamp.mvp.internal.TesteeState;
 import etr.android.reamp.mvp.BaseTest;
 import etr.android.reamp.mvp.MvpPresenter;
 import etr.android.reamp.mvp.PresenterManager;
 import etr.android.reamp.mvp.ReampProvider;
-import etr.android.reamp.debug.SimpleAppCompatActivity;
-import etr.android.reamp.debug.TestFragmentPresenter;
-import etr.android.reamp.debug.TestFragmentState;
-import etr.android.reamp.debug.TestMvpFragment;
+import etr.android.reamp.mvp.internal.RegularAppCompatActivity;
+import etr.android.reamp.mvp.internal.TestMvpFragment;
 
 public class SupportFragmentTest extends BaseTest {
 
@@ -29,29 +26,29 @@ public class SupportFragmentTest extends BaseTest {
 
     @Test
     public void simple() throws Exception {
-        SimpleAppCompatActivity activity = Robolectric.setupActivity(SimpleAppCompatActivity.class);
+        RegularAppCompatActivity activity = Robolectric.setupActivity(RegularAppCompatActivity.class);
         TestMvpFragment fragment = activity.getEmbeddedFragment();
-        TestFragmentPresenter presenter = fragment.getPresenter();
+        TesteePresenter presenter = fragment.getPresenter();
         Assert.assertNotNull(presenter);
-        TestFragmentState stateModel = presenter.getStateModel();
+        TesteeState stateModel = presenter.getStateModel();
         Assert.assertNotNull(stateModel);
-        presenter.count();
+        presenter.increment();
         Assert.assertEquals(fragment.counter, 1);
     }
 
     @Test
     public void keepState() throws Exception {
-        ActivityController<SimpleAppCompatActivity> controller = Robolectric.buildActivity(SimpleAppCompatActivity.class);
-        SimpleAppCompatActivity activity = controller.setup().get();
+        ActivityController<RegularAppCompatActivity> controller = Robolectric.buildActivity(RegularAppCompatActivity.class);
+        RegularAppCompatActivity activity = controller.setup().get();
         TestMvpFragment fragment = activity.getEmbeddedFragment();
-        fragment.getPresenter().count();
+        fragment.getPresenter().increment();
         Bundle bundle = new Bundle();
         controller.saveInstanceState(bundle).pause().stop().destroy();
-        activity = Robolectric.buildActivity(SimpleAppCompatActivity.class).create(bundle).start().restoreInstanceState(bundle).resume().get();
+        activity = Robolectric.buildActivity(RegularAppCompatActivity.class).create(bundle).start().restoreInstanceState(bundle).resume().get();
         fragment = activity.getEmbeddedFragment();
-        TestFragmentPresenter presenter = fragment.getPresenter();
+        TesteePresenter presenter = fragment.getPresenter();
         Assert.assertNotNull(presenter);
-        TestFragmentState stateModel = presenter.getStateModel();
+        TesteeState stateModel = presenter.getStateModel();
         Assert.assertNotNull(stateModel);
         Assert.assertEquals(stateModel.counter, 1);
         Assert.assertEquals(fragment.counter, 1);
@@ -59,29 +56,29 @@ public class SupportFragmentTest extends BaseTest {
 
     @Test
     public void keepRunning() throws Exception {
-        ActivityController<SimpleAppCompatActivity> controller = Robolectric.buildActivity(SimpleAppCompatActivity.class);
-        SimpleAppCompatActivity activity = controller.setup().get();
+        ActivityController<RegularAppCompatActivity> controller = Robolectric.buildActivity(RegularAppCompatActivity.class);
+        RegularAppCompatActivity activity = controller.setup().get();
         TestMvpFragment fragment = activity.getEmbeddedFragment();
         Assert.assertEquals(fragment.counter, 0);
-        TestFragmentPresenter presenter = fragment.getPresenter();
+        TesteePresenter presenter = fragment.getPresenter();
         Bundle bundle = new Bundle();
         controller.saveInstanceState(bundle).pause().stop().destroy();
         for (int i = 0; i < 10; i++) {
-            presenter.count();
+            presenter.increment();
         }
 
         //fragment should not receive updates while is detached
         Assert.assertEquals(fragment.counter, 0);
 
-        activity = Robolectric.buildActivity(SimpleAppCompatActivity.class).create(bundle).start().restoreInstanceState(bundle).resume().get();
+        activity = Robolectric.buildActivity(RegularAppCompatActivity.class).create(bundle).start().restoreInstanceState(bundle).resume().get();
         fragment = activity.getEmbeddedFragment();
         Assert.assertEquals(fragment.counter, 10);
     }
 
     @Test
     public void destroyPresenter() throws Exception {
-        ActivityController<SimpleAppCompatActivity> controller = Robolectric.buildActivity(SimpleAppCompatActivity.class);
-        SimpleAppCompatActivity activity = controller.get();
+        ActivityController<RegularAppCompatActivity> controller = Robolectric.buildActivity(RegularAppCompatActivity.class);
+        RegularAppCompatActivity activity = controller.get();
         controller.create().start().resume().visible();
         TestMvpFragment fragment = activity.getEmbeddedFragment();
         String mvpId = fragment.getMvpId();
@@ -94,8 +91,8 @@ public class SupportFragmentTest extends BaseTest {
 
     @Test
     public void doNotDestroyPresenter() throws Exception {
-        ActivityController<SimpleAppCompatActivity> controller = Robolectric.buildActivity(SimpleAppCompatActivity.class);
-        SimpleAppCompatActivity activity = controller.get();
+        ActivityController<RegularAppCompatActivity> controller = Robolectric.buildActivity(RegularAppCompatActivity.class);
+        RegularAppCompatActivity activity = controller.get();
         controller.create().start().resume().visible();
         TestMvpFragment fragment = activity.getEmbeddedFragment();
         String mvpId = fragment.getMvpId();
@@ -106,11 +103,11 @@ public class SupportFragmentTest extends BaseTest {
 
     @Test
     public void fragmentLeak() throws Exception {
-        ActivityController<SimpleAppCompatActivity> controller = Robolectric.buildActivity(SimpleAppCompatActivity.class);
-        SimpleAppCompatActivity activity = controller.get();
+        ActivityController<RegularAppCompatActivity> controller = Robolectric.buildActivity(RegularAppCompatActivity.class);
+        RegularAppCompatActivity activity = controller.get();
         controller.create().start().resume().visible();
         TestMvpFragment fragment = activity.getEmbeddedFragment();
-        TestFragmentPresenter presenter = fragment.getPresenter();
+        TesteePresenter presenter = fragment.getPresenter();
         controller.pause().stop().destroy();
         Assert.assertNull(fragment.getPresenter());
         Assert.assertNull(presenter.getView());
@@ -118,33 +115,33 @@ public class SupportFragmentTest extends BaseTest {
 
     @Test
     public void simpleDynamicFragment() throws Exception {
-        ActivityController<SimpleAppCompatActivity> controller = Robolectric.buildActivity(SimpleAppCompatActivity.class);
-        SimpleAppCompatActivity activity = controller.get();
+        ActivityController<RegularAppCompatActivity> controller = Robolectric.buildActivity(RegularAppCompatActivity.class);
+        RegularAppCompatActivity activity = controller.get();
         controller.create().start().resume().visible();
         activity.addFragmentProgrammatically();
         TestMvpFragment fragment = activity.getDynamicFragment();
-        TestFragmentPresenter presenter = fragment.getPresenter();
+        TesteePresenter presenter = fragment.getPresenter();
         Assert.assertNotNull(presenter);
-        TestFragmentState stateModel = presenter.getStateModel();
+        TesteeState stateModel = presenter.getStateModel();
         Assert.assertNotNull(stateModel);
-        presenter.count();
+        presenter.increment();
         Assert.assertEquals(fragment.counter, 1);
     }
 
     @Test
     public void dynamicFragmentKeepState() throws Exception {
-        ActivityController<SimpleAppCompatActivity> controller = Robolectric.buildActivity(SimpleAppCompatActivity.class);
-        SimpleAppCompatActivity activity = controller.setup().get();
+        ActivityController<RegularAppCompatActivity> controller = Robolectric.buildActivity(RegularAppCompatActivity.class);
+        RegularAppCompatActivity activity = controller.setup().get();
         activity.addFragmentProgrammatically();
         TestMvpFragment fragment = activity.getDynamicFragment();
-        fragment.getPresenter().count();
+        fragment.getPresenter().increment();
         Bundle bundle = new Bundle();
         controller.saveInstanceState(bundle).pause().stop().destroy();
-        activity = Robolectric.buildActivity(SimpleAppCompatActivity.class).create(bundle).start().restoreInstanceState(bundle).resume().get();
+        activity = Robolectric.buildActivity(RegularAppCompatActivity.class).create(bundle).start().restoreInstanceState(bundle).resume().get();
         fragment = activity.getDynamicFragment();
-        TestFragmentPresenter presenter = fragment.getPresenter();
+        TesteePresenter presenter = fragment.getPresenter();
         Assert.assertNotNull(presenter);
-        TestFragmentState stateModel = presenter.getStateModel();
+        TesteeState stateModel = presenter.getStateModel();
         Assert.assertNotNull(stateModel);
         Assert.assertEquals(stateModel.counter, 1);
         Assert.assertEquals(fragment.counter, 1);
@@ -152,15 +149,15 @@ public class SupportFragmentTest extends BaseTest {
 
     @Test
     public void dynamicFragmentKeepRunning() throws Exception {
-        ActivityController<SimpleAppCompatActivity> controller = Robolectric.buildActivity(SimpleAppCompatActivity.class);
-        SimpleAppCompatActivity activity = controller.setup().get();
+        ActivityController<RegularAppCompatActivity> controller = Robolectric.buildActivity(RegularAppCompatActivity.class);
+        RegularAppCompatActivity activity = controller.setup().get();
         activity.addFragmentProgrammatically();
         TestMvpFragment fragment = activity.getDynamicFragment();
         Assert.assertEquals(fragment.counter, 0);
-        TestFragmentPresenter presenter = fragment.getPresenter();
+        TesteePresenter presenter = fragment.getPresenter();
         activity.removeFragmentProgrammatically();
         for (int i = 0; i < 10; i++) {
-            presenter.count();
+            presenter.increment();
         }
 
         //fragment should not receive updates while is detached
@@ -172,8 +169,8 @@ public class SupportFragmentTest extends BaseTest {
 
     @Test
     public void dynamicFragmentLeak() throws Exception {
-        ActivityController<SimpleAppCompatActivity> controller = Robolectric.buildActivity(SimpleAppCompatActivity.class);
-        SimpleAppCompatActivity activity = controller.setup().get();
+        ActivityController<RegularAppCompatActivity> controller = Robolectric.buildActivity(RegularAppCompatActivity.class);
+        RegularAppCompatActivity activity = controller.setup().get();
         activity.addFragmentProgrammatically();
         TestMvpFragment fragment = activity.getDynamicFragment();
         String mvpId = fragment.getMvpId();
@@ -186,9 +183,9 @@ public class SupportFragmentTest extends BaseTest {
 
     @Test
     public void errorMessage() throws Exception {
-        SimpleAppCompatActivity activity = Robolectric.setupActivity(SimpleAppCompatActivity.class);
+        RegularAppCompatActivity activity = Robolectric.setupActivity(RegularAppCompatActivity.class);
         TestMvpFragment fragment = activity.getEmbeddedFragment();
-        TestFragmentPresenter presenter = fragment.getPresenter();
+        TesteePresenter presenter = fragment.getPresenter();
         presenter.sendError();
         Assert.assertNotNull(fragment.throwable);
     }
@@ -196,7 +193,7 @@ public class SupportFragmentTest extends BaseTest {
 
     @Test
     public void context() throws Exception {
-        SimpleAppCompatActivity activity = Robolectric.setupActivity(SimpleAppCompatActivity.class);
+        RegularAppCompatActivity activity = Robolectric.setupActivity(RegularAppCompatActivity.class);
         TestMvpFragment fragment = activity.getEmbeddedFragment();
         Assert.assertNotNull(fragment.getContext());
     }

@@ -1,4 +1,4 @@
-package etr.android.reamp.mvp.integrations;
+package etr.android.reamp.mvp.integrationtests;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,13 +12,13 @@ import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowIntent;
 
 import etr.android.reamp.R;
-import etr.android.reamp.debug.navigation.FirstActivity;
-import etr.android.reamp.debug.navigation.FirstPresenter;
-import etr.android.reamp.debug.navigation.NavFragment;
-import etr.android.reamp.debug.navigation.NavFragmentPresenter;
-import etr.android.reamp.debug.navigation.RegularFragment;
-import etr.android.reamp.debug.navigation.SecondActivity;
 import etr.android.reamp.mvp.BaseTest;
+import etr.android.reamp.mvp.internal.RegularFragment;
+import etr.android.reamp.mvp.internal.SimpleView;
+import etr.android.reamp.mvp.internal.navigation.FirstActivity;
+import etr.android.reamp.mvp.internal.navigation.NavFragment;
+import etr.android.reamp.mvp.internal.navigation.NavigationPresenter;
+import etr.android.reamp.mvp.internal.navigation.SecondActivity;
 import etr.android.reamp.navigation.ComplexNavigationUnit;
 import etr.android.reamp.navigation.Navigation;
 import etr.android.reamp.navigation.NavigationUnit;
@@ -31,7 +31,7 @@ public class NavigationTest extends BaseTest {
     @Test
     public void simple() throws Exception {
         FirstActivity activity = Robolectric.setupActivity(FirstActivity.class);
-        FirstPresenter presenter = activity.getPresenter();
+        NavigationPresenter presenter = activity.getPresenter();
         ComplexNavigationUnit navUnit = new SimpleNavigationUnit();
         presenter.getNavigation().open(navUnit);
         Intent startedIntent = shadowOf(activity).getNextStartedActivity();
@@ -43,13 +43,15 @@ public class NavigationTest extends BaseTest {
     @Test
     public void simpleResultNavigation() throws Exception {
         FirstActivity activity = Robolectric.setupActivity(FirstActivity.class);
-        FirstPresenter presenter = activity.getPresenter();
+        NavigationPresenter presenter = activity.getPresenter();
         presenter.getNavigation().open(new ForResultUnit());
         ShadowActivity.IntentForResult forResult = shadowOf(activity).getNextStartedActivityForResult();
         shadowOf(activity).receiveResult(forResult.intent, Activity.RESULT_OK, new Intent().putExtra(ForResultUnit.EXTRA_DATA, 10));
-        Integer result = presenter.getNavigation().getResult(new ForResultUnit(), presenter.requestCode, presenter.resultCode, presenter.data);
+
         Assert.assertEquals(presenter.requestCode, ForResultUnit.REQUEST_CODE);
         Assert.assertEquals(presenter.resultCode, Activity.RESULT_OK);
+
+        Integer result = presenter.getNavigation().getResult(new ForResultUnit(), presenter.requestCode, presenter.resultCode, presenter.data);
         Assert.assertTrue(10 == result);
     }
 
@@ -79,23 +81,25 @@ public class NavigationTest extends BaseTest {
         FirstActivity activity = Robolectric.setupActivity(FirstActivity.class);
         activity.addFragment();
         NavFragment fragment = (NavFragment) activity.getSupportFragmentManager().findFragmentById(R.id.test_fragment);
-        NavFragmentPresenter presenter = fragment.getPresenter();
+        NavigationPresenter presenter = fragment.getPresenter();
         presenter.getNavigation().open(new ForResultUnit());
         ShadowActivity.IntentForResult forResult = shadowOf(activity).getNextStartedActivityForResult();
         shadowOf(activity).receiveResult(forResult.intent, Activity.RESULT_OK, new Intent().putExtra(ForResultUnit.EXTRA_DATA, 10));
-        Integer result = presenter.getNavigation().getResult(new ForResultUnit(), presenter.requestCode, presenter.resultCode, presenter.data);
+
         Assert.assertEquals(presenter.requestCode, ForResultUnit.REQUEST_CODE);
         Assert.assertEquals(presenter.resultCode, Activity.RESULT_OK);
+
+        Integer result = presenter.getNavigation().getResult(new ForResultUnit(), presenter.requestCode, presenter.resultCode, presenter.data);
         Assert.assertTrue(10 == result);
     }
 
     @Test
     public void fragmentNavigationNoPresenter() throws Exception {
-        //the case when somehow the presenter is missing
+        //a case when somehow the presenter is missing
         FirstActivity activity = Robolectric.setupActivity(FirstActivity.class);
         activity.addFragment();
         NavFragment fragment = (NavFragment) activity.getSupportFragmentManager().findFragmentById(R.id.test_fragment);
-        NavFragmentPresenter presenter = fragment.getPresenter();
+        NavigationPresenter presenter = fragment.getPresenter();
         presenter.getNavigation().open(new ForResultUnit());
         ShadowActivity.IntentForResult forResult = shadowOf(activity).getNextStartedActivityForResult();
         fragment.spoilPresenter();
@@ -110,7 +114,7 @@ public class NavigationTest extends BaseTest {
         FirstActivity activity = Robolectric.setupActivity(FirstActivity.class);
         activity.addFragment();
         NavFragment fragment = (NavFragment) activity.getSupportFragmentManager().findFragmentById(R.id.test_fragment);
-        NavFragmentPresenter presenter = fragment.getPresenter();
+        NavigationPresenter presenter = fragment.getPresenter();
         fragment.startActivityForResult(new Intent(activity, SecondActivity.class), 1);
         fragment.onActivityResult(1, Activity.RESULT_OK, new Intent().putExtra(ForResultUnit.EXTRA_DATA, 10));
         //by this time, navigation does not support result delivering if the activity was started from a fragment
@@ -120,16 +124,18 @@ public class NavigationTest extends BaseTest {
     }
 
     @Test
-    public void checkBehaviorRegularFragment() throws Exception {
-        FirstActivity activity = Robolectric.setupActivity(FirstActivity.class);
-        activity.getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.test_fragment, new RegularFragment())
-                .commitNow();
-
-        activity.startActivityForResult(new Intent(activity, SecondActivity.class), 1);
-        ShadowActivity.IntentForResult forResult = shadowOf(activity).getNextStartedActivityForResult();
-        shadowOf(activity).receiveResult(forResult.intent, Activity.RESULT_OK, new Intent().putExtra(ForResultUnit.EXTRA_DATA, 10));
+    public void checkBadContext() throws Exception {
+        class Container {
+            Throwable e;
+        }
+        Container container = new Container();
+        try {
+            Navigation navigation = new Navigation(new SimpleView());
+        } catch (Exception e) {
+            container.e = e;
+            Assert.assertTrue(e.getMessage().contains("Context of the view should be also an MvpView"));
+        }
+        Assert.assertNotNull(container.e);
     }
 
     @NonNull
@@ -153,12 +159,14 @@ public class NavigationTest extends BaseTest {
         }
 
     }
+
     static class ForResultUnit extends ComplexNavigationUnit<String, Integer> {
 
         static final String EXTRA_DATA = "EXTRA_DATA";
 
         static int REQUEST_CODE = 1;
         private int aNumber;
+
         public void setaNumber(int aNumber) {
             this.aNumber = aNumber;
         }

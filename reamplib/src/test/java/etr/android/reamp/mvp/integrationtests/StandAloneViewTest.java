@@ -1,4 +1,4 @@
-package etr.android.reamp.mvp.integrations;
+package etr.android.reamp.mvp.integrationtests;
 
 import android.os.Bundle;
 
@@ -8,14 +8,14 @@ import org.junit.Test;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
 
+import etr.android.reamp.mvp.internal.TesteePresenter;
+import etr.android.reamp.mvp.internal.TesteeState;
 import etr.android.reamp.mvp.BaseTest;
-import etr.android.reamp.debug.CustomViewPresenter;
-import etr.android.reamp.debug.CustomViewState;
 import etr.android.reamp.mvp.MvpPresenter;
 import etr.android.reamp.mvp.PresenterManager;
 import etr.android.reamp.mvp.ReampProvider;
-import etr.android.reamp.debug.SimpleAppCompatActivity;
-import etr.android.reamp.debug.TestCustomView;
+import etr.android.reamp.mvp.internal.RegularAppCompatActivity;
+import etr.android.reamp.mvp.internal.TestMvpCustomView;
 
 public class StandAloneViewTest extends BaseTest {
 
@@ -26,29 +26,29 @@ public class StandAloneViewTest extends BaseTest {
 
     @Test
     public void simple() throws Exception {
-        SimpleAppCompatActivity activity = Robolectric.setupActivity(SimpleAppCompatActivity.class);
-        TestCustomView testCustomView = activity.getCustomView();
-        CustomViewPresenter presenter = testCustomView.getPresenter();
+        RegularAppCompatActivity activity = Robolectric.setupActivity(RegularAppCompatActivity.class);
+        TestMvpCustomView testMvpCustomView = activity.getCustomView();
+        TesteePresenter presenter = testMvpCustomView.getPresenter();
         Assert.assertNotNull(presenter);
-        CustomViewState stateModel = presenter.getStateModel();
+        TesteeState stateModel = presenter.getStateModel();
         Assert.assertNotNull(stateModel);
-        presenter.count();
-        Assert.assertEquals(testCustomView.counter, 1);
+        presenter.increment();
+        Assert.assertEquals(testMvpCustomView.counter, 1);
     }
 
     @Test
     public void keepState() throws Exception {
-        ActivityController<SimpleAppCompatActivity> controller = Robolectric.buildActivity(SimpleAppCompatActivity.class);
-        SimpleAppCompatActivity activity = controller.setup().get();
-        TestCustomView view = activity.getCustomView();
-        view.getPresenter().count();
+        ActivityController<RegularAppCompatActivity> controller = Robolectric.buildActivity(RegularAppCompatActivity.class);
+        RegularAppCompatActivity activity = controller.setup().get();
+        TestMvpCustomView view = activity.getCustomView();
+        view.getPresenter().increment();
         Bundle bundle = new Bundle();
         controller.saveInstanceState(bundle).pause().stop().destroy();
-        activity = Robolectric.buildActivity(SimpleAppCompatActivity.class).create(bundle).start().restoreInstanceState(bundle).resume().visible().get();
+        activity = Robolectric.buildActivity(RegularAppCompatActivity.class).create(bundle).start().restoreInstanceState(bundle).resume().visible().get();
         view = activity.getCustomView();
-        CustomViewPresenter presenter = view.getPresenter();
+        TesteePresenter presenter = view.getPresenter();
         Assert.assertNotNull(presenter);
-        CustomViewState stateModel = presenter.getStateModel();
+        TesteeState stateModel = presenter.getStateModel();
         Assert.assertNotNull(stateModel);
         Assert.assertEquals(stateModel.counter, 1);
         Assert.assertEquals(view.counter, 1);
@@ -56,10 +56,10 @@ public class StandAloneViewTest extends BaseTest {
 
     @Test
     public void destroyPresenter() throws Exception {
-        ActivityController<SimpleAppCompatActivity> controller = Robolectric.buildActivity(SimpleAppCompatActivity.class);
-        SimpleAppCompatActivity activity = controller.get();
+        ActivityController<RegularAppCompatActivity> controller = Robolectric.buildActivity(RegularAppCompatActivity.class);
+        RegularAppCompatActivity activity = controller.get();
         controller.create().start().resume().visible();
-        TestCustomView view = activity.getCustomView();
+        TestMvpCustomView view = activity.getCustomView();
         String mvpId = view.getMvpId();
         controller.userLeaving();
         activity.finish(); //make activity to think that it is being finished
@@ -70,10 +70,10 @@ public class StandAloneViewTest extends BaseTest {
 
     @Test
     public void doNotDestroyPresenter() throws Exception {
-        ActivityController<SimpleAppCompatActivity> controller = Robolectric.buildActivity(SimpleAppCompatActivity.class);
-        SimpleAppCompatActivity activity = controller.get();
+        ActivityController<RegularAppCompatActivity> controller = Robolectric.buildActivity(RegularAppCompatActivity.class);
+        RegularAppCompatActivity activity = controller.get();
         controller.create().start().resume().visible();
-        TestCustomView view = activity.getCustomView();
+        TestMvpCustomView view = activity.getCustomView();
         String mvpId = view.getMvpId();
         controller.pause().stop().destroy();
         MvpPresenter presenter = PresenterManager.getInstance().getPresenter(mvpId);
@@ -82,11 +82,11 @@ public class StandAloneViewTest extends BaseTest {
 
     @Test
     public void viewLeak() throws Exception {
-        ActivityController<SimpleAppCompatActivity> controller = Robolectric.buildActivity(SimpleAppCompatActivity.class);
-        SimpleAppCompatActivity activity = controller.get();
+        ActivityController<RegularAppCompatActivity> controller = Robolectric.buildActivity(RegularAppCompatActivity.class);
+        RegularAppCompatActivity activity = controller.get();
         controller.create().start().resume().visible();
-        TestCustomView view = activity.getCustomView();
-        CustomViewPresenter presenter = view.getPresenter();
+        TestMvpCustomView view = activity.getCustomView();
+        TesteePresenter presenter = view.getPresenter();
         activity.removeView();
         Assert.assertNull(view.getPresenter());
         Assert.assertNull(presenter.getView());

@@ -1,4 +1,4 @@
-package etr.android.reamp.debug;
+package etr.android.reamp.mvp.internal;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,12 +7,13 @@ import android.view.ViewGroup;
 
 import etr.android.reamp.R;
 
-public class SimpleAppCompatActivity extends AppCompatActivity {
+public class RegularAppCompatActivity extends AppCompatActivity {
 
     private TestMvpFragment dynamicFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setTheme(R.style.Theme_AppCompat);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple);
         if (savedInstanceState != null) {
@@ -22,8 +23,8 @@ public class SimpleAppCompatActivity extends AppCompatActivity {
         }
     }
 
-    public TestCustomView getCustomView() {
-        return (TestCustomView) findViewById(R.id.custom_view);
+    public TestMvpCustomView getCustomView() {
+        return (TestMvpCustomView) findViewById(R.id.custom_view);
     }
 
     public TestMvpFragment getEmbeddedFragment() {

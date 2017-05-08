@@ -1,4 +1,4 @@
-package etr.android.reamp.debug;
+package etr.android.reamp.mvp.internal;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,26 +12,26 @@ import etr.android.reamp.mvp.MvpDelegate;
 import etr.android.reamp.mvp.MvpPresenter;
 import etr.android.reamp.mvp.MvpView;
 
-public class TestCustomView extends View implements MvpView<CustomViewState> {
+public class TestMvpCustomView extends View implements MvpView<TesteeState> {
 
     MvpDelegate delegate = new MvpDelegate(this);
     public int counter;
     private Bundle savedState;
 
-    public TestCustomView(Context context) {
+    public TestMvpCustomView(Context context) {
         super(context);
     }
 
-    public TestCustomView(Context context, @Nullable AttributeSet attrs) {
+    public TestMvpCustomView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public TestCustomView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public TestMvpCustomView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @Override
-    public void onStateChanged(CustomViewState stateModel) {
+    public void onStateChanged(TesteeState stateModel) {
         this.counter = stateModel.counter;
     }
 
@@ -46,19 +46,19 @@ public class TestCustomView extends View implements MvpView<CustomViewState> {
     }
 
     @Override
-    public CustomViewState onCreateStateModel() {
-        return new CustomViewState();
+    public TesteeState onCreateStateModel() {
+        return new TesteeState();
     }
 
     @Override
-    public CustomViewPresenter onCreatePresenter() {
-        return new CustomViewPresenter();
+    public TesteePresenter onCreatePresenter() {
+        return new TesteePresenter();
     }
 
     @Override
-    public CustomViewPresenter getPresenter() {
+    public TesteePresenter getPresenter() {
         MvpPresenter presenter = delegate.getPresenter();
-        return (CustomViewPresenter) presenter;
+        return (TesteePresenter) presenter;
     }
 
     @Override

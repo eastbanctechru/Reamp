@@ -1,12 +1,13 @@
-package etr.android.reamp.debug.navigation;
+package etr.android.reamp.mvp.internal.navigation;
 
 import android.content.Intent;
 
 import etr.android.reamp.mvp.MvpPresenter;
+import etr.android.reamp.mvp.MvpStateModel;
+import etr.android.reamp.mvp.SerializableStateModel;
 
-public class FirstPresenter extends MvpPresenter<FirstState> {
+public class NavigationPresenter extends MvpPresenter<SerializableStateModel> {
 
-    public boolean onresultCalled;
     public int requestCode;
     public int resultCode;
     public Intent data;
@@ -14,7 +15,6 @@ public class FirstPresenter extends MvpPresenter<FirstState> {
     @Override
     public void onResult(int requestCode, int resultCode, Intent data) {
         super.onResult(requestCode, resultCode, data);
-        onresultCalled = true;
         this.requestCode = requestCode;
         this.resultCode = resultCode;
         this.data = data;

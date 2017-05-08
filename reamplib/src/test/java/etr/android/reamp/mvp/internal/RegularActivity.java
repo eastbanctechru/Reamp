@@ -1,4 +1,4 @@
-package etr.android.reamp.mvp.common;
+package etr.android.reamp.mvp.internal;
 
 import android.app.Activity;
 
