@@ -20,7 +20,7 @@ import etr.android.reamp.debug.TestFragmentPresenter;
 import etr.android.reamp.debug.TestFragmentState;
 import etr.android.reamp.debug.TestMvpFragment;
 
-public class StandAloneFragmentTest extends BaseTest {
+public class SupportFragmentTest extends BaseTest {
 
     @Before
     public void setUp() throws Exception {
@@ -168,6 +168,20 @@ public class StandAloneFragmentTest extends BaseTest {
 
         activity.addFragmentProgrammatically();
         Assert.assertEquals(fragment.counter, 10);
+    }
+
+    @Test
+    public void dynamicFragmentLeak() throws Exception {
+        ActivityController<SimpleAppCompatActivity> controller = Robolectric.buildActivity(SimpleAppCompatActivity.class);
+        SimpleAppCompatActivity activity = controller.setup().get();
+        activity.addFragmentProgrammatically();
+        TestMvpFragment fragment = activity.getDynamicFragment();
+        String mvpId = fragment.getMvpId();
+        activity.removeFragmentProgrammatically();
+        controller.get().finish();
+        controller.pause().stop().destroy();
+        MvpPresenter presenter = PresenterManager.getInstance().getPresenter(mvpId);
+        Assert.assertNull(presenter);
     }
 
     @Test

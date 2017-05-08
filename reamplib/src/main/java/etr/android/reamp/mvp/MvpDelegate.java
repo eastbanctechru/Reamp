@@ -70,6 +70,8 @@ public class MvpDelegate {
         if (newPresenter) {
             presenter.onPresenterCreated();
         }
+
+        presenterManager.registerView(view, view.getContext());
     }
 
     public String getId() {

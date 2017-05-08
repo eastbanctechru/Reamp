@@ -1,12 +1,10 @@
 package etr.android.reamp.mvp;
 
-import android.os.Handler;
 import android.os.Looper;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.robolectric.Robolectric;
-import org.robolectric.shadow.api.Shadow;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -25,7 +23,6 @@ public class AsyncTest extends BaseTest {
             @Override
             public void onStateChanged(TestState stateModel) {
                 super.onStateChanged(stateModel);
-                System.out.println(stateModel.counter);
                 Assert.assertTrue(Looper.myLooper() == Looper.getMainLooper());
                 if (stateModel.counter == 1) {
                     cdl.countDown();
