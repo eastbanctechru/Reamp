@@ -9,6 +9,7 @@ import etr.android.reamp.mvp.MvpView;
 public class SimpleView implements MvpView<TesteeState> {
 
     private MvpDelegate delegate = new MvpDelegate(this);
+    public int counter;
 
     @Override
     public Context getContext() {
@@ -17,7 +18,7 @@ public class SimpleView implements MvpView<TesteeState> {
 
     @Override
     public void onStateChanged(TesteeState stateModel) {
-
+        this.counter = stateModel.counter;
     }
 
     @Override
@@ -52,5 +53,13 @@ public class SimpleView implements MvpView<TesteeState> {
 
     public void connect() {
         delegate.connect();
+    }
+
+    public void disconnect() {
+        delegate.disconnect();
+    }
+
+    public void destroy() {
+        delegate.onDestroy();
     }
 }

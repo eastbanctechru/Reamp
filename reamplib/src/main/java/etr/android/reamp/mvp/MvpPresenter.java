@@ -1,10 +1,10 @@
 package etr.android.reamp.mvp;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.io.ByteArrayInputStream;
@@ -15,6 +15,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import etr.android.reamp.BuildConfig;
 import etr.android.reamp.navigation.Navigation;
@@ -26,8 +28,8 @@ public class MvpPresenter<SM extends MvpStateModel> {
     private final Handler uiHandler = new Handler(Looper.getMainLooper());
 
     private SM stateModel;
-    private MvpView view;
-    private StateChanges stateChanges;
+    private List<MvpView> views = new ArrayList<>();
+    private List<StateChanges> stateChanges = new ArrayList<>();
     private boolean throwOnSerializationError = BuildConfig.DEBUG;
 
     public void attachStateModel(SM stateModel) {
@@ -48,9 +50,6 @@ public class MvpPresenter<SM extends MvpStateModel> {
      */
     public final void sendStateModel(final SM stateModel) {
         this.stateModel = stateModel;
-        if (stateChanges == null) {
-            return;
-        }
         if (Looper.myLooper() != Looper.getMainLooper()) {
             uiHandler.post(new Runnable() {
                 @Override
@@ -59,10 +58,12 @@ public class MvpPresenter<SM extends MvpStateModel> {
                 }
             });
         } else {
-            try {
-                stateChanges.onNewState(stateModel);
-            } catch (Throwable e) {
-                stateChanges.onError(e);
+            for (StateChanges stateChange : stateChanges) {
+                try {
+                    stateChange.onNewState(stateModel);
+                } catch (Throwable e) {
+                    stateChange.onError(e);
+                }
             }
         }
     }
@@ -75,8 +76,12 @@ public class MvpPresenter<SM extends MvpStateModel> {
         sendStateModel(getStateModel());
     }
 
-    public void setView(MvpView view) {
-        this.view = view;
+    public void addView(@NonNull MvpView view) {
+        views.add(view);
+    }
+
+    public void removeView(@NonNull MvpView view) {
+        views.remove(view);
     }
 
     /**
@@ -89,7 +94,14 @@ public class MvpPresenter<SM extends MvpStateModel> {
     }
 
     public MvpView getView() {
-        return view;
+        if (views.isEmpty()) {
+            return null;
+        }
+        return views.get(0);
+    }
+
+    public List<MvpView> getViews() {
+        return new ArrayList<>(views);
     }
 
     /**
@@ -192,13 +204,12 @@ public class MvpPresenter<SM extends MvpStateModel> {
     }
 
     public void connect(StateChanges stateChanges) {
-        this.stateChanges = stateChanges;
+        this.stateChanges.add(stateChanges);
         sendStateModel();
     }
 
-    public void disconnect() {
-        stateChanges = null;
-        uiHandler.removeCallbacks(null);
+    public void disconnect(StateChanges stateChanges) {
+        this.stateChanges.remove(stateChanges);
     }
 
     protected boolean throwOnSerializationError() {
@@ -207,5 +218,19 @@ public class MvpPresenter<SM extends MvpStateModel> {
 
     public void setThrowOnSerializationError(boolean throwOnSerializationError) {
         this.throwOnSerializationError = throwOnSerializationError;
+    }
+
+    public void releaseAllViews() {
+        views.clear();
+        stateChanges.clear();
+        uiHandler.removeCallbacks(null);
+    }
+
+    public void onConnect(MvpView view) {
+
+    }
+
+    public void onDisconnect(MvpView view) {
+
     }
 }

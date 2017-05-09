@@ -3,6 +3,7 @@
           package="example.reamp">
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
@@ -26,6 +27,7 @@
         <activity android:name=".basic.BasicActivity"/>
         <activity android:name=".basic.BasicFragmentActivity"/>
         <activity android:name=".lifecycle.ShortRunningActivity"/>
+        <activity android:name=".share.ParticularActivity"/>
     </application>
 
 </manifest>

@@ -3,10 +3,6 @@ package etr.android.reamp.mvp;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.util.Log;
 
 import java.util.List;
 import java.util.UUID;
@@ -24,6 +20,7 @@ public class MvpDelegate {
     private final MvpView view;
     private String mvpId;
     private MvpPresenter presenter;
+    private StateChanges stateChanges;
 
     public MvpDelegate(MvpView view) {
         this.view = view;
@@ -64,7 +61,7 @@ public class MvpDelegate {
             presenter.attachStateModel(stateModel);
         }
 
-        presenter.setView(view);
+        presenter.addView(view);
         this.presenter = presenter;
 
         if (newPresenter) {
@@ -84,8 +81,9 @@ public class MvpDelegate {
     public void connect() {
 
         view.getPresenter().onConnect();
+        view.getPresenter().onConnect(view);
 
-        view.getPresenter().connect(new StateChanges() {
+        stateChanges = new StateChanges() {
             @Override
             public void onNewState(MvpStateModel state) {
                 view.onStateChanged(state);
@@ -95,12 +93,15 @@ public class MvpDelegate {
             public void onError(Throwable e) {
                 view.onError(e);
             }
-        });
+        };
+        view.getPresenter().connect(stateChanges);
     }
 
     public void disconnect() {
         view.getPresenter().onDisconnect();
-        view.getPresenter().disconnect();
+        view.getPresenter().onDisconnect(view);
+        view.getPresenter().disconnect(stateChanges);
+        stateChanges = null;
     }
 
     public void onSaveInstanceState(Bundle outState) {
@@ -110,7 +111,7 @@ public class MvpDelegate {
 
     public void onDestroy() {
         MvpPresenter presenter = view.getPresenter();
-        presenter.setView(null);
+        presenter.removeView(view);
         this.presenter = null;
     }
 

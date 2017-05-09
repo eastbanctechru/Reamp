@@ -11,6 +11,7 @@ import example.reamp.basic.BasicFragmentActivity;
 import example.reamp.lifecycle.LongRunningActivity;
 import example.reamp.lifecycle.ShortRunningActivity;
 import example.reamp.navigation.NavigationActivity;
+import example.reamp.share.ParticularActivity;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -46,6 +47,12 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(WelcomeActivity.this, NavigationActivity.class));
+            }
+        });
+        findViewById(R.id.presenter_sharing).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(ParticularActivity.getRootIntent(WelcomeActivity.this));
             }
         });
     }

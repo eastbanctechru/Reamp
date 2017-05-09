@@ -19,4 +19,9 @@
         the activity receives updates on the main thread</string>
     <string name="open_an_activity_for_result">Start an activity for result</string>
     <string name="open_activity_with_date">Open an activity and pass a data to it</string>
+    <string name="shared_presenter_disclaimer">This activity return the same mvpId every time and for any instance.
+        MvpViews with the same id connect to the same presenter. So all instances of this activity use a single shared presenter.
+        For example, this trick can be useful for implementing a left menu: the case when all activities should have the same
+        fragment in the navigation drawer. Pay attention that we had to use custom ReampStrategy in the Application class to let
+        the presenter live while its\' activities destroys.</string>
 </resources>

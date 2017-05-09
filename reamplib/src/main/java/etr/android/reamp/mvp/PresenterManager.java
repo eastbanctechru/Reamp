@@ -37,7 +37,7 @@ public class PresenterManager {
     public void destroyPresenter(String mvpId) {
         MvpPresenter presenter = presenters.remove(mvpId);
         if (presenter != null) {
-            presenter.setView(null);
+            presenter.releaseAllViews();
             presenter.onDestroyPresenter();
         }
     }
