@@ -1,3 +1,8 @@
+[0.10]
+Presenter now can has multiple active MvpViews at the same time
+Result delivery mechanism (Presenter#onResult(...)) refactored
+ReampStrategy and views tracking mechanism refactored
+
 [0.9.1]
 Small fix for MvpPresenter keeping state
 
