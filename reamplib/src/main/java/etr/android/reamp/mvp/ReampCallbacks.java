@@ -39,5 +39,6 @@ class ReampCallbacks implements Application.ActivityLifecycleCallbacks {
     public void onActivityDestroyed(Activity activity) {
         ReampStrategy strategy = PresenterManager.getInstance().getStrategy();
         strategy.onActivityDestroyed(activity);
+        PresenterManager.getInstance().unregisterViewsOf(activity);
     }
 }

@@ -14,7 +14,5 @@ public class ReampStrategy {
                 PresenterManager.getInstance().destroyPresenter(view.getMvpId());
             }
         }
-
-        PresenterManager.getInstance().unregisterViewsOf(activity);
     }
 }
