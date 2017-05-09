@@ -3,7 +3,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              tools:context="example.reamp.details.DetailsFragment">
+              tools:context=".navigation.details.DetailsFragment">
 
     <EditText
         android:id="@+id/details_edit_text"

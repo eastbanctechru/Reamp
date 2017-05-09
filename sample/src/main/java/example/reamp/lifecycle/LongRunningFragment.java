@@ -3,7 +3,6 @@ package example.reamp.lifecycle;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,15 +11,10 @@ import android.widget.TextView;
 import etr.android.reamp.mvp.MvpFragment;
 import example.reamp.R;
 
-public class LongRunningFragment extends MvpFragment<LongRunningFragmentPresenter, LongRunningFragmentState> {
+public class LongRunningFragment extends MvpFragment<LongRunningPresenter, RunningState> {
 
 
     private TextView textView;
-
-    public LongRunningFragment() {
-        // Required empty public constructor
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,17 +29,17 @@ public class LongRunningFragment extends MvpFragment<LongRunningFragmentPresente
     }
 
     @Override
-    public LongRunningFragmentState onCreateStateModel() {
-        return new LongRunningFragmentState();
+    public RunningState onCreateStateModel() {
+        return new RunningState();
     }
 
     @Override
-    public LongRunningFragmentPresenter onCreatePresenter() {
-        return new LongRunningFragmentPresenter();
+    public LongRunningPresenter onCreatePresenter() {
+        return new LongRunningPresenter(1000, "LongRunningFragment");
     }
 
     @Override
-    public void onStateChanged(LongRunningFragmentState stateModel) {
-        textView.setText(String.valueOf(stateModel.times));
+    public void onStateChanged(RunningState stateModel) {
+        textView.setText(getString(R.string.fragment_timer, stateModel.times));
     }
 }

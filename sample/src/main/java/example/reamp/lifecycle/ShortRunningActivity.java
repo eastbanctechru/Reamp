@@ -6,14 +6,14 @@ import android.widget.TextView;
 import etr.android.reamp.mvp.MvpAppCompatActivity;
 import example.reamp.R;
 
-public class LongRunningActivity extends MvpAppCompatActivity<LongRunningPresenter, RunningState> {
+public class ShortRunningActivity extends MvpAppCompatActivity<ShortRunnintPresenter, RunningState> {
 
     private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_long_running_job);
+        setContentView(R.layout.activity_short_running);
         textView = (TextView) findViewById(R.id.job_text);
     }
 
@@ -23,8 +23,8 @@ public class LongRunningActivity extends MvpAppCompatActivity<LongRunningPresent
     }
 
     @Override
-    public LongRunningPresenter onCreatePresenter() {
-        return new LongRunningPresenter(1000, "LongRunningActivity");
+    public ShortRunnintPresenter onCreatePresenter() {
+        return new ShortRunnintPresenter(1000, "ShortRunningActivity");
     }
 
     @Override

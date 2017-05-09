@@ -2,4 +2,21 @@
 <resources>
     <string name="open_details">Open details</string>
     <string name="open_number">Open number</string>
+    <string name="basic_disclaimer">This screen shows you basic principles of how MvpView, MvpPresenter, and MvpStateModel communicate with each other.
+        Moreover, pay attention that when you rotate the screen and recreate the activity, you don\'t need to save and restore its\' state.
+        The last state is automatically attached.</string>
+    <string name="basic_fragment_disclaimer">Fragment also can be an MvpView. You don\'t need that the host activity be an MvpView, it\'s optional.</string>
+    <string name="long_running_activity_disclaimer">The timer starts when the presenter is created and stops only when the presenter is destroyed.
+        You can minimize, rotate, open another screen, but the timer will still work. The presenter will be destroyed only when the activity is finished (for instance, by pressing the back button).</string>
+    <string name="long_running_fragment_disclaimer">The presenter of the fragment is also destroyed only when the host activity is destroyed</string>
+    <string name="activity_timer">Activity timer: %1$d</string>
+    <string name="fragment_timer">Fragment timer: %1$d</string>
+    <string name="long_running_activity_disclaimer_2">When the MvpView (activity of fragment) is not visible (minimized or covered by another activity)
+        it does not receive state updates</string>
+    <string name="short_running_activity_disclaimer">The timer starts when the presenter and the activity are connected to each other (the view is visible to a user)
+        and pauses when the view are minimized or covered by another screen</string>
+    <string name="short_running_activity_disclaimer2">Pay attention that while the timer operates on a background thread
+        the activity receives updates on the main thread</string>
+    <string name="open_an_activity_for_result">Start an activity for result</string>
+    <string name="open_activity_with_date">Open an activity and pass a data to it</string>
 </resources>

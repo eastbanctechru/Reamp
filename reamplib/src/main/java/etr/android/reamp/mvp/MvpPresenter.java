@@ -80,7 +80,7 @@ public class MvpPresenter<SM extends MvpStateModel> {
     }
 
     /**
-     * Called when the presenter first created
+     * Called when the presenter is first created
      * <br/>
      * <i>Note: this method is not called when a view is re-attached</i>
      */
@@ -169,6 +169,7 @@ public class MvpPresenter<SM extends MvpStateModel> {
 
     /**
      * Called when the presenter's view is ready to receive updates ({@link MvpStateModel})
+     * <br/>
      * In general, this means that the view is visible to a user and ready to show some data
      * @see MvpPresenter#onDisconnect()
      */
@@ -178,7 +179,8 @@ public class MvpPresenter<SM extends MvpStateModel> {
 
     /**
      * Called when the view stops receiving updates from its' presenter
-     * In general, this means that the view is not visible to a user and
+     * <br/>
+     * In general, this means that the view is not visible to a user
      * @see MvpPresenter#onConnect()
      */
     public void onDisconnect() {
