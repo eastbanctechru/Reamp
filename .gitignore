@@ -41,3 +41,5 @@ proguard/
 # Mac OSX Files
 .DS_Store
 app_history.json
+
+javadoc/
