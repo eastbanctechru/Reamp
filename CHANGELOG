@@ -1,3 +1,6 @@
+[0.10.1]
+fixed issues: #6 and #7
+
 [0.10]
 Presenter now can has multiple active MvpViews at the same time
 Result delivery mechanism (Presenter#onResult(...)) refactored
