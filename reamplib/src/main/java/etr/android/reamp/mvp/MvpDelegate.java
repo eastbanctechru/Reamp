@@ -80,9 +80,6 @@ public class MvpDelegate {
 
     public void connect() {
 
-        view.getPresenter().onConnect();
-        view.getPresenter().onConnect(view);
-
         stateChanges = new StateChanges() {
             @Override
             public void onNewState(MvpStateModel state) {
@@ -94,13 +91,11 @@ public class MvpDelegate {
                 view.onError(e);
             }
         };
-        view.getPresenter().connect(stateChanges);
+        view.getPresenter().connect(stateChanges, view);
     }
 
     public void disconnect() {
-        view.getPresenter().onDisconnect();
-        view.getPresenter().onDisconnect(view);
-        view.getPresenter().disconnect(stateChanges);
+        view.getPresenter().disconnect(stateChanges, view);
         stateChanges = null;
     }
 

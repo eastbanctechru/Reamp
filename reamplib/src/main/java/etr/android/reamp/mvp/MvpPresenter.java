@@ -70,6 +70,7 @@ public class MvpPresenter<SM extends MvpStateModel> {
 
     /**
      * Send the current state model
+     *
      * @see MvpPresenter#sendStateModel(MvpStateModel)
      */
     public final void sendStateModel() {
@@ -106,6 +107,7 @@ public class MvpPresenter<SM extends MvpStateModel> {
 
     /**
      * Restores a state model from the bundle
+     *
      * @param savedInstance a bundle the state model saved into
      * @return restored {@link MvpStateModel} or null
      * @see MvpPresenter#serializeState()
@@ -127,6 +129,7 @@ public class MvpPresenter<SM extends MvpStateModel> {
      * Saves the current state model to a Bundle when the view serializes its' state
      * The default implementation attempts to serialize the current state if the state is {@link Serializable}
      * and does nothing otherwise
+     *
      * @return a bundle with saved state model or null
      * @see MvpPresenter#deserializeState(Bundle)
      */
@@ -180,9 +183,9 @@ public class MvpPresenter<SM extends MvpStateModel> {
     }
 
     /**
-     * Called when the presenter's view is ready to receive updates ({@link MvpStateModel})
-     * <br/>
-     * In general, this means that the view is visible to a user and ready to show some data
+     * Called when the first view has been connected
+     * @see MvpPresenter#onConnect(MvpView)
+     * @see MvpPresenter#onDisconnect(MvpView) ()
      * @see MvpPresenter#onDisconnect()
      */
     public void onConnect() {
@@ -190,12 +193,38 @@ public class MvpPresenter<SM extends MvpStateModel> {
     }
 
     /**
+     * Called when the presenter's view is ready to receive updates ({@link MvpStateModel})
+     * <br/>
+     * In general, this means that the view is visible to a user and ready to show some data
+     *
+     * @see MvpPresenter#onConnect(MvpView)
+     * @see MvpPresenter#onDisconnect(MvpView) ()
+     * @see MvpPresenter#onDisconnect()
+     */
+    public void onConnect(MvpView view) {
+
+    }
+
+    /**
+     * Called when the last view has been disconnected
+     * @see MvpPresenter#onConnect(MvpView)
+     * @see MvpPresenter#onDisconnect(MvpView) ()
+     * @see MvpPresenter#onDisconnect()
+     */
+    public void onDisconnect() {
+
+    }
+
+    /**
      * Called when the view stops receiving updates from its' presenter
      * <br/>
      * In general, this means that the view is not visible to a user
-     * @see MvpPresenter#onConnect()
+     *
+     * @see MvpPresenter#onConnect(MvpView)
+     * @see MvpPresenter#onDisconnect(MvpView) ()
+     * @see MvpPresenter#onDisconnect()
      */
-    public void onDisconnect() {
+    public void onDisconnect(MvpView view) {
 
     }
 
@@ -203,13 +232,25 @@ public class MvpPresenter<SM extends MvpStateModel> {
         return new Navigation(getView());
     }
 
-    public void connect(StateChanges stateChanges) {
+    public void connect(StateChanges stateChanges, MvpView mvpView) {
         this.stateChanges.add(stateChanges);
         sendStateModel();
+
+        int activeViews = this.stateChanges.size();
+        if (activeViews == 1) {
+            onConnect();
+        }
+        onConnect(mvpView);
     }
 
-    public void disconnect(StateChanges stateChanges) {
+    public void disconnect(StateChanges stateChanges, MvpView mvpView) {
         this.stateChanges.remove(stateChanges);
+
+        onDisconnect(mvpView);
+        int activeViews = this.stateChanges.size();
+        if (activeViews == 0) {
+            onDisconnect();
+        }
     }
 
     protected boolean throwOnSerializationError() {
@@ -224,13 +265,5 @@ public class MvpPresenter<SM extends MvpStateModel> {
         views.clear();
         stateChanges.clear();
         uiHandler.removeCallbacks(null);
-    }
-
-    public void onConnect(MvpView view) {
-
-    }
-
-    public void onDisconnect(MvpView view) {
-
     }
 }
