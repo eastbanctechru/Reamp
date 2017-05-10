@@ -24,4 +24,7 @@
         For example, this trick can be useful for implementing a left menu: the case when all activities should have the same
         fragment in the navigation drawer. Pay attention that we had to use custom ReampStrategy in the Application class to let
         the presenter live while its\' activities destroys.</string>
+    <string name="custom_view_disclaimer">You are not forced to use MvpAppCompatActivity or MvpFragment from Reamp.
+        You can create a custom MvpView easily with help of MvpDelegate class. All you need is to insert MvpDelegate calls
+        (such as onCreate(), connect(), disconnect(), onDestroy(), and onSaveInstanceState()) into proper points of your view\'s life cycle.</string>
 </resources>

@@ -12,6 +12,7 @@ import example.reamp.lifecycle.LongRunningActivity;
 import example.reamp.lifecycle.ShortRunningActivity;
 import example.reamp.navigation.NavigationActivity;
 import example.reamp.share.ParticularActivity;
+import example.reamp.view.CustomViewActivity;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -53,6 +54,12 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(ParticularActivity.getRootIntent(WelcomeActivity.this));
+            }
+        });
+        findViewById(R.id.custom_view).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(WelcomeActivity.this, CustomViewActivity.class));
             }
         });
     }

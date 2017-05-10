@@ -16,41 +16,60 @@
         android:layout_height="30dp"
         android:src="@drawable/reamp" />
 
-    <Button
-        android:id="@+id/basic"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Basic" />
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/basic_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Basic Fragment" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/life_cycle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Life Cycle" />
+            <Button
+                android:id="@+id/basic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Basic" />
 
-    <Button
-        android:id="@+id/life_cycle2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Life Cycle 2" />
+            <Button
+                android:id="@+id/basic_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Basic Fragment" />
 
-    <Button
-        android:id="@+id/navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Navigation" />
+            <Button
+                android:id="@+id/life_cycle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Life Cycle" />
 
-    <Button
-        android:id="@+id/presenter_sharing"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Sharing a presenter" />
+            <Button
+                android:id="@+id/life_cycle2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Life Cycle 2" />
+
+            <Button
+                android:id="@+id/navigation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Navigation" />
+
+            <Button
+                android:id="@+id/presenter_sharing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sharing a presenter" />
+
+            <Button
+                android:id="@+id/custom_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Custom View" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

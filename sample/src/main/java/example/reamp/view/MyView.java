@@ -1,6 +1,9 @@
 package example.reamp.view;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -17,6 +20,7 @@ public class MyView extends View implements MvpView<MyState> {
     private static final String TAG = "MyView";
     private MvpDelegate mvpDelegate = new MvpDelegate(this);
     private Bundle savedState;
+    private Paint textPaint;
 
     public MyView(Context context) {
         super(context);
@@ -30,10 +34,27 @@ public class MyView extends View implements MvpView<MyState> {
         super(context, attrs, defStyleAttr);
     }
 
+    private static final String TEXT = "Hi, I'm a custom view";
+
+    private final float textWidth;
+
+    {
+        textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        textPaint.setTextSize(50);
+        textPaint.setColor(Color.MAGENTA);
+        textWidth = textPaint.measureText(TEXT);
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setMeasuredDimension(100, 100);
+        setMeasuredDimension(500, 500);
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        canvas.drawText(TEXT, getWidth() / 2 - textWidth / 2, getHeight() / 2, textPaint);
     }
 
     @Override
@@ -67,7 +88,8 @@ public class MyView extends View implements MvpView<MyState> {
 
     @Override
     public void onStateChanged(MyState stateModel) {
-        Log.d(TAG, "onStateChanged() called with: stateModel = [" + stateModel + "]");
+        textPaint.setColor(Color.rgb(stateModel.r, stateModel.g, stateModel.b));
+        invalidate();
     }
 
     @Override
