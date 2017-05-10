@@ -5,7 +5,8 @@
 
         <provider
             android:name=".mvp.ReampProvider"
-            android:authorities="etr.android.reamp.provider" />
+            android:exported="false"
+            android:authorities="${applicationId}.reamp.provider" />
 
     </application>
 
