@@ -10,6 +10,7 @@ import example.reamp.basic.BasicActivity;
 import example.reamp.basic.BasicFragmentActivity;
 import example.reamp.lifecycle.LongRunningActivity;
 import example.reamp.lifecycle.ShortRunningActivity;
+import example.reamp.login.LoginActivity;
 import example.reamp.navigation.NavigationActivity;
 import example.reamp.share.ParticularActivity;
 import example.reamp.view.CustomViewActivity;
@@ -60,6 +61,12 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(WelcomeActivity.this, CustomViewActivity.class));
+            }
+        });
+        findViewById(R.id.login).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(WelcomeActivity.this, LoginActivity.class));
             }
         });
     }

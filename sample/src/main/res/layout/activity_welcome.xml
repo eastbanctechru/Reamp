@@ -39,6 +39,12 @@
                 android:text="Basic Fragment" />
 
             <Button
+                android:id="@+id/login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Login" />
+
+            <Button
                 android:id="@+id/life_cycle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

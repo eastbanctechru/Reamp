@@ -28,6 +28,7 @@
         <activity android:name=".basic.BasicFragmentActivity"/>
         <activity android:name=".lifecycle.ShortRunningActivity"/>
         <activity android:name=".share.ParticularActivity"/>
+        <activity android:name=".login.LoginActivity"/>
     </application>
 
 </manifest>
