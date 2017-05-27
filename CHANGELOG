@@ -1,3 +1,7 @@
+[0.10.2]
+More javadocs
+'onResult' methods are not deprecated anymore
+
 [0.10.1]
 fixed issues: #6 and #7
 
