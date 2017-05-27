@@ -111,11 +111,8 @@ public class MvpDelegate {
     }
 
     /**
-     * Helper method that forwards onResult of an Activity to all fragments
-     *
-     * @deprecated
+     * Helper method that forwards the "onResult" call of Activity to all its' fragments
      */
-    @Deprecated()
     public void onResult(int requestCode, int resultCode, Intent data) {
         if (view instanceof Activity) {
             dispatchResult(requestCode, resultCode, data);

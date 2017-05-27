@@ -167,10 +167,9 @@ public class MvpPresenter<SM extends MvpStateModel> {
     }
 
     /**
-     * @deprecated Leave result parsing to the activity/fragment and make a presenter's method
-     * to handle the result. Do not use this callback in a fragment's presenters if the host activity is not an MvpView
+     * Callback from an activity or a fragment when they receive a result intent
+     * Do not use this callback in a fragment's presenters if the host activity is not an MvpView
      */
-    @Deprecated
     public void onResult(int requestCode, int resultCode, Intent data) {
 
     }
