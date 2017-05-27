@@ -18,21 +18,28 @@ public class LoginPresenter extends MvpPresenter<LoginState> {
         getStateModel().setLoggedIn(null);
         sendStateModel();
 
+        performLogin();
+    }
+
+    void performLogin() {
         LoginTask loginTask = new LoginTask(getStateModel().getLogin(), getStateModel().getPassword()) {
             @Override
             protected void onPostExecute(Boolean result) {
                 super.onPostExecute(result);
-                if (error != null) {
-                    getStateModel().errorAction(error.getMessage());
-                }
-                getStateModel().setLoggedIn(result);
-                getStateModel().setShowProgress(false);
-                sendStateModel();
+                processLoginResult(result, error);
             }
         };
 
         loginTask.execute();
+    }
 
+    void processLoginResult(Boolean result, Throwable error) {
+        if (error != null) {
+            getStateModel().errorAction(error.getMessage());
+        }
+        getStateModel().setLoggedIn(result);
+        getStateModel().setShowProgress(false);
+        sendStateModel();
     }
 
     public void loginChanged(String login) {

@@ -1,7 +1,5 @@
 package example.reamp.login;
 
-import android.text.TextUtils;
-
 import etr.android.reamp.mvp.Action;
 import etr.android.reamp.mvp.SerializableStateModel;
 
@@ -35,8 +33,8 @@ public class LoginState extends SerializableStateModel {
     public boolean isLoginActionEnabled() {
         return !showProgress
                 && (loggedIn == null || !loggedIn)
-                && !TextUtils.isEmpty(login)
-                && !TextUtils.isEmpty(password);
+                && !isEmpty(login)
+                && !isEmpty(password);
     }
 
     public boolean showSuccessLogin() {
@@ -61,5 +59,9 @@ public class LoginState extends SerializableStateModel {
 
     public String getPassword() {
         return password;
+    }
+
+    private static boolean isEmpty(CharSequence str) {
+        return str == null || str.length() == 0;
     }
 }
