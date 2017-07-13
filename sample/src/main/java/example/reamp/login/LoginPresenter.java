@@ -12,6 +12,16 @@ public class LoginPresenter extends MvpPresenter<LoginState> {
         this.loginService = loginService;
     }
 
+    @Override
+    public void onPresenterCreated() {
+        super.onPresenterCreated();
+        getStateModel().setLogin("");
+        getStateModel().setPassword("");
+        getStateModel().setLoggedIn(null);
+        getStateModel().setShowProgress(false);
+        sendStateModel();
+    }
+
     public void login() {
 
         getStateModel().setShowProgress(true);

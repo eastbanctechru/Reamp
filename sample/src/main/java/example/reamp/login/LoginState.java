@@ -64,4 +64,14 @@ public class LoginState extends SerializableStateModel {
     private static boolean isEmpty(CharSequence str) {
         return str == null || str.length() == 0;
     }
+
+    @Override
+    public String toString() {
+        return "LoginState{" +
+                "loggedIn=" + loggedIn +
+                ", showProgress=" + showProgress +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }
