@@ -6,11 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import etr.android.reamp.mvp.MvpFragment;
-import etr.android.reamp.mvp.MvpPresenter;
+import etr.android.reamp.mvp.ReampFragment;
 import etr.android.reamp.mvp.SerializableStateModel;
 
-public class NavFragment extends MvpFragment<NavigationPresenter, SerializableStateModel> {
+public class NavFragment extends ReampFragment<NavigationPresenter, SerializableStateModel> {
 
     private boolean spoilPresenter;
 

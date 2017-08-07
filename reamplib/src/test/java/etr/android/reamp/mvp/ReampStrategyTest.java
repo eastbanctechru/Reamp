@@ -1,7 +1,6 @@
 package etr.android.reamp.mvp;
 
 import android.app.Activity;
-import android.os.Bundle;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,7 +10,7 @@ import org.robolectric.android.controller.ActivityController;
 
 import java.util.List;
 
-import etr.android.reamp.mvp.internal.TestMvpActivity;
+import etr.android.reamp.mvp.internal.TestReampActivity;
 import etr.android.reamp.mvp.internal.RegularActivity;
 
 public class ReampStrategyTest extends BaseTest {
@@ -37,7 +36,7 @@ public class ReampStrategyTest extends BaseTest {
 
     @Test
     public void normalBehaviorWithNoPresenter2() throws Exception {
-        ActivityController<TestMvpActivity> controller = Robolectric.buildActivity(TestMvpActivity.class);
+        ActivityController<TestReampActivity> controller = Robolectric.buildActivity(TestReampActivity.class);
         controller.create().start().resume().visible();
         PresenterManager.getInstance().destroyPresenter(controller.get().getMvpId());
         controller.userLeaving();
@@ -68,9 +67,9 @@ public class ReampStrategyTest extends BaseTest {
             public void onActivityDestroyed(Activity activity) {
 
                 if (activity.isFinishing()) {
-                    List<MvpView> views = PresenterManager.getInstance().getViewsOf(activity);
-                    for (MvpView view : views) {
-                        if (!(view.getContext() instanceof TestMvpActivity)) {
+                    List<ReampView> views = PresenterManager.getInstance().getViewsOf(activity);
+                    for (ReampView view : views) {
+                        if (!(view.getContext() instanceof TestReampActivity)) {
                             PresenterManager.getInstance().destroyPresenter(view.getMvpId());
                         }
                     }
@@ -82,12 +81,12 @@ public class ReampStrategyTest extends BaseTest {
 
         PresenterManager.getInstance().setStrategy(reampStrategy);
 
-        ActivityController<TestMvpActivity> controller = Robolectric.buildActivity(TestMvpActivity.class);
-        TestMvpActivity activity = controller.setup().get();
+        ActivityController<TestReampActivity> controller = Robolectric.buildActivity(TestReampActivity.class);
+        TestReampActivity activity = controller.setup().get();
         String mvpId = activity.getMvpId();
         activity.finish();
         controller.pause().stop().destroy();
-        MvpPresenter presenter = PresenterManager.getInstance().getPresenter(mvpId);
+        ReampPresenter presenter = PresenterManager.getInstance().getPresenter(mvpId);
         Assert.assertNotNull(presenter);
     }
 

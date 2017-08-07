@@ -10,9 +10,9 @@ import org.robolectric.android.controller.ActivityController;
 import etr.android.reamp.BuildConfig;
 import etr.android.reamp.mvp.BaseTest;
 import etr.android.reamp.mvp.internal.NotSerializableActivity;
-import etr.android.reamp.mvp.MvpPresenter;
+import etr.android.reamp.mvp.ReampPresenter;
 import etr.android.reamp.mvp.PresenterManager;
-import etr.android.reamp.mvp.internal.TestMvpActivity;
+import etr.android.reamp.mvp.internal.TestReampActivity;
 
 public class SerializationTests extends BaseTest {
 
@@ -20,11 +20,11 @@ public class SerializationTests extends BaseTest {
     public void keepPresenterWithNotSerializableState() throws Exception {
         ActivityController<NotSerializableActivity> controller = Robolectric.buildActivity(NotSerializableActivity.class);
         NotSerializableActivity activity = controller.setup().get();
-        MvpPresenter presenter = activity.getPresenter();
+        ReampPresenter presenter = activity.getPresenter();
         Bundle bundle = new Bundle();
         controller.saveInstanceState(bundle).pause().stop().destroy();
         activity = Robolectric.buildActivity(NotSerializableActivity.class).create(bundle).start().restoreInstanceState(bundle).resume().get();
-        MvpPresenter newPresenter = activity.getPresenter();
+        ReampPresenter newPresenter = activity.getPresenter();
         Assert.assertEquals(presenter, newPresenter);
         Assert.assertNotNull(newPresenter.getStateModel());
     }
@@ -38,7 +38,7 @@ public class SerializationTests extends BaseTest {
         controller.saveInstanceState(bundle).pause().stop().destroy();
         PresenterManager.getInstance().destroyPresenter(mvpId);
         activity = Robolectric.buildActivity(NotSerializableActivity.class).create(bundle).start().restoreInstanceState(bundle).resume().get();
-        MvpPresenter newPresenter = activity.getPresenter();
+        ReampPresenter newPresenter = activity.getPresenter();
         Assert.assertNotNull(newPresenter);
         Assert.assertNotNull(newPresenter.getStateModel());
     }
@@ -52,8 +52,8 @@ public class SerializationTests extends BaseTest {
             Throwable e;
         }
         Container container = new Container();
-        ActivityController<TestMvpActivity> controller = Robolectric.buildActivity(TestMvpActivity.class);
-        TestMvpActivity activity = controller.setup().get();
+        ActivityController<TestReampActivity> controller = Robolectric.buildActivity(TestReampActivity.class);
+        TestReampActivity activity = controller.setup().get();
         activity.getPresenter().setObj(new Object());
         Bundle bundle = new Bundle();
         try {
@@ -75,15 +75,15 @@ public class SerializationTests extends BaseTest {
             Throwable e;
         }
         Container container = new Container();
-        ActivityController<TestMvpActivity> controller = Robolectric.buildActivity(TestMvpActivity.class);
-        TestMvpActivity activity = controller.setup().get();
+        ActivityController<TestReampActivity> controller = Robolectric.buildActivity(TestReampActivity.class);
+        TestReampActivity activity = controller.setup().get();
         String mvpId = activity.getMvpId();
         Bundle bundle = new Bundle();
         controller.saveInstanceState(bundle).pause().stop().destroy();
         makeBundleBad(bundle);
         PresenterManager.getInstance().destroyPresenter(mvpId);
         try {
-            activity = Robolectric.buildActivity(TestMvpActivity.class).create(bundle).start().restoreInstanceState(bundle).resume().get();
+            activity = Robolectric.buildActivity(TestReampActivity.class).create(bundle).start().restoreInstanceState(bundle).resume().get();
         } catch (Exception e) {
             container.e = e;
             Assert.assertTrue(e.getMessage().contains("Can not deserialize state model"));
@@ -94,8 +94,8 @@ public class SerializationTests extends BaseTest {
 
     @Test
     public void badSerialization() throws Exception {
-        ActivityController<TestMvpActivity> controller = Robolectric.buildActivity(TestMvpActivity.class);
-        TestMvpActivity activity = controller.setup().get();
+        ActivityController<TestReampActivity> controller = Robolectric.buildActivity(TestReampActivity.class);
+        TestReampActivity activity = controller.setup().get();
         String mvpId = activity.getMvpId();
         activity.getPresenter().setObj(new Object());
         activity.getPresenter().setThrowOnSerializationError(false);
@@ -105,7 +105,7 @@ public class SerializationTests extends BaseTest {
         PresenterManager.getInstance().setPresenter(mvpId, null);
         makeBundleBad(bundle);
 
-        controller = Robolectric.buildActivity(TestMvpActivity.class);
+        controller = Robolectric.buildActivity(TestReampActivity.class);
         controller.get().setThrowOnSerializationError(false);
         activity = controller.create(bundle).start().restoreInstanceState(bundle).resume().get();
         Assert.assertNull(activity.getPresenter().getStateModel().object);

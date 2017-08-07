@@ -11,11 +11,11 @@ import org.robolectric.android.controller.ActivityController;
 import etr.android.reamp.mvp.internal.TesteePresenter;
 import etr.android.reamp.mvp.internal.TesteeState;
 import etr.android.reamp.mvp.BaseTest;
-import etr.android.reamp.mvp.MvpPresenter;
+import etr.android.reamp.mvp.ReampPresenter;
 import etr.android.reamp.mvp.PresenterManager;
 import etr.android.reamp.mvp.ReampProvider;
 import etr.android.reamp.mvp.internal.RegularAppCompatActivity;
-import etr.android.reamp.mvp.internal.TestMvpCustomView;
+import etr.android.reamp.mvp.internal.TestReampCustomView;
 
 public class StandAloneViewTest extends BaseTest {
 
@@ -27,7 +27,7 @@ public class StandAloneViewTest extends BaseTest {
     @Test
     public void simple() throws Exception {
         RegularAppCompatActivity activity = Robolectric.setupActivity(RegularAppCompatActivity.class);
-        TestMvpCustomView testMvpCustomView = activity.getCustomView();
+        TestReampCustomView testMvpCustomView = activity.getCustomView();
         TesteePresenter presenter = testMvpCustomView.getPresenter();
         Assert.assertNotNull(presenter);
         TesteeState stateModel = presenter.getStateModel();
@@ -40,7 +40,7 @@ public class StandAloneViewTest extends BaseTest {
     public void keepState() throws Exception {
         ActivityController<RegularAppCompatActivity> controller = Robolectric.buildActivity(RegularAppCompatActivity.class);
         RegularAppCompatActivity activity = controller.setup().get();
-        TestMvpCustomView view = activity.getCustomView();
+        TestReampCustomView view = activity.getCustomView();
         view.getPresenter().increment();
         Bundle bundle = new Bundle();
         controller.saveInstanceState(bundle).pause().stop().destroy();
@@ -59,12 +59,12 @@ public class StandAloneViewTest extends BaseTest {
         ActivityController<RegularAppCompatActivity> controller = Robolectric.buildActivity(RegularAppCompatActivity.class);
         RegularAppCompatActivity activity = controller.get();
         controller.create().start().resume().visible();
-        TestMvpCustomView view = activity.getCustomView();
+        TestReampCustomView view = activity.getCustomView();
         String mvpId = view.getMvpId();
         controller.userLeaving();
         activity.finish(); //make activity to think that it is being finished
         controller.pause().stop().destroy();
-        MvpPresenter presenter = PresenterManager.getInstance().getPresenter(mvpId);
+        ReampPresenter presenter = PresenterManager.getInstance().getPresenter(mvpId);
         Assert.assertNull(presenter);
     }
 
@@ -73,10 +73,10 @@ public class StandAloneViewTest extends BaseTest {
         ActivityController<RegularAppCompatActivity> controller = Robolectric.buildActivity(RegularAppCompatActivity.class);
         RegularAppCompatActivity activity = controller.get();
         controller.create().start().resume().visible();
-        TestMvpCustomView view = activity.getCustomView();
+        TestReampCustomView view = activity.getCustomView();
         String mvpId = view.getMvpId();
         controller.pause().stop().destroy();
-        MvpPresenter presenter = PresenterManager.getInstance().getPresenter(mvpId);
+        ReampPresenter presenter = PresenterManager.getInstance().getPresenter(mvpId);
         Assert.assertNotNull(presenter);
     }
 
@@ -85,7 +85,7 @@ public class StandAloneViewTest extends BaseTest {
         ActivityController<RegularAppCompatActivity> controller = Robolectric.buildActivity(RegularAppCompatActivity.class);
         RegularAppCompatActivity activity = controller.get();
         controller.create().start().resume().visible();
-        TestMvpCustomView view = activity.getCustomView();
+        TestReampCustomView view = activity.getCustomView();
         TesteePresenter presenter = view.getPresenter();
         activity.removeView();
         Assert.assertNull(view.getPresenter());

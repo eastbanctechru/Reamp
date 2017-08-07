@@ -3,10 +3,10 @@ package example.reamp.lifecycle;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import etr.android.reamp.mvp.MvpAppCompatActivity;
+import etr.android.reamp.mvp.ReampAppCompatActivity;
 import example.reamp.R;
 
-public class ShortRunningActivity extends MvpAppCompatActivity<ShortRunnintPresenter, RunningState> {
+public class ShortRunningActivity extends ReampAppCompatActivity<ShortRunnintPresenter, RunningState> {
 
     private TextView textView;
 

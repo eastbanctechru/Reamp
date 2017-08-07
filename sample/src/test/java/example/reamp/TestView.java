@@ -3,11 +3,11 @@ package example.reamp;
 import android.content.Context;
 
 import etr.android.reamp.mvp.MvpDelegate;
-import etr.android.reamp.mvp.MvpPresenter;
-import etr.android.reamp.mvp.MvpStateModel;
-import etr.android.reamp.mvp.MvpView;
+import etr.android.reamp.mvp.ReampPresenter;
+import etr.android.reamp.mvp.ReampStateModel;
+import etr.android.reamp.mvp.ReampView;
 
-public class TestView<SM extends MvpStateModel> implements MvpView<SM> {
+public class TestView<SM extends ReampStateModel> implements ReampView<SM> {
 
     private MvpDelegate delegate = new MvpDelegate(this);
 
@@ -42,12 +42,12 @@ public class TestView<SM extends MvpStateModel> implements MvpView<SM> {
     }
 
     @Override
-    public MvpPresenter<SM> onCreatePresenter() {
+    public ReampPresenter<SM> onCreatePresenter() {
         return null;
     }
 
     @Override
-    public MvpPresenter<SM> getPresenter() {
-        return delegate.<MvpPresenter<SM>, SM>getPresenter();
+    public ReampPresenter<SM> getPresenter() {
+        return delegate.<ReampPresenter<SM>, SM>getPresenter();
     }
 }

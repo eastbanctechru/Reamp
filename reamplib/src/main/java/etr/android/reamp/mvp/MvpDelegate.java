@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * A proxy class between {@link MvpView} and {@link MvpPresenter} which should be used
- * while implementing a custom {@link MvpView}.
+ * A proxy class between {@link ReampView} and {@link ReampPresenter} which should be used
+ * while implementing a custom {@link ReampView}.
  */
 public class MvpDelegate {
 
@@ -17,16 +17,16 @@ public class MvpDelegate {
     private static final String KEY_MVP_ID = "KEY_MVP_ID";
     private static final String TAG = "MvpDelegate";
 
-    private final MvpView view;
+    private final ReampView view;
     private String mvpId;
-    private MvpPresenter presenter;
+    private ReampPresenter presenter;
     private StateChanges stateChanges;
 
-    public MvpDelegate(MvpView view) {
+    public MvpDelegate(ReampView view) {
         this.view = view;
     }
 
-    public <P extends MvpPresenter<SM>, SM extends MvpStateModel> P getPresenter() {
+    public <P extends ReampPresenter<SM>, SM extends ReampStateModel> P getPresenter() {
         return (P) presenter;
     }
 
@@ -41,7 +41,7 @@ public class MvpDelegate {
         }
 
         PresenterManager presenterManager = PresenterManager.getInstance();
-        MvpPresenter presenter = presenterManager.getPresenter(mvpId);
+        ReampPresenter presenter = presenterManager.getPresenter(mvpId);
 
         boolean newPresenter = presenter == null;
 
@@ -49,7 +49,7 @@ public class MvpDelegate {
             presenter = view.onCreatePresenter();
             presenterManager.setPresenter(mvpId, presenter);
 
-            MvpStateModel stateModel = null;
+            ReampStateModel stateModel = null;
             if (presenterState != null) {
                 stateModel = presenter.deserializeState(presenterState);
             }
@@ -82,7 +82,7 @@ public class MvpDelegate {
 
         stateChanges = new StateChanges() {
             @Override
-            public void onNewState(MvpStateModel state) {
+            public void onNewState(ReampStateModel state) {
                 view.onStateChanged(state);
             }
 
@@ -105,7 +105,7 @@ public class MvpDelegate {
     }
 
     public void onDestroy() {
-        MvpPresenter presenter = view.getPresenter();
+        ReampPresenter presenter = view.getPresenter();
         presenter.removeView(view);
         this.presenter = null;
     }
@@ -120,9 +120,9 @@ public class MvpDelegate {
     }
 
     private void dispatchResult(int requestCode, int resultCode, Intent data) {
-        List<MvpView> views = PresenterManager.getInstance().getViewsOf(view.getContext());
-        for (MvpView mvpView : views) {
-            MvpPresenter presenter = mvpView.getPresenter();
+        List<ReampView> views = PresenterManager.getInstance().getViewsOf(view.getContext());
+        for (ReampView reampView : views) {
+            ReampPresenter presenter = reampView.getPresenter();
             if (presenter != null) {
                 presenter.onResult(requestCode, resultCode, data);
             }

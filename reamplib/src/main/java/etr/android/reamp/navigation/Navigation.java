@@ -3,7 +3,7 @@ package etr.android.reamp.navigation;
 import android.app.Activity;
 import android.content.Intent;
 
-import etr.android.reamp.mvp.MvpView;
+import etr.android.reamp.mvp.ReampView;
 
 /**
  * Class which helps you to encapsulate your navigation logic
@@ -12,14 +12,14 @@ public class Navigation {
 
     private final Activity activity;
 
-    public Navigation(MvpView view) {
+    public Navigation(ReampView view) {
         this.activity = (Activity) view.getContext();
         checkContext();
     }
 
     private void checkContext() {
-        if (!(activity instanceof MvpView)) {
-            throw new IllegalStateException("Context of the view should be also an MvpView");
+        if (!(activity instanceof ReampView)) {
+            throw new IllegalStateException("Context of the view should be also an ReampView");
         }
     }
 

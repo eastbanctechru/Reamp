@@ -1,8 +1,8 @@
 package example.reamp.basic;
 
-import etr.android.reamp.mvp.MvpPresenter;
+import etr.android.reamp.mvp.ReampPresenter;
 
-public class BasicPresenter extends MvpPresenter<BasicState> {
+public class BasicPresenter extends ReampPresenter<BasicState> {
 
     public void increment() {
         getStateModel().counter++;

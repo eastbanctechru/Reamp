@@ -6,10 +6,10 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import etr.android.reamp.R;
-import etr.android.reamp.mvp.MvpAppCompatActivity;
-import etr.android.reamp.mvp.MvpPresenter;
+import etr.android.reamp.mvp.ReampAppCompatActivity;
+import etr.android.reamp.mvp.ReampPresenter;
 
-public class TestMvpActivity extends MvpAppCompatActivity<TesteePresenter, TesteeState> {
+public class TestReampActivity extends ReampAppCompatActivity<TesteePresenter, TesteeState> {
 
     public int count;
     public Throwable throwable;
@@ -47,7 +47,7 @@ public class TestMvpActivity extends MvpAppCompatActivity<TesteePresenter, Teste
     }
 
     @Override
-    public MvpPresenter<TesteeState> onCreatePresenter() {
+    public ReampPresenter<TesteeState> onCreatePresenter() {
         TesteePresenter testActivityPresenter = new TesteePresenter();
         testActivityPresenter.setThrowOnSerializationError(throwOnSerializationError);
         return testActivityPresenter;

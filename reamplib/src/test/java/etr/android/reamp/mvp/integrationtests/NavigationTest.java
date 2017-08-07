@@ -133,7 +133,7 @@ public class NavigationTest extends BaseTest {
             Navigation navigation = new Navigation(new SimpleView());
         } catch (Exception e) {
             container.e = e;
-            Assert.assertTrue(e.getMessage().contains("Context of the view should be also an MvpView"));
+            Assert.assertTrue(e.getMessage().contains("Context of the view should be also an ReampView"));
         }
         Assert.assertNotNull(container.e);
     }

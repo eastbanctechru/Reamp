@@ -10,9 +10,9 @@ import android.util.Log;
 import etr.android.reamp.R;
 
 /**
- * A base Activity which is {@link MvpView}.
+ * A base Activity which is {@link ReampView}.
  */
-public abstract class MvpAppCompatActivity<P extends MvpPresenter<SM>, SM extends MvpStateModel> extends AppCompatActivity implements MvpView<SM> {
+public abstract class ReampAppCompatActivity<P extends ReampPresenter<SM>, SM extends ReampStateModel> extends AppCompatActivity implements ReampView<SM> {
 
     private MvpDelegate delegate = new MvpDelegate(this);
 

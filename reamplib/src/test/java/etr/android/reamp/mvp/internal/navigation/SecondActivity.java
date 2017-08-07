@@ -3,11 +3,11 @@ package etr.android.reamp.mvp.internal.navigation;
 import android.os.Bundle;
 
 import etr.android.reamp.R;
-import etr.android.reamp.mvp.MvpAppCompatActivity;
-import etr.android.reamp.mvp.MvpPresenter;
+import etr.android.reamp.mvp.ReampAppCompatActivity;
+import etr.android.reamp.mvp.ReampPresenter;
 import etr.android.reamp.mvp.SerializableStateModel;
 
-public class SecondActivity extends MvpAppCompatActivity<MvpPresenter<SerializableStateModel>, SerializableStateModel> {
+public class SecondActivity extends ReampAppCompatActivity<ReampPresenter<SerializableStateModel>, SerializableStateModel> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,7 @@ public class SecondActivity extends MvpAppCompatActivity<MvpPresenter<Serializab
     }
 
     @Override
-    public MvpPresenter<SerializableStateModel> onCreatePresenter() {
-        return new MvpPresenter<>();
+    public ReampPresenter<SerializableStateModel> onCreatePresenter() {
+        return new ReampPresenter<>();
     }
 }

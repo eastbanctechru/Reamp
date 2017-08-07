@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/test_fragment"
-        android:name="etr.android.reamp.mvp.internal.TestMvpFragment"
+        android:name="etr.android.reamp.mvp.internal.TestReampFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <etr.android.reamp.mvp.internal.TestMvpCustomView
+    <etr.android.reamp.mvp.internal.TestReampCustomView
         android:id="@+id/custom_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

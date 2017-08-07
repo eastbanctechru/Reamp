@@ -3,7 +3,7 @@ package etr.android.reamp.mvp;
 import java.io.Serializable;
 
 /**
- * A handy container-class which can be used to store "one-shot" data into {@link MvpStateModel}
+ * A handy container-class which can be used to store "one-shot" data into {@link ReampStateModel}
  * <br/>
  * Use {@link Action#set(Serializable)} to store the value
  * <br/>

@@ -13,9 +13,9 @@ import android.util.Log;
 import android.view.View;
 
 import etr.android.reamp.mvp.MvpDelegate;
-import etr.android.reamp.mvp.MvpView;
+import etr.android.reamp.mvp.ReampView;
 
-public class MyView extends View implements MvpView<MyState> {
+public class MyView extends View implements ReampView<MyState> {
 
     private static final String TAG = "MyView";
     private MvpDelegate mvpDelegate = new MvpDelegate(this);

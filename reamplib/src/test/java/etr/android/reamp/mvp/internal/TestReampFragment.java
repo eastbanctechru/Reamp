@@ -6,9 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import etr.android.reamp.mvp.MvpFragment;
+import etr.android.reamp.mvp.ReampFragment;
 
-public class TestMvpFragment extends MvpFragment<TesteePresenter, TesteeState> {
+public class TestReampFragment extends ReampFragment<TesteePresenter, TesteeState> {
 
     public int counter;
     public Throwable throwable;

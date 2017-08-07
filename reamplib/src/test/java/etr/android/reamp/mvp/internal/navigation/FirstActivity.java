@@ -3,10 +3,10 @@ package etr.android.reamp.mvp.internal.navigation;
 import android.os.Bundle;
 
 import etr.android.reamp.R;
-import etr.android.reamp.mvp.MvpAppCompatActivity;
+import etr.android.reamp.mvp.ReampAppCompatActivity;
 import etr.android.reamp.mvp.SerializableStateModel;
 
-public class FirstActivity extends MvpAppCompatActivity<NavigationPresenter, SerializableStateModel> {
+public class FirstActivity extends ReampAppCompatActivity<NavigationPresenter, SerializableStateModel> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

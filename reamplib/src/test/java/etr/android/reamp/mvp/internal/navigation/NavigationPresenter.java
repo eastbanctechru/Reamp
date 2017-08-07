@@ -2,11 +2,10 @@ package etr.android.reamp.mvp.internal.navigation;
 
 import android.content.Intent;
 
-import etr.android.reamp.mvp.MvpPresenter;
-import etr.android.reamp.mvp.MvpStateModel;
+import etr.android.reamp.mvp.ReampPresenter;
 import etr.android.reamp.mvp.SerializableStateModel;
 
-public class NavigationPresenter extends MvpPresenter<SerializableStateModel> {
+public class NavigationPresenter extends ReampPresenter<SerializableStateModel> {
 
     public int requestCode;
     public int resultCode;

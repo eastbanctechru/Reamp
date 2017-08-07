@@ -9,8 +9,8 @@ public class ReampStrategy {
     public void onActivityDestroyed(Activity activity) {
 
         if (activity.isFinishing()) {
-            List<MvpView> views = PresenterManager.getInstance().getViewsOf(activity);
-            for (MvpView view : views) {
+            List<ReampView> views = PresenterManager.getInstance().getViewsOf(activity);
+            for (ReampView view : views) {
                 PresenterManager.getInstance().destroyPresenter(view.getMvpId());
             }
         }

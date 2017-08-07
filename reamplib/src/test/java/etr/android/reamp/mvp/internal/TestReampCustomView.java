@@ -9,24 +9,24 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import etr.android.reamp.mvp.MvpDelegate;
-import etr.android.reamp.mvp.MvpPresenter;
-import etr.android.reamp.mvp.MvpView;
+import etr.android.reamp.mvp.ReampPresenter;
+import etr.android.reamp.mvp.ReampView;
 
-public class TestMvpCustomView extends View implements MvpView<TesteeState> {
+public class TestReampCustomView extends View implements ReampView<TesteeState> {
 
     MvpDelegate delegate = new MvpDelegate(this);
     public int counter;
     private Bundle savedState;
 
-    public TestMvpCustomView(Context context) {
+    public TestReampCustomView(Context context) {
         super(context);
     }
 
-    public TestMvpCustomView(Context context, @Nullable AttributeSet attrs) {
+    public TestReampCustomView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public TestMvpCustomView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public TestReampCustomView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -57,7 +57,7 @@ public class TestMvpCustomView extends View implements MvpView<TesteeState> {
 
     @Override
     public TesteePresenter getPresenter() {
-        MvpPresenter presenter = delegate.getPresenter();
+        ReampPresenter presenter = delegate.getPresenter();
         return (TesteePresenter) presenter;
     }
 

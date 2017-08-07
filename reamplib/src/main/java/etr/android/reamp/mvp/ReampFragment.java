@@ -10,9 +10,9 @@ import android.util.Log;
 import etr.android.reamp.R;
 
 /**
- * A base Fragment which is {@link MvpView}.
+ * A base Fragment which is {@link ReampView}.
  */
-public abstract class MvpFragment<P extends MvpPresenter<SM>, SM extends MvpStateModel> extends Fragment implements MvpView<SM> {
+public abstract class ReampFragment<P extends ReampPresenter<SM>, SM extends ReampStateModel> extends Fragment implements ReampView<SM> {
 
     private MvpDelegate delegate = new MvpDelegate(this);
 

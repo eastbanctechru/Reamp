@@ -11,10 +11,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import etr.android.reamp.mvp.MvpFragment;
+import etr.android.reamp.mvp.ReampFragment;
 import example.reamp.R;
 
-public class NavigationFragment extends MvpFragment<NavigationFragmentPresenter, NavigationFragmentState> {
+public class NavigationFragment extends ReampFragment<NavigationFragmentPresenter, NavigationFragmentState> {
 
     private EditText mainEditText;
     private TextView textFromDetails;

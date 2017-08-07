@@ -4,12 +4,12 @@ import android.util.Log;
 
 import java.util.concurrent.TimeUnit;
 
-import etr.android.reamp.mvp.MvpPresenter;
+import etr.android.reamp.mvp.ReampPresenter;
 import rx.Observable;
 import rx.Subscription;
 import rx.functions.Action1;
 
-public class SharedPresenter extends MvpPresenter<SharedState> {
+public class SharedPresenter extends ReampPresenter<SharedState> {
 
     private Subscription subscription;
 

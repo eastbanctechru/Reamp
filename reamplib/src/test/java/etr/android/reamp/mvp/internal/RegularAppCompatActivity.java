@@ -9,7 +9,7 @@ import etr.android.reamp.R;
 
 public class RegularAppCompatActivity extends AppCompatActivity {
 
-    private TestMvpFragment dynamicFragment;
+    private TestReampFragment dynamicFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -19,16 +19,16 @@ public class RegularAppCompatActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             dynamicFragment = getDynamicFragment();
         } else {
-            dynamicFragment = new TestMvpFragment();
+            dynamicFragment = new TestReampFragment();
         }
     }
 
-    public TestMvpCustomView getCustomView() {
-        return (TestMvpCustomView) findViewById(R.id.custom_view);
+    public TestReampCustomView getCustomView() {
+        return (TestReampCustomView) findViewById(R.id.custom_view);
     }
 
-    public TestMvpFragment getEmbeddedFragment() {
-        return (TestMvpFragment) getSupportFragmentManager().findFragmentById(R.id.test_fragment);
+    public TestReampFragment getEmbeddedFragment() {
+        return (TestReampFragment) getSupportFragmentManager().findFragmentById(R.id.test_fragment);
     }
 
     public void addFragmentProgrammatically() {
@@ -38,12 +38,12 @@ public class RegularAppCompatActivity extends AppCompatActivity {
                 .commitNow();
     }
 
-    public TestMvpFragment getDynamicFragment() {
-        return (TestMvpFragment) getSupportFragmentManager().findFragmentById(R.id.dynamic_container);
+    public TestReampFragment getDynamicFragment() {
+        return (TestReampFragment) getSupportFragmentManager().findFragmentById(R.id.dynamic_container);
     }
 
     public void removeFragmentProgrammatically() {
-        TestMvpFragment fragment = getDynamicFragment();
+        TestReampFragment fragment = getDynamicFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .remove(fragment)
