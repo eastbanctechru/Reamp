@@ -8,10 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import etr.android.reamp.mvp.MvpFragment;
+import etr.android.reamp.mvp.ReampFragment;
 import example.reamp.R;
 
-public class LongRunningFragment extends MvpFragment<LongRunningPresenter, RunningState> {
+public class LongRunningFragment extends ReampFragment<LongRunningPresenter, RunningState> {
 
 
     private TextView textView;

@@ -21,14 +21,14 @@ import java.util.List;
 import etr.android.reamp.BuildConfig;
 import etr.android.reamp.navigation.Navigation;
 
-public class MvpPresenter<SM extends MvpStateModel> {
+public class ReampPresenter<SM extends ReampStateModel> {
 
-    private static final String TAG = "MvpPresenter";
+    private static final String TAG = "ReampPresenter";
     private static final String EXTRA_INSTANCE_STATE = "EXTRA_INSTANCE_STATE";
     private final Handler uiHandler = new Handler(Looper.getMainLooper());
 
     private SM stateModel;
-    private List<MvpView> views = new ArrayList<>();
+    private List<ReampView> views = new ArrayList<>();
     private List<StateChanges> stateChanges = new ArrayList<>();
     private boolean throwOnSerializationError = BuildConfig.DEBUG;
 
@@ -45,8 +45,8 @@ public class MvpPresenter<SM extends MvpStateModel> {
 
     /**
      * Send a state model to a view and save it as a current.
-     * If the view is attached, {@link MvpView#onStateChanged(MvpStateModel)} is called.
-     * If the view is not attached, {@link MvpView#onStateChanged(MvpStateModel)} will be called when the view is attached
+     * If the view is attached, {@link ReampView#onStateChanged(ReampStateModel)} is called.
+     * If the view is not attached, {@link ReampView#onStateChanged(ReampStateModel)} will be called when the view is attached
      */
     public final void sendStateModel(final SM stateModel) {
         this.stateModel = stateModel;
@@ -71,17 +71,17 @@ public class MvpPresenter<SM extends MvpStateModel> {
     /**
      * Send the current state model
      *
-     * @see MvpPresenter#sendStateModel(MvpStateModel)
+     * @see ReampPresenter#sendStateModel(ReampStateModel)
      */
     public final void sendStateModel() {
         sendStateModel(getStateModel());
     }
 
-    public void addView(@NonNull MvpView view) {
+    public void addView(@NonNull ReampView view) {
         views.add(view);
     }
 
-    public void removeView(@NonNull MvpView view) {
+    public void removeView(@NonNull ReampView view) {
         views.remove(view);
     }
 
@@ -94,14 +94,14 @@ public class MvpPresenter<SM extends MvpStateModel> {
 
     }
 
-    public MvpView getView() {
+    public ReampView getView() {
         if (views.isEmpty()) {
             return null;
         }
         return views.get(0);
     }
 
-    public List<MvpView> getViews() {
+    public List<ReampView> getViews() {
         return new ArrayList<>(views);
     }
 
@@ -109,8 +109,8 @@ public class MvpPresenter<SM extends MvpStateModel> {
      * Restores a state model from the bundle
      *
      * @param savedInstance a bundle the state model saved into
-     * @return restored {@link MvpStateModel} or null
-     * @see MvpPresenter#serializeState()
+     * @return restored {@link ReampStateModel} or null
+     * @see ReampPresenter#serializeState()
      */
     public SM deserializeState(Bundle savedInstance) {
         try {
@@ -131,7 +131,7 @@ public class MvpPresenter<SM extends MvpStateModel> {
      * and does nothing otherwise
      *
      * @return a bundle with saved state model or null
-     * @see MvpPresenter#deserializeState(Bundle)
+     * @see ReampPresenter#deserializeState(Bundle)
      */
     public Bundle serializeState() {
         if (stateModel instanceof Serializable) {
@@ -168,7 +168,7 @@ public class MvpPresenter<SM extends MvpStateModel> {
 
     /**
      * Callback from an activity or a fragment when they receive a result intent
-     * Do not use this callback in a fragment's presenters if the host activity is not an MvpView
+     * Do not use this callback in a fragment's presenters if the host activity is not an ReampView
      */
     public void onResult(int requestCode, int resultCode, Intent data) {
 
@@ -183,32 +183,32 @@ public class MvpPresenter<SM extends MvpStateModel> {
 
     /**
      * Called when the first view has been connected
-     * @see MvpPresenter#onConnect(MvpView)
-     * @see MvpPresenter#onDisconnect(MvpView) ()
-     * @see MvpPresenter#onDisconnect()
+     * @see ReampPresenter#onConnect(ReampView)
+     * @see ReampPresenter#onDisconnect(ReampView) ()
+     * @see ReampPresenter#onDisconnect()
      */
     public void onConnect() {
 
     }
 
     /**
-     * Called when the presenter's view is ready to receive updates ({@link MvpStateModel})
+     * Called when the presenter's view is ready to receive updates ({@link ReampStateModel})
      * <br/>
      * In general, this means that the view is visible to a user and ready to show some data
      *
-     * @see MvpPresenter#onConnect(MvpView)
-     * @see MvpPresenter#onDisconnect(MvpView) ()
-     * @see MvpPresenter#onDisconnect()
+     * @see ReampPresenter#onConnect(ReampView)
+     * @see ReampPresenter#onDisconnect(ReampView) ()
+     * @see ReampPresenter#onDisconnect()
      */
-    public void onConnect(MvpView view) {
+    public void onConnect(ReampView view) {
 
     }
 
     /**
      * Called when the last view has been disconnected
-     * @see MvpPresenter#onConnect(MvpView)
-     * @see MvpPresenter#onDisconnect(MvpView) ()
-     * @see MvpPresenter#onDisconnect()
+     * @see ReampPresenter#onConnect(ReampView)
+     * @see ReampPresenter#onDisconnect(ReampView) ()
+     * @see ReampPresenter#onDisconnect()
      */
     public void onDisconnect() {
 
@@ -219,11 +219,11 @@ public class MvpPresenter<SM extends MvpStateModel> {
      * <br/>
      * In general, this means that the view is not visible to a user
      *
-     * @see MvpPresenter#onConnect(MvpView)
-     * @see MvpPresenter#onDisconnect(MvpView) ()
-     * @see MvpPresenter#onDisconnect()
+     * @see ReampPresenter#onConnect(ReampView)
+     * @see ReampPresenter#onDisconnect(ReampView) ()
+     * @see ReampPresenter#onDisconnect()
      */
-    public void onDisconnect(MvpView view) {
+    public void onDisconnect(ReampView view) {
 
     }
 
@@ -231,7 +231,7 @@ public class MvpPresenter<SM extends MvpStateModel> {
         return new Navigation(getView());
     }
 
-    public void connect(StateChanges stateChanges, MvpView mvpView) {
+    public void connect(StateChanges stateChanges, ReampView reampView) {
         this.stateChanges.add(stateChanges);
         sendStateModel();
 
@@ -239,13 +239,13 @@ public class MvpPresenter<SM extends MvpStateModel> {
         if (activeViews == 1) {
             onConnect();
         }
-        onConnect(mvpView);
+        onConnect(reampView);
     }
 
-    public void disconnect(StateChanges stateChanges, MvpView mvpView) {
+    public void disconnect(StateChanges stateChanges, ReampView reampView) {
         this.stateChanges.remove(stateChanges);
 
-        onDisconnect(mvpView);
+        onDisconnect(reampView);
         int activeViews = this.stateChanges.size();
         if (activeViews == 0) {
             onDisconnect();

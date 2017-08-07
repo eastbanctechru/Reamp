@@ -10,11 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import etr.android.reamp.mvp.MvpFragment;
+import etr.android.reamp.mvp.ReampFragment;
 import example.reamp.R;
 
 
-public class DetailsFragment extends MvpFragment<DetailsFragmentPresenter, DetailsFragmentStateModel> {
+public class DetailsFragment extends ReampFragment<DetailsFragmentPresenter, DetailsFragmentStateModel> {
 
     private EditText editText;
 

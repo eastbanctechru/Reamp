@@ -5,7 +5,7 @@ import android.content.Context;
 /**
  * Interface which you implement to work with Reamp
  */
-public interface MvpView<SM extends MvpStateModel> {
+public interface ReampView<SM extends ReampStateModel> {
 
     Context getContext();
 
@@ -37,12 +37,12 @@ public interface MvpView<SM extends MvpStateModel> {
     /**
      * Asks the view implementation to create a new presenter
      */
-    MvpPresenter<SM> onCreatePresenter();
+    ReampPresenter<SM> onCreatePresenter();
 
     /**
      * Provides the current view presenter.
      * <br/>
      * In general, you may want to delegate this call to {@link MvpDelegate#getPresenter()}
      */
-    MvpPresenter<SM> getPresenter();
+    ReampPresenter<SM> getPresenter();
 }

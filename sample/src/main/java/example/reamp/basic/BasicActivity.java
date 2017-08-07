@@ -4,11 +4,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import etr.android.reamp.mvp.MvpAppCompatActivity;
-import etr.android.reamp.mvp.MvpPresenter;
+import etr.android.reamp.mvp.ReampAppCompatActivity;
+import etr.android.reamp.mvp.ReampPresenter;
 import example.reamp.R;
 
-public class BasicActivity extends MvpAppCompatActivity<BasicPresenter, BasicState> {
+public class BasicActivity extends ReampAppCompatActivity<BasicPresenter, BasicState> {
 
     private TextView counterView;
 
@@ -40,7 +40,7 @@ public class BasicActivity extends MvpAppCompatActivity<BasicPresenter, BasicSta
 
     // This method is called when Reamp asks you to create a new instance of BasicPresenter
     @Override
-    public MvpPresenter<BasicState> onCreatePresenter() {
+    public ReampPresenter<BasicState> onCreatePresenter() {
         return new BasicPresenter();
     }
 }

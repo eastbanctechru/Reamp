@@ -7,11 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import etr.android.reamp.mvp.MvpFragment;
-import etr.android.reamp.mvp.MvpPresenter;
+import etr.android.reamp.mvp.ReampFragment;
+import etr.android.reamp.mvp.ReampPresenter;
 import example.reamp.R;
 
-public class BasicFragment extends MvpFragment<BasicPresenter, BasicState> {
+public class BasicFragment extends ReampFragment<BasicPresenter, BasicState> {
 
     private TextView counterView;
 
@@ -44,7 +44,7 @@ public class BasicFragment extends MvpFragment<BasicPresenter, BasicState> {
     }
 
     @Override
-    public MvpPresenter<BasicState> onCreatePresenter() {
+    public ReampPresenter<BasicState> onCreatePresenter() {
         return new BasicPresenter();
     }
 }

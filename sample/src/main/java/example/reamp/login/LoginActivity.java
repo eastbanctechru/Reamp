@@ -7,11 +7,11 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
-import etr.android.reamp.mvp.MvpAppCompatActivity;
-import etr.android.reamp.mvp.MvpPresenter;
+import etr.android.reamp.mvp.ReampAppCompatActivity;
+import etr.android.reamp.mvp.ReampPresenter;
 import example.reamp.R;
 
-public class LoginActivity extends MvpAppCompatActivity<LoginPresenter, LoginState> {
+public class LoginActivity extends ReampAppCompatActivity<LoginPresenter, LoginState> {
 
     private EditText loginInput;
     private EditText passwordInput;
@@ -60,7 +60,7 @@ public class LoginActivity extends MvpAppCompatActivity<LoginPresenter, LoginSta
     }
 
     @Override
-    public MvpPresenter<LoginState> onCreatePresenter() {
+    public ReampPresenter<LoginState> onCreatePresenter() {
         return new LoginPresenter(loginService);
     }
 

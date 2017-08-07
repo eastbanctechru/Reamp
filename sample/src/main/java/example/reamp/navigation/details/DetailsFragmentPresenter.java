@@ -1,8 +1,8 @@
 package example.reamp.navigation.details;
 
-import etr.android.reamp.mvp.MvpPresenter;
+import etr.android.reamp.mvp.ReampPresenter;
 
-public class DetailsFragmentPresenter extends MvpPresenter<DetailsFragmentStateModel> {
+public class DetailsFragmentPresenter extends ReampPresenter<DetailsFragmentStateModel> {
 
     @Override
     public void onPresenterCreated() {

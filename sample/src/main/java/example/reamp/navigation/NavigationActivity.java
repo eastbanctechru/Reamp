@@ -2,12 +2,12 @@ package example.reamp.navigation;
 
 import android.os.Bundle;
 
-import etr.android.reamp.mvp.MvpAppCompatActivity;
-import etr.android.reamp.mvp.MvpPresenter;
+import etr.android.reamp.mvp.ReampAppCompatActivity;
+import etr.android.reamp.mvp.ReampPresenter;
 import etr.android.reamp.mvp.SerializableStateModel;
 import example.reamp.R;
 
-public class NavigationActivity extends MvpAppCompatActivity<MvpPresenter<SerializableStateModel>, SerializableStateModel> {
+public class NavigationActivity extends ReampAppCompatActivity<ReampPresenter<SerializableStateModel>, SerializableStateModel> {
 
     @Override
     public SerializableStateModel onCreateStateModel() {
@@ -15,8 +15,8 @@ public class NavigationActivity extends MvpAppCompatActivity<MvpPresenter<Serial
     }
 
     @Override
-    public MvpPresenter<SerializableStateModel> onCreatePresenter() {
-        return new MvpPresenter<>();
+    public ReampPresenter<SerializableStateModel> onCreatePresenter() {
+        return new ReampPresenter<>();
     }
 
     @Override

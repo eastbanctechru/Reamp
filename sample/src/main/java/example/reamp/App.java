@@ -5,7 +5,7 @@ import android.app.Application;
 
 import java.util.List;
 
-import etr.android.reamp.mvp.MvpView;
+import etr.android.reamp.mvp.ReampView;
 import etr.android.reamp.mvp.PresenterManager;
 import etr.android.reamp.mvp.ReampStrategy;
 import example.reamp.share.ParticularActivity;
@@ -23,8 +23,8 @@ public class App extends Application {
         @Override
         public void onActivityDestroyed(Activity activity) {
             if (activity.isFinishing()) {
-                List<MvpView> views = PresenterManager.getInstance().getViewsOf(activity);
-                for (MvpView view : views) {
+                List<ReampView> views = PresenterManager.getInstance().getViewsOf(activity);
+                for (ReampView view : views) {
                     if (view instanceof ParticularActivity && !((ParticularActivity) view).isRoot()) {
                         //let the presenter of this view stay alive
                     } else {

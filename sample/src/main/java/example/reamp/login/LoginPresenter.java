@@ -2,9 +2,9 @@ package example.reamp.login;
 
 import android.os.AsyncTask;
 
-import etr.android.reamp.mvp.MvpPresenter;
+import etr.android.reamp.mvp.ReampPresenter;
 
-public class LoginPresenter extends MvpPresenter<LoginState> {
+public class LoginPresenter extends ReampPresenter<LoginState> {
 
     private final LoginService loginService;
 

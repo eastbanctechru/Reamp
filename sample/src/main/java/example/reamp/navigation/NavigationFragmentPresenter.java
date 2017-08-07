@@ -2,11 +2,11 @@ package example.reamp.navigation;
 
 import android.content.Intent;
 
-import etr.android.reamp.mvp.MvpPresenter;
+import etr.android.reamp.mvp.ReampPresenter;
 import example.reamp.navigation.details.DetailsWithData;
 import example.reamp.navigation.details.DetailsWithResultUnit;
 
-public class NavigationFragmentPresenter extends MvpPresenter<NavigationFragmentState> {
+public class NavigationFragmentPresenter extends ReampPresenter<NavigationFragmentState> {
 
     // a basic way to use Navigation and NavigationUnit
     public void openBrowser() {

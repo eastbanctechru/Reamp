@@ -6,11 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import etr.android.reamp.mvp.MvpAppCompatActivity;
-import etr.android.reamp.mvp.MvpPresenter;
+import etr.android.reamp.mvp.ReampAppCompatActivity;
+import etr.android.reamp.mvp.ReampPresenter;
 import example.reamp.R;
 
-public class ParticularActivity extends MvpAppCompatActivity<SharedPresenter, SharedState> {
+public class ParticularActivity extends ReampAppCompatActivity<SharedPresenter, SharedState> {
 
     private TextView textView;
 
@@ -38,7 +38,7 @@ public class ParticularActivity extends MvpAppCompatActivity<SharedPresenter, Sh
     }
 
     @Override
-    public MvpPresenter<SharedState> onCreatePresenter() {
+    public ReampPresenter<SharedState> onCreatePresenter() {
         return new SharedPresenter();
     }
 

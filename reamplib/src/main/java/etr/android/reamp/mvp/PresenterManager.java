@@ -12,8 +12,8 @@ public class PresenterManager {
 
     private static PresenterManager instance;
 
-    private final HashMap<String, MvpPresenter> presenters = new HashMap<>();
-    private final Map<MvpView, Context> register = new HashMap<>();
+    private final HashMap<String, ReampPresenter> presenters = new HashMap<>();
+    private final Map<ReampView, Context> register = new HashMap<>();
     private ReampStrategy strategy = new ReampStrategy();
 
     private PresenterManager() {
@@ -26,16 +26,16 @@ public class PresenterManager {
         return instance;
     }
 
-    public MvpPresenter getPresenter(String mvpId) {
+    public ReampPresenter getPresenter(String mvpId) {
         return presenters.get(mvpId);
     }
 
-    public void setPresenter(String mvpId, MvpPresenter presenter) {
+    public void setPresenter(String mvpId, ReampPresenter presenter) {
         presenters.put(mvpId, presenter);
     }
 
     public void destroyPresenter(String mvpId) {
-        MvpPresenter presenter = presenters.remove(mvpId);
+        ReampPresenter presenter = presenters.remove(mvpId);
         if (presenter != null) {
             presenter.releaseAllViews();
             presenter.onDestroyPresenter();
@@ -52,23 +52,23 @@ public class PresenterManager {
         }
     }
 
-    public void registerView(MvpView view, Context context) {
+    public void registerView(ReampView view, Context context) {
         register.put(view, context);
     }
 
     public void unregisterViewsOf(Context context) {
-        Iterator<Map.Entry<MvpView, Context>> iterator = register.entrySet().iterator();
+        Iterator<Map.Entry<ReampView, Context>> iterator = register.entrySet().iterator();
         while (iterator.hasNext()) {
-            Map.Entry<MvpView, Context> entry = iterator.next();
+            Map.Entry<ReampView, Context> entry = iterator.next();
             if (context.equals(entry.getValue())) {
                 iterator.remove();
             }
         }
     }
 
-    public List<MvpView> getViewsOf(Context context) {
-        List<MvpView> views = new ArrayList<>();
-        for (Map.Entry<MvpView, Context> entry : register.entrySet()) {
+    public List<ReampView> getViewsOf(Context context) {
+        List<ReampView> views = new ArrayList<>();
+        for (Map.Entry<ReampView, Context> entry : register.entrySet()) {
             if (context.equals(entry.getValue())) {
                 views.add(entry.getKey());
             }

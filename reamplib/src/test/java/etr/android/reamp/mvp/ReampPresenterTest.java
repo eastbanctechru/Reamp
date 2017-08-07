@@ -6,7 +6,7 @@ import org.junit.Test;
 import etr.android.reamp.mvp.internal.SimpleView;
 import etr.android.reamp.mvp.internal.TesteePresenter;
 
-public class MvpPresenterTest extends BaseTest {
+public class ReampPresenterTest extends BaseTest {
 
 
     @Test

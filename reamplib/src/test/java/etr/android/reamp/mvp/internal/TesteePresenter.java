@@ -1,9 +1,9 @@
 package etr.android.reamp.mvp.internal;
 
-import etr.android.reamp.mvp.MvpPresenter;
-import etr.android.reamp.mvp.MvpView;
+import etr.android.reamp.mvp.ReampPresenter;
+import etr.android.reamp.mvp.ReampView;
 
-public class TesteePresenter extends MvpPresenter<TesteeState> {
+public class TesteePresenter extends ReampPresenter<TesteeState> {
 
     public int presenterCreated;
     public int destroyPresenter;
@@ -31,13 +31,13 @@ public class TesteePresenter extends MvpPresenter<TesteeState> {
     }
 
     @Override
-    public void onConnect(MvpView view) {
+    public void onConnect(ReampView view) {
         super.onConnect(view);
         onConnectedWithView++;
     }
 
     @Override
-    public void onDisconnect(MvpView view) {
+    public void onDisconnect(ReampView view) {
         super.onDisconnect(view);
         onDisconnectWithView++;
     }

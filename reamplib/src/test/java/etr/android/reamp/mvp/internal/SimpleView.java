@@ -3,10 +3,10 @@ package etr.android.reamp.mvp.internal;
 import android.content.Context;
 
 import etr.android.reamp.mvp.MvpDelegate;
-import etr.android.reamp.mvp.MvpPresenter;
-import etr.android.reamp.mvp.MvpView;
+import etr.android.reamp.mvp.ReampPresenter;
+import etr.android.reamp.mvp.ReampView;
 
-public class SimpleView implements MvpView<TesteeState> {
+public class SimpleView implements ReampView<TesteeState> {
 
     private MvpDelegate delegate = new MvpDelegate(this);
     public int counter;
@@ -43,7 +43,7 @@ public class SimpleView implements MvpView<TesteeState> {
 
     @Override
     public TesteePresenter getPresenter() {
-        MvpPresenter presenter = delegate.getPresenter();
+        ReampPresenter presenter = delegate.getPresenter();
         return (TesteePresenter) presenter;
     }
 

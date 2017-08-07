@@ -3,11 +3,11 @@ package etr.android.reamp.mvp.internal;
 import android.os.Bundle;
 
 import etr.android.reamp.R;
-import etr.android.reamp.mvp.MvpAppCompatActivity;
-import etr.android.reamp.mvp.MvpPresenter;
-import etr.android.reamp.mvp.MvpStateModel;
+import etr.android.reamp.mvp.ReampAppCompatActivity;
+import etr.android.reamp.mvp.ReampPresenter;
+import etr.android.reamp.mvp.ReampStateModel;
 
-public class NotSerializableActivity extends MvpAppCompatActivity<MvpPresenter<MvpStateModel>, MvpStateModel> {
+public class NotSerializableActivity extends ReampAppCompatActivity<ReampPresenter<ReampStateModel>, ReampStateModel> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,17 +16,17 @@ public class NotSerializableActivity extends MvpAppCompatActivity<MvpPresenter<M
     }
 
     @Override
-    public void onStateChanged(MvpStateModel stateModel) {
+    public void onStateChanged(ReampStateModel stateModel) {
 
     }
 
     @Override
-    public MvpStateModel onCreateStateModel() {
-        return new MvpStateModel();
+    public ReampStateModel onCreateStateModel() {
+        return new ReampStateModel();
     }
 
     @Override
-    public MvpPresenter<MvpStateModel> onCreatePresenter() {
-        return new MvpPresenter<>();
+    public ReampPresenter<ReampStateModel> onCreatePresenter() {
+        return new ReampPresenter<>();
     }
 }

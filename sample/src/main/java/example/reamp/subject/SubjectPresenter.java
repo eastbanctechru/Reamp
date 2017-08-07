@@ -1,8 +1,8 @@
 package example.reamp.subject;
 
-import etr.android.reamp.mvp.MvpPresenter;
+import etr.android.reamp.mvp.ReampPresenter;
 
-public class SubjectPresenter extends MvpPresenter<SubjectStateModel> {
+public class SubjectPresenter extends ReampPresenter<SubjectStateModel> {
 
     public void onNameChanged(String text) {
         getStateModel().nameSubject.onNext(text);

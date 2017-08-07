@@ -15,7 +15,7 @@ public class MvpDelegateTest extends BaseTest {
 
     }
 
-    private class MockActivity extends Activity implements MvpView {
+    private class MockActivity extends Activity implements ReampView {
 
         @Override
         public Context getContext() {
@@ -23,7 +23,7 @@ public class MvpDelegateTest extends BaseTest {
         }
 
         @Override
-        public void onStateChanged(MvpStateModel stateModel) {
+        public void onStateChanged(ReampStateModel stateModel) {
 
         }
 
@@ -38,18 +38,18 @@ public class MvpDelegateTest extends BaseTest {
         }
 
         @Override
-        public MvpStateModel onCreateStateModel() {
+        public ReampStateModel onCreateStateModel() {
             return null;
         }
 
         @Override
-        public MvpPresenter onCreatePresenter() {
+        public ReampPresenter onCreatePresenter() {
             return null;
         }
 
         @Override
-        public MvpPresenter getPresenter() {
-            return new MvpPresenter();
+        public ReampPresenter getPresenter() {
+            return new ReampPresenter();
         }
     }
 }

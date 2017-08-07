@@ -1,18 +1,14 @@
 package example.reamp.view;
 
-import android.graphics.Color;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-import etr.android.reamp.mvp.MvpPresenter;
+import etr.android.reamp.mvp.ReampPresenter;
 import rx.Observable;
 import rx.Subscription;
 import rx.functions.Action1;
 
-public class MyPresenter extends MvpPresenter<MyState> {
+public class MyPresenter extends ReampPresenter<MyState> {
 
     private Subscription subscription;
 

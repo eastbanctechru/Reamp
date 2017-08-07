@@ -7,14 +7,14 @@ import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
 
-import etr.android.reamp.mvp.MvpAppCompatActivity;
+import etr.android.reamp.mvp.ReampAppCompatActivity;
 import example.reamp.R;
 import rx.Observable;
 import rx.Subscription;
 import rx.functions.Action1;
 import rx.functions.Func2;
 
-public class SubjectActivity extends MvpAppCompatActivity<SubjectPresenter, SubjectStateModel> {
+public class SubjectActivity extends ReampAppCompatActivity<SubjectPresenter, SubjectStateModel> {
 
     private Button button;
     private Subscription subscription;

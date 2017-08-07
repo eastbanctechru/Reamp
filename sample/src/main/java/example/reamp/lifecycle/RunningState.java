@@ -2,8 +2,8 @@ package example.reamp.lifecycle;
 
 import java.io.Serializable;
 
-import etr.android.reamp.mvp.MvpStateModel;
+import etr.android.reamp.mvp.ReampStateModel;
 
-public class RunningState extends MvpStateModel implements Serializable {
+public class RunningState extends ReampStateModel implements Serializable {
     public long times;
 }
