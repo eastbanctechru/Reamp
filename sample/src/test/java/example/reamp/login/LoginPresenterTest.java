@@ -43,8 +43,8 @@ public class LoginPresenterTest {
         TestLoginPresenter presenter = view.getPresenter();
 
         LoginState state = presenter.getStateModel();
-        Assert.assertEquals(state.getLogin(), null);
-        Assert.assertEquals(state.getPassword(), null);
+        Assert.assertEquals(state.getLogin(), "");
+        Assert.assertEquals(state.getPassword(), "");
         Assert.assertFalse(state.showProgress());
         Assert.assertFalse(state.isLoginActionEnabled());
         Assert.assertFalse(state.showFailedLogin());
