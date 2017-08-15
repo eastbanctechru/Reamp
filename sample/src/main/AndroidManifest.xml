@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="example.reamp">
+
+    <application
+        android:name=".App"
+        android:allowBackup="true"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+        <activity android:name=".navigation.NavigationActivity" android:windowSoftInputMode="stateHidden">
+        </activity>
+        <activity android:name=".navigation.details.DetailsActivity">
+        </activity>
+        <activity android:name=".subject.SubjectActivity">
+        </activity>
+        <activity android:name=".lifecycle.LongRunningActivity" android:exported="true">
+        </activity>
+        <activity android:name=".view.CustomViewActivity" android:exported="true">
+        </activity>
+        <activity android:name=".WelcomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".basic.BasicActivity"/>
+        <activity android:name=".basic.BasicFragmentActivity"/>
+        <activity android:name=".lifecycle.ShortRunningActivity"/>
+        <activity android:name=".share.ParticularActivity"/>
+        <activity android:name=".login.LoginActivity"/>
+    </application>
+
+</manifest>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">reamp-lib</string>
+    <string name="reamp_common_error_title">Ошибка</string>
+</resources>

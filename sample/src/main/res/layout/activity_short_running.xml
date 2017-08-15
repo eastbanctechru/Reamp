@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".lifecycle.LongRunningActivity">
+
+    <TextView
+        android:id="@+id/disclaimer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/short_running_activity_disclaimer" />
+
+    <TextView
+        android:id="@+id/job_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/disclaimer"
+        android:layout_centerInParent="true"
+        android:textSize="28sp"
+        tools:text="0" />
+
+
+    <TextView
+        android:id="@+id/disclaimer2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/job_text"
+        android:layout_margin="16dp"
+        android:text="@string/short_running_activity_disclaimer2" />
+
+</RelativeLayout>

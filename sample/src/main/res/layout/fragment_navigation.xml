@@ -1,0 +1,77 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context="example.reamp.navigation.NavigationFragment">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:padding="8dp">
+
+        <Button
+            android:id="@+id/open_browser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Open a browser" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/border"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/open_an_activity_for_result" />
+
+        <Button
+            android:id="@+id/open_for_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start activity for result" />
+
+        <TextView
+            android:id="@+id/text_from_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/border"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/open_activity_with_date" />
+
+        <EditText
+            android:id="@+id/main_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Write a message"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/open_with_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start activity with data" />
+
+    </LinearLayout>
+
+</LinearLayout>

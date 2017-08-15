@@ -1,0 +1,13 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="etr.android.reamp">
+
+    <application>
+
+        <provider
+            android:name=".mvp.ReampProvider"
+            android:exported="false"
+            android:authorities="${applicationId}.reamp.provider" />
+
+    </application>
+
+</manifest>
