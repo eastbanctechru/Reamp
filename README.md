@@ -20,10 +20,33 @@ An easy, powerful, and flexible MVP/MVVM library for Android apps
 # Reamp in a few words
 
 Every ReampView (activity, fragment, whatever) has a presenter and a view state.
+
 The presenter lives all the time across view's life cycle and dies only when the view explicitly closes (for instance, by pressing the back button).
+
 The view state contains all the data your view needs.
+
 Update the view state and send a notification to the view when you need to update the screen without having to pay attention to the life cycle.
+
 Reamp will do all the remaining work: check view availability, save and restore the state if needed, and more.
+
+# Dependency
+
+```groovy
+// root build.gradle file
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+```
+
+```groovy
+// module build.gradle file
+dependencies {
+  compile 'etr.android.reamp:reamp:0.11.1'
+}
+```
 
 ## License
 ```

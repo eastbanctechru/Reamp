@@ -1,1 +1,3 @@
-include ':sample', ':reamplib', ':rxstatemodel'
+include ':sample', ':reamp', ':rxstatemodel'
+
+project(":reamp").projectDir = file("reamplib")
