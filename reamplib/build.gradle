@@ -58,6 +58,7 @@ tasks.withType(Javadoc) {
 ext {
     bintrayRepo = 'Reamp'
     bintrayName = 'Reamp'
+    bintrayOrg = 'eastbanctechru'
 
     publishedGroupId = 'etr.android.reamp'
     libraryName = 'Reamp'
@@ -68,7 +69,7 @@ ext {
     siteUrl = 'https://github.com/eastbanctechru/Reamp'
     gitUrl = 'https://github.com/eastbanctechru/Reamp.git'
 
-    libraryVersion = '0.11.1'
+    libraryVersion = '1.0'
 
     developerId = 'eastbanctechru'
     developerName = 'EastBanc Technologies'
@@ -83,5 +84,5 @@ apply from: '../jacoco.gradle'
 
 if (project.rootProject.file('local.properties').exists()) {
     apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-    apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+    apply from: './bintray.gradle'
 }
