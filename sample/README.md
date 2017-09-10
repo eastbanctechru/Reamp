@@ -2,4 +2,4 @@
 
 Here you can find a demo project of how to use Reamp, from basics to complex.
 
-<img src="demo.png" alt="Login 1" width="200"/>
+<img src="img/demo.png" width="300"/>
