@@ -14,6 +14,7 @@ public class PresenterManager {
 
     private final HashMap<String, ReampPresenter> presenters = new HashMap<>();
     private final Map<ReampView, Context> register = new HashMap<>();
+    private final Map<String, Context> phantomRegister = new HashMap<>();
     private ReampStrategy strategy = new ReampStrategy();
 
     private PresenterManager() {
@@ -74,5 +75,29 @@ public class PresenterManager {
             }
         }
         return views;
+    }
+
+    public void registerPhantomView(String phantomId, Context context) {
+        phantomRegister.put(phantomId, context);
+    }
+
+    public List<String> getPhantomViews(Context context) {
+        List<String> views = new ArrayList<>();
+        for (Map.Entry<String, Context> entry : phantomRegister.entrySet()) {
+            if (context.equals(entry.getValue())) {
+                views.add(entry.getKey());
+            }
+        }
+        return views;
+    }
+
+    public void releasePhantomViews(Context context) {
+        Iterator<Map.Entry<String, Context>> iterator = phantomRegister.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<String, Context> entry = iterator.next();
+            if (context.equals(entry.getValue())) {
+                iterator.remove();
+            }
+        }
     }
 }
