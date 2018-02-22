@@ -46,7 +46,8 @@ class ReampCallbacks implements Application.ActivityLifecycleCallbacks {
     @Override
     public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
         List<ReampView> attachedViews = PresenterManager.getInstance().getViewsOf(activity);
-        outState.putStringArrayList(REAMP_ATTACHED_VIEWS, mapToIds(attachedViews));
+        List<String> phantomViews = PresenterManager.getInstance().getPhantomViews(activity);
+        outState.putStringArrayList(REAMP_ATTACHED_VIEWS, mapToIds(attachedViews, phantomViews));
     }
 
     @Override
@@ -56,11 +57,15 @@ class ReampCallbacks implements Application.ActivityLifecycleCallbacks {
         PresenterManager.getInstance().unregisterViewsOf(activity);
     }
 
-    private ArrayList<String> mapToIds(List<ReampView> attachedViews) {
-        if (attachedViews == null) return new ArrayList<>(0);
-        ArrayList<String> attachedIds = new ArrayList<>(attachedViews.size());
-        for (ReampView attachedView : attachedViews) {
-            attachedIds.add(attachedView.getMvpId());
+    private ArrayList<String> mapToIds(List<ReampView> attachedViews, List<String> phantomViews) {
+        ArrayList<String> attachedIds = new ArrayList<>();
+        if (attachedViews != null) {
+            for (ReampView attachedView : attachedViews) {
+                attachedIds.add(attachedView.getMvpId());
+            }
+        }
+        if (phantomViews != null) {
+            attachedIds.addAll(phantomViews);
         }
         return attachedIds;
     }
