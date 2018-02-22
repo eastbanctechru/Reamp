@@ -44,7 +44,7 @@ allprojects {
 ```groovy
 // module build.gradle file
 dependencies {
-  compile 'etr.android.reamp:reamp:1.0.1'
+  compile 'etr.android.reamp:reamp:1.0.2'
 }
 ```
 

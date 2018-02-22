@@ -1,3 +1,6 @@
+[1.0.2]
+Another presenter leak fixed
+
 [1.0.1]
 Presenter leak fixed
 Default error behavior reworked

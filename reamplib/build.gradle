@@ -69,7 +69,7 @@ ext {
     siteUrl = 'https://github.com/eastbanctechru/Reamp'
     gitUrl = 'https://github.com/eastbanctechru/Reamp.git'
 
-    libraryVersion = '1.0.1'
+    libraryVersion = '1.0.2'
 
     developerId = 'eastbanctechru'
     developerName = 'EastBanc Technologies'
