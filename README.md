@@ -3,7 +3,7 @@
 
 # Reamp
 
-An easy, powerful, and flexible MVP/MVVM library for Android apps
+An easy, powerful, and flexible MVP/MVI library for Android apps
  
 # What you get by using Reamp
 
@@ -47,6 +47,10 @@ dependencies {
   compile 'etr.android.reamp:reamp:1.0.2'
 }
 ```
+
+## More info
+
+If you have any questions please visit our [Wiki pages](https://github.com/eastbanctechru/Reamp/wiki)
 
 ## License
 ```
