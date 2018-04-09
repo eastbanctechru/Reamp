@@ -52,7 +52,7 @@ dependencies {
 
 If you have any questions please visit our [Wiki pages](https://github.com/eastbanctechru/Reamp/wiki)
 
-Don't forget to chec out the sample project with step-by-step examples: [Sample](https://github.com/eastbanctechru/Reamp/tree/master/sample)
+Don't forget to check out the sample project with step-by-step examples: [Sample](https://github.com/eastbanctechru/Reamp/tree/master/sample)
 
 ## License
 ```
