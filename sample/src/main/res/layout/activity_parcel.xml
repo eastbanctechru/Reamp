@@ -7,7 +7,7 @@
     android:padding="16dp">
 
     <TextView
-        android:text="@string/basic_disclaimer"
+        android:text="@string/parcelable_disclaimer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
