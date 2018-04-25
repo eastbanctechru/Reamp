@@ -22,6 +22,6 @@ public class ParcelPresenter extends ReampPresenter<ParcelableState> {
 
     @Override
     public ParcelableState deserializeState(Bundle savedInstance) {
-        return savedInstance.getParcelable("parcelable_state");
+        return savedInstance.getParcelable(PARCELABLE_STATE);
     }
 }
