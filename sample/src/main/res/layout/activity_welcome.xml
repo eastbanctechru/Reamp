@@ -74,6 +74,12 @@
                 android:layout_height="wrap_content"
                 android:text="Custom View" />
 
+            <Button
+                android:id="@+id/parcelable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Parcelable State" />
+
         </LinearLayout>
 
     </ScrollView>
