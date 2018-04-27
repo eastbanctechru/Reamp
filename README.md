@@ -30,6 +30,8 @@ Update the view state and send a notification to the view when you need to updat
 
 Reamp will do all the remaining work: check view availability, save and restore the state if needed, and more.
 
+![Reamp diagram](https://raw.githubusercontent.com/eastbanctechru/Reamp/master/docs/diagram.png "Reamp diagram")
+
 # Dependency
 
 ```groovy
