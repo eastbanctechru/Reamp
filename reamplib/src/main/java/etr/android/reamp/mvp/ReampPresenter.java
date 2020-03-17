@@ -2,8 +2,6 @@ package etr.android.reamp.mvp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -25,11 +23,11 @@ public class ReampPresenter<SM extends ReampStateModel> {
 
     private static final String TAG = "ReampPresenter";
     private static final String EXTRA_INSTANCE_STATE = "EXTRA_INSTANCE_STATE";
-    private final Handler uiHandler = new Handler(Looper.getMainLooper());
 
     private SM stateModel;
     private List<ReampView> views = new ArrayList<>();
     private List<StateChanges> stateChanges = new ArrayList<>();
+    private final SendStateModelExecutor sendStateModelExecutor = createSendStateModelExecutor();
     private boolean throwOnSerializationError = BuildConfig.DEBUG;
 
     public void attachStateModel(SM stateModel) {
@@ -43,6 +41,10 @@ public class ReampPresenter<SM extends ReampStateModel> {
         return stateModel;
     }
 
+    protected SendStateModelExecutor createSendStateModelExecutor() {
+        return new SendStateModelExecutor.UiThread();
+    }
+
     /**
      * Send a state model to a view and save it as a current.
      * If the view is attached, {@link ReampView#onStateChanged(ReampStateModel)} is called.
@@ -50,22 +52,19 @@ public class ReampPresenter<SM extends ReampStateModel> {
      */
     public final void sendStateModel(final SM stateModel) {
         this.stateModel = stateModel;
-        if (Looper.myLooper() != Looper.getMainLooper()) {
-            uiHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    sendStateModel(stateModel);
-                }
-            });
-        } else {
-            for (StateChanges stateChange : stateChanges) {
-                try {
-                    stateChange.onNewState(stateModel);
-                } catch (Throwable e) {
-                    stateChange.onError(e);
+
+        sendStateModelExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                for (StateChanges stateChange : stateChanges) {
+                    try {
+                        stateChange.onNewState(stateModel);
+                    } catch (Throwable e) {
+                        stateChange.onError(e);
+                    }
                 }
             }
-        }
+        });
     }
 
     /**
@@ -183,6 +182,7 @@ public class ReampPresenter<SM extends ReampStateModel> {
 
     /**
      * Called when the first view has been connected
+     *
      * @see ReampPresenter#onConnect(ReampView)
      * @see ReampPresenter#onDisconnect(ReampView) ()
      * @see ReampPresenter#onDisconnect()
@@ -206,6 +206,7 @@ public class ReampPresenter<SM extends ReampStateModel> {
 
     /**
      * Called when the last view has been disconnected
+     *
      * @see ReampPresenter#onConnect(ReampView)
      * @see ReampPresenter#onDisconnect(ReampView) ()
      * @see ReampPresenter#onDisconnect()
@@ -263,6 +264,6 @@ public class ReampPresenter<SM extends ReampStateModel> {
     public void releaseAllViews() {
         views.clear();
         stateChanges.clear();
-        uiHandler.removeCallbacks(null);
+        sendStateModelExecutor.cancelAll();
     }
 }
