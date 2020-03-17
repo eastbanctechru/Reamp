@@ -26,4 +26,16 @@ public interface SendStateModelExecutor {
             uiHandler.removeCallbacks(null);
         }
     }
+
+    final class Unconfined implements SendStateModelExecutor {
+        @Override
+        public void execute(@NonNull Runnable sendStateModel) {
+            sendStateModel.run();
+        }
+
+        @Override
+        public void cancelAll() {
+            // nothing.
+        }
+    }
 }
