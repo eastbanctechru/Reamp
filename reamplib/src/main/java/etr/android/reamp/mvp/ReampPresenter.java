@@ -93,6 +93,11 @@ public class ReampPresenter<SM extends ReampStateModel> {
 
     }
 
+    /**
+     * @deprecated if you need Context in Presenter,
+     * move Context related logic to long-living object in data-layer and use only application's context.
+     */
+    @Deprecated
     public ReampView getView() {
         if (views.isEmpty()) {
             return null;
@@ -100,6 +105,7 @@ public class ReampPresenter<SM extends ReampStateModel> {
         return views.get(0);
     }
 
+    @Deprecated
     public List<ReampView> getViews() {
         return new ArrayList<>(views);
     }
