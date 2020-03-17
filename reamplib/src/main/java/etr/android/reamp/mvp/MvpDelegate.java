@@ -3,6 +3,7 @@ package etr.android.reamp.mvp;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,12 +22,16 @@ public class MvpDelegate {
     private String mvpId;
     private ReampPresenter presenter;
     private StateChanges stateChanges;
+    private boolean isDestroyed = false;
 
     public MvpDelegate(ReampView view) {
         this.view = view;
     }
 
     public <P extends ReampPresenter<SM>, SM extends ReampStateModel> P getPresenter() {
+        if (isDestroyed) {
+            Log.e(TAG, "MvpDelegate#getPresenter was called after onDestroy.", new IllegalStateException());
+        }
         return (P) presenter;
     }
 
@@ -107,7 +112,8 @@ public class MvpDelegate {
     public void onDestroy() {
         ReampPresenter presenter = view.getPresenter();
         presenter.removeView(view);
-        this.presenter = null;
+        isDestroyed = true;
+        // Don't set presenter to null, because there are a lot of crashes, when view calls getPresenter() after onDestroy.
     }
 
     /**
