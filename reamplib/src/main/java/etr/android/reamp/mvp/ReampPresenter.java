@@ -2,6 +2,7 @@ package etr.android.reamp.mvp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -18,6 +19,7 @@ import java.util.List;
 
 import etr.android.reamp.BuildConfig;
 import etr.android.reamp.navigation.Navigation;
+import etr.android.reamp.navigation.ResultProvider;
 
 public class ReampPresenter<SM extends ReampStateModel> {
 
@@ -175,8 +177,18 @@ public class ReampPresenter<SM extends ReampStateModel> {
      * Callback from an activity or a fragment when they receive a result intent
      * Do not use this callback in a fragment's presenters if the host activity is not an ReampView
      */
+    @CallSuper
     public void onResult(int requestCode, int resultCode, Intent data) {
+        onResult(new ResultProvider.Android(getNavigation(), requestCode, resultCode, data));
+    }
 
+    /**
+     * Convenient receiving result:
+     * - Useful in Unit-tests without Android dependencies.
+     * - Useful in application code - no extra params like "requestCode, resultCode, data"
+     */
+    public void onResult(@NonNull ResultProvider resultProvider) {
+        // nothing by default.
     }
 
     /**
