@@ -3,10 +3,14 @@ package etr.android.reamp.mvp;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.RestrictTo;
 import android.util.Log;
 
 import java.util.List;
 import java.util.UUID;
+
+import etr.android.reamp.navigation.ResultProvider;
 
 /**
  * A proxy class between {@link ReampView} and {@link ReampPresenter} which should be used
@@ -125,11 +129,19 @@ public class MvpDelegate {
         }
     }
 
+    @RestrictTo(RestrictTo.Scope.TESTS)
+    public void onResult(@NonNull ResultProvider resultProvider) {
+        view.getPresenter().onResult(resultProvider);
+    }
+
     private void dispatchResult(int requestCode, int resultCode, Intent data) {
         List<ReampView> views = PresenterManager.getInstance().getViewsOf(view.getContext());
         for (ReampView reampView : views) {
             ReampPresenter presenter = reampView.getPresenter();
             if (presenter != null) {
+                presenter.onResult(new ResultProvider.Android(view.getPresenter().getNavigation(), requestCode, resultCode, data));
+
+                // Call it for backward compatibility.
                 presenter.onResult(requestCode, resultCode, data);
             }
         }

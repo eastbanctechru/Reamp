@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import java.io.Serializable;
 
-import etr.android.reamp.functional.Consumer;
+import etr.android.reamp.functional.ConsumerNonNull;
 
 /**
  * A handy container-class which can be used to store "one-shot" data into {@link ReampStateModel}
@@ -20,11 +20,16 @@ public class Action<T extends Serializable> implements Serializable {
     private T value;
     private boolean hasAction;
 
-    public void set(T value) {
+    public void set(@NonNull T value) {
         this.value = value;
         hasAction = true;
     }
 
+    /**
+     * @deprecated use {@link Action#consume(ConsumerNonNull)}.
+     */
+    @Deprecated
+    @NonNull
     public T get() {
         if (!hasAction) {
             throw new IllegalStateException("No action yet");
@@ -35,11 +40,15 @@ public class Action<T extends Serializable> implements Serializable {
         return result;
     }
 
+    /**
+     * @deprecated use {@link Action#consume(ConsumerNonNull)}.
+     */
+    @Deprecated
     public boolean hasAction() {
         return hasAction;
     }
 
-    public void consume(@NonNull Consumer<T> consumer) {
+    public void consume(@NonNull ConsumerNonNull<T> consumer) {
         if (hasAction()) {
             consumer.consume(get());
         }

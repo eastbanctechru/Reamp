@@ -45,7 +45,7 @@ public class ReampPresenter<SM extends ReampStateModel> {
     }
 
     protected SendStateModelExecutor createSendStateModelExecutor() {
-        return new SendStateModelExecutor.UiThread();
+        return SendStateModelExecutor.createDefault();
     }
 
     /**
@@ -177,10 +177,11 @@ public class ReampPresenter<SM extends ReampStateModel> {
     /**
      * Callback from an activity or a fragment when they receive a result intent
      * Do not use this callback in a fragment's presenters if the host activity is not an ReampView
+     * @deprecated use {@link ReampPresenter#onResult(ResultProvider)}.
      */
+    @Deprecated
     @CallSuper
     public void onResult(int requestCode, int resultCode, Intent data) {
-        onResult(new ResultProvider.Android(getNavigation(), requestCode, resultCode, data));
     }
 
     /**

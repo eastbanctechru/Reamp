@@ -1,19 +1,18 @@
-package etr.android.reamp.mvp.screen_two;
+package etr.android.reamp.mvp.screen_one;
 
 import java.util.Objects;
 
+import etr.android.reamp.navigation.ComplexNavigationUnit;
 import etr.android.reamp.navigation.Navigation;
-import etr.android.reamp.navigation.NavigationUnit;
 
-public class TwoNavigationUnit extends NavigationUnit<Integer> {
-
+public class OneNavigationUnit extends ComplexNavigationUnit<Integer, Void> {
     private final Integer i;
 
-    public TwoNavigationUnit() {
+    public OneNavigationUnit() {
         this.i = null;
     }
 
-    public TwoNavigationUnit(int i) {
+    public OneNavigationUnit(int i) {
         this.i = i;
     }
 
@@ -26,7 +25,7 @@ public class TwoNavigationUnit extends NavigationUnit<Integer> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TwoNavigationUnit that = (TwoNavigationUnit) o;
+        OneNavigationUnit that = (OneNavigationUnit) o;
         return Objects.equals(i, that.i);
     }
 

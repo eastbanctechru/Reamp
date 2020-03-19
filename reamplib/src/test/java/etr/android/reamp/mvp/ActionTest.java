@@ -1,7 +1,11 @@
 package etr.android.reamp.mvp;
 
+import android.support.annotation.NonNull;
+
 import org.junit.Assert;
 import org.junit.Test;
+
+import etr.android.reamp.functional.ConsumerNonNull;
 
 public class ActionTest extends BaseTest {
 
@@ -23,6 +27,30 @@ public class ActionTest extends BaseTest {
         } catch (Exception e) {
             Assert.assertTrue(e instanceof IllegalStateException);
         }
+    }
+
+    public void consume() {
+        Action<String> action = new Action<>();
+
+        final String[] strings = new String[]{null};
+
+        action.set("test");
+        action.consume(new ConsumerNonNull<String>() {
+            @Override
+            public void consume(@NonNull String s) {
+                strings[0] = s;
+            }
+        });
+        Assert.assertEquals("test", strings[0]);
+
+        strings[0] = null;
+        action.consume(new ConsumerNonNull<String>() {
+            @Override
+            public void consume(@NonNull String s) {
+                strings[0] = s;
+            }
+        });
+        Assert.assertNull(strings[0]);
     }
 
     @Test

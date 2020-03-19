@@ -1,15 +1,24 @@
 package etr.android.reamp.mvp;
 
+import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 
-public interface SendStateModelExecutor {
-    void execute(@NonNull Runnable sendStateModel);
+public abstract class SendStateModelExecutor {
+    public abstract void execute(@NonNull Runnable sendStateModel);
 
-    void cancelAll();
+    public abstract void cancelAll();
 
-    final class UiThread implements SendStateModelExecutor {
+    @SuppressLint("ObsoleteSdkInt")
+    public static SendStateModelExecutor createDefault() {
+        return Build.VERSION.SDK_INT > 0 // SDK_INT == 0 in unit tests.
+                ? new UiThread()
+                : new Unconfined();
+    }
+
+    public static final class UiThread extends SendStateModelExecutor {
         private final Handler uiHandler = new Handler(Looper.getMainLooper());
 
         @Override
@@ -27,7 +36,7 @@ public interface SendStateModelExecutor {
         }
     }
 
-    final class Unconfined implements SendStateModelExecutor {
+    public static final class Unconfined extends SendStateModelExecutor {
         @Override
         public void execute(@NonNull Runnable sendStateModel) {
             sendStateModel.run();
