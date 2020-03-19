@@ -1,6 +1,10 @@
 package etr.android.reamp.mvp;
 
+import android.support.annotation.NonNull;
+
 import java.io.Serializable;
+
+import etr.android.reamp.functional.Consumer;
 
 /**
  * A handy container-class which can be used to store "one-shot" data into {@link ReampStateModel}
@@ -33,5 +37,11 @@ public class Action<T extends Serializable> implements Serializable {
 
     public boolean hasAction() {
         return hasAction;
+    }
+
+    public void consume(@NonNull Consumer<T> consumer) {
+        if (hasAction()) {
+            consumer.consume(get());
+        }
     }
 }

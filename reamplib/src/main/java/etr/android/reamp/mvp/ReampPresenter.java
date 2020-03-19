@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import etr.android.reamp.BuildConfig;
+import etr.android.reamp.functional.ConsumerNonNull;
 import etr.android.reamp.navigation.Navigation;
 import etr.android.reamp.navigation.ResultProvider;
 
@@ -287,5 +288,10 @@ public class ReampPresenter<SM extends ReampStateModel> {
         views.clear();
         stateChanges.clear();
         sendStateModelExecutor.cancelAll();
+    }
+
+    protected final void updateStateModel(@NonNull ConsumerNonNull<SM> updater) {
+        updater.consume(getStateModel());
+        sendStateModel();
     }
 }

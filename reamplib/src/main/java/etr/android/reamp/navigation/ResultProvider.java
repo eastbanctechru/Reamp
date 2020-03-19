@@ -4,11 +4,23 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-public interface ResultProvider {
-    @Nullable
-    <R> R getResult(@NonNull ComplexNavigationUnit<?, R> navigationUnit);
+import etr.android.reamp.functional.ConsumerNonNull;
 
-    final class Android implements ResultProvider {
+public abstract class ResultProvider {
+    @Nullable
+    abstract public <R> R getResult(@NonNull ComplexNavigationUnit<?, R> navigationUnit);
+
+    public <R> void consumeResult(
+            @NonNull ComplexNavigationUnit<?, R> navigationUnit,
+            @NonNull ConsumerNonNull<R> consumer
+    ) {
+        final R result = getResult(navigationUnit);
+        if (result != null) {
+            consumer.consume(result);
+        }
+    }
+
+    public static final class Android extends ResultProvider {
         @NonNull
         private final Navigation navigation;
         private final int requestCode;
@@ -29,7 +41,7 @@ public interface ResultProvider {
         }
     }
 
-    final class Test<R> implements ResultProvider {
+    public static final class Test<R> extends ResultProvider {
         private final Class<? extends ComplexNavigationUnit<?, R>> nClass;
         private final R result;
 
