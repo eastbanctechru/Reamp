@@ -248,6 +248,10 @@ public class ReampPresenter<SM extends ReampStateModel> {
 
     }
 
+    public boolean isNavigationAvailable() {
+        return !views.isEmpty();
+    }
+
     public Navigation getNavigation() {
         if (views.isEmpty()) {
             Log.e(TAG, "ReampPresenter#getNavigation was called when no views were added.", new IllegalStateException());
