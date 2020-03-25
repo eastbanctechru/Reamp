@@ -40,24 +40,4 @@ public abstract class ResultProvider {
             return navigation.getResult(navigationUnit, requestCode, resultCode, data);
         }
     }
-
-    public static final class Test<R> extends ResultProvider {
-        private final Class<? extends ComplexNavigationUnit<?, R>> nClass;
-        private final R result;
-
-        public Test(Class<? extends ComplexNavigationUnit<?, R>> nClass, R result) {
-            this.nClass = nClass;
-            this.result = result;
-        }
-
-        @SuppressWarnings("unchecked")
-        @Nullable
-        @Override
-        public <R2> R2 getResult(@NonNull ComplexNavigationUnit<?, R2> navigationUnit) {
-            if (navigationUnit.getClass() == nClass) {
-                return (R2) result;
-            }
-            return null;
-        }
-    }
 }

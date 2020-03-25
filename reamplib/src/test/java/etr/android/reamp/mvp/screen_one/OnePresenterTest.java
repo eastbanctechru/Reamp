@@ -7,7 +7,6 @@ import org.mockito.Mockito;
 import etr.android.reamp.mvp.MvpDelegate;
 import etr.android.reamp.mvp.screen_two.TwoNavigationUnit;
 import etr.android.reamp.navigation.Navigation;
-import etr.android.reamp.navigation.ResultProvider;
 
 public class OnePresenterTest {
     @Test
@@ -50,7 +49,7 @@ public class OnePresenterTest {
         onePresenter.onOpenScreenTwo();
         Mockito.verify(navigation).open(new TwoNavigationUnit(11));
 
-        mvpDelegate.onResult(new ResultProvider.Test<>(TwoNavigationUnit.class, 14));
+        mvpDelegate.onResult(new TestResultProvider<>(TwoNavigationUnit.class, 14));
         Assert.assertEquals(14, onePresenter.getStateModel().counter);
 
         onePresenter.onShow();
