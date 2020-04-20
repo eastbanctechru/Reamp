@@ -3,8 +3,8 @@ package etr.android.reamp.mvp;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.RestrictTo;
+import androidx.annotation.NonNull;
+import androidx.annotation.RestrictTo;
 import android.util.Log;
 
 import java.util.List;

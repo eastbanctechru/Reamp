@@ -1,6 +1,6 @@
 package etr.android.reamp.mvp.screen_one;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import junit.framework.Assert;
 
