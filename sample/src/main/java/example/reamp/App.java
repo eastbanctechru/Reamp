@@ -22,15 +22,10 @@ public class App extends Application {
 
         @Override
         public void onActivityDestroyed(Activity activity) {
-            if (activity.isFinishing()) {
-                List<ReampView> views = PresenterManager.getInstance().getViewsOf(activity);
-                for (ReampView view : views) {
-                    if (view instanceof ParticularActivity && !((ParticularActivity) view).isRoot()) {
-                        //let the presenter of this view stay alive
-                    } else {
-                        PresenterManager.getInstance().destroyPresenter(view.getMvpId());
-                    }
-                }
+            if (activity instanceof ParticularActivity && !((ParticularActivity) activity).isRoot()) {
+                //do nothing
+            } else {
+                super.onActivityDestroyed(activity);
             }
         }
     }

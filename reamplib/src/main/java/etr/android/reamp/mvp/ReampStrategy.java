@@ -1,8 +1,10 @@
 package etr.android.reamp.mvp;
 
 import android.app.Activity;
+import android.content.Context;
 
 import java.util.List;
+import java.util.Map;
 
 public class ReampStrategy {
 
@@ -13,6 +15,11 @@ public class ReampStrategy {
             for (ReampView view : views) {
                 PresenterManager.getInstance().destroyPresenter(view.getMvpId());
             }
+            List<String> phantomViews = PresenterManager.getInstance().getPhantomViews(activity);
+            for (String phantomView : phantomViews) {
+                PresenterManager.getInstance().destroyPresenter(phantomView);
+            }
+            PresenterManager.getInstance().releasePhantomViews(activity);
         }
     }
 }

@@ -29,6 +29,7 @@
         <activity android:name=".lifecycle.ShortRunningActivity"/>
         <activity android:name=".share.ParticularActivity"/>
         <activity android:name=".login.LoginActivity"/>
+        <activity android:name=".parcelable.ParcelActivity"/>
     </application>
 
 </manifest>
