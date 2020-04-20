@@ -42,7 +42,6 @@ public class PresenterLeaksTest extends BaseTest {
             activity.getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.root, new TestReampFragment())
-                    .addToBackStack("bs")
                     .commit();
         }
 
