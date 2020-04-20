@@ -22,24 +22,24 @@ public class OnePresenterTest {
             }
         };
 
-        TestReampView<OnePresenter, OneModel> view1 = new TestReampView<>(onePresenter, new OneModel());
-        MvpDelegate mvpDelegate = new MvpDelegate(view1);
+        TestReampView<OnePresenter, OneModel> view = new TestReampView<>(onePresenter, new OneModel());
+        MvpDelegate mvpDelegate = new MvpDelegate(view);
         mvpDelegate.onCreate(null);
         mvpDelegate.connect();
 
         Mockito.verify(navigation).getData(new OneNavigationUnit());
-        Assert.assertEquals(10, view1.sm.counter);
-        Util.assertNoValue(view1.sm.action);
-        Util.assertAndConsume(view1.sm.emptyAction, false);
+        Assert.assertEquals(10, view.sm.counter);
+        Util.assertNoValue(view.sm.action);
+        Util.assertAndConsume(view.sm.emptyAction, false);
 
         onePresenter.onIncrement();
         Assert.assertEquals(11, onePresenter.getStateModel().counter);
 
         onePresenter.onShow();
-        Util.assertHasValue(view1.sm.action, 11);
+        Util.assertHasValue(view.sm.action, 11);
 
         onePresenter.onShowEmpty();
-        Util.assertAndConsume(view1.sm.emptyAction, true);
+        Util.assertAndConsume(view.sm.emptyAction, true);
 
         onePresenter.onIncrement();
         Assert.assertEquals(12, onePresenter.getStateModel().counter);
@@ -54,7 +54,7 @@ public class OnePresenterTest {
         Assert.assertEquals(14, onePresenter.getStateModel().counter);
 
         onePresenter.onShow();
-        Util.assertHasValue(view1.sm.action, 14);
+        Util.assertHasValue(view.sm.action, 14);
 
         Mockito.verifyNoMoreInteractions(navigation);
     }
