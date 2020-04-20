@@ -1,3 +1,16 @@
+[1.0.2]
+Another presenter leak fixed
+
+[1.0.1]
+Presenter leak fixed
+Default error behavior reworked
+
+[1.0]
+Release
+
+[0.11]
+public Mvp* classes are renamed into Reamp* classes
+
 [0.10.2]
 More javadocs
 'onResult' methods are not deprecated anymore

@@ -14,6 +14,8 @@ import etr.android.reamp.R;
  */
 public abstract class ReampFragment<P extends ReampPresenter<SM>, SM extends ReampStateModel> extends Fragment implements ReampView<SM> {
 
+    private static final String TAG = "ReampFragment";
+
     private MvpDelegate delegate = new MvpDelegate(this);
 
     @Override
@@ -54,9 +56,10 @@ public abstract class ReampFragment<P extends ReampPresenter<SM>, SM extends Rea
 
     @Override
     public void onError(Throwable throwable) {
+        Log.e(TAG, "Error while changing state", throwable);
         new AlertDialog.Builder(getContext())
                 .setTitle(R.string.reamp_common_error_title)
-                .setMessage(Log.getStackTraceString(throwable))
+                .setMessage(R.string.reamp_common_error_message)
                 .show();
     }
 
