@@ -13,7 +13,6 @@ import org.robolectric.shadows.ShadowIntent;
 
 import etr.android.reamp.R;
 import etr.android.reamp.mvp.BaseTest;
-import etr.android.reamp.mvp.internal.RegularFragment;
 import etr.android.reamp.mvp.internal.SimpleView;
 import etr.android.reamp.mvp.internal.navigation.FirstActivity;
 import etr.android.reamp.mvp.internal.navigation.NavFragment;

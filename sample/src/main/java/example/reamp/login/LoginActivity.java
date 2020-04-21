@@ -1,12 +1,14 @@
 package example.reamp.login;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
+import etr.android.reamp.functional.ConsumerNonNull;
 import etr.android.reamp.mvp.ReampAppCompatActivity;
 import etr.android.reamp.mvp.ReampPresenter;
 import example.reamp.R;
@@ -70,9 +72,13 @@ public class LoginActivity extends ReampAppCompatActivity<LoginPresenter, LoginS
         loginActionView.setEnabled(stateModel.isLoginActionEnabled());
         successView.setVisibility(stateModel.showSuccessLogin() ? View.VISIBLE : View.GONE);
         errorView.setVisibility(stateModel.showFailedLogin() ? View.VISIBLE : View.GONE);
-        if (stateModel.errorAction().hasAction()) {
-            showError(stateModel.errorAction().get());
-        }
+
+        stateModel.errorAction().consume(new ConsumerNonNull<String>() {
+            @Override
+            public void consume(@NonNull String s) {
+                showError(s);
+            }
+        });
     }
 
     private void showError(String message) {

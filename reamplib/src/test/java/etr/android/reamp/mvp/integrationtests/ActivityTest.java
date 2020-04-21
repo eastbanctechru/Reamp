@@ -135,7 +135,6 @@ public class ActivityTest extends BaseTest {
         controller.create().start().resume().visible();
         TesteePresenter presenter = testMvpActivity.getPresenter();
         controller.pause().stop().destroy();
-        Assert.assertNull(testMvpActivity.getPresenter());
         Assert.assertNull(presenter.getView());
         List<ReampView> reampViews = PresenterManager.getInstance().getViewsOf(testMvpActivity);
         Assert.assertTrue(reampViews.isEmpty());

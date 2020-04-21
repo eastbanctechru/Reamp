@@ -109,7 +109,6 @@ public class SupportFragmentTest extends BaseTest {
         TestReampFragment fragment = activity.getEmbeddedFragment();
         TesteePresenter presenter = fragment.getPresenter();
         controller.pause().stop().destroy();
-        Assert.assertNull(fragment.getPresenter());
         Assert.assertNull(presenter.getView());
     }
 
