@@ -39,6 +39,17 @@ public class PresenterLeaksTest extends BaseTest {
         EmptyAppCompatActivity activity = controller.setup().get();
 
         for (int i = 0; i < 3; i++) {
+            /*
+            todo
+            Раньше, когда targetSdkVersion был 25, фрагменты добавлялись в бек-стек,
+            и тест проходил проверку "only the last fragment has attached".
+            После миграции на AndroidX и поднятия targetSdkVersion до 29 тест стал падать в этом месте.
+            В результате убрали добавление фрагментов в бек-стек и все заработало.
+            Почему оно работало раньше -- не понятно. Так как:
+            - в MvpDelegate.onCreate вызывается presenterManager.registerView(view, view.getContext());
+            - и если положить фрагменты в бек стек, то после поворота активити у фрагментов будет вызван onCreate и все 3 фрагмента вызовут registerView.
+            - у фрагментов в бек-стеке точно вызываются onCreate после поворота активити.
+             */
             activity.getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.root, new TestReampFragment())
