@@ -1,6 +1,6 @@
 package etr.android.reamp.mvp;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import org.junit.Assert;
 import org.junit.Test;

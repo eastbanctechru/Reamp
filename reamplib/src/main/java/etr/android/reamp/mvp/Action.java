@@ -1,6 +1,6 @@
 package etr.android.reamp.mvp;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.io.Serializable;
 

@@ -2,8 +2,8 @@ package etr.android.reamp.mvp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
-import android.support.annotation.NonNull;
+import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import java.io.ByteArrayInputStream;

@@ -1,7 +1,7 @@
 package etr.android.reamp.mvp.screen_one;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import etr.android.reamp.navigation.ComplexNavigationUnit;
 import etr.android.reamp.navigation.ResultProvider;

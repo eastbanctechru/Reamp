@@ -1,6 +1,6 @@
 package example.reamp.navigation;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import etr.android.reamp.functional.ConsumerNonNull;
 import etr.android.reamp.mvp.ReampPresenter;
