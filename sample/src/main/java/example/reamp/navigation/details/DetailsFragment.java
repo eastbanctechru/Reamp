@@ -2,7 +2,8 @@ package example.reamp.navigation.details;
 
 
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import etr.android.reamp.functional.ConsumerNonNull;
 import etr.android.reamp.mvp.ReampFragment;
 import example.reamp.R;
 
@@ -64,9 +66,12 @@ public class DetailsFragment extends ReampFragment<DetailsFragmentPresenter, Det
     @Override
     public void onStateChanged(DetailsFragmentStateModel stateModel) {
         editText.setText(stateModel.text);
-        if (stateModel.showDataAction.hasAction()) {
-            showAlert(stateModel.showDataAction.get());
-        }
+        stateModel.showDataAction.consume(new ConsumerNonNull<String>() {
+            @Override
+            public void consume(@NonNull String s) {
+                showAlert(s);
+            }
+        });
     }
 
     private void showAlert(String msg) {

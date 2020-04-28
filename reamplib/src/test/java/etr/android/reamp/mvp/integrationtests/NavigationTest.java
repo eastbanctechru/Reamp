@@ -2,7 +2,7 @@ package etr.android.reamp.mvp.integrationtests;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,7 +13,6 @@ import org.robolectric.shadows.ShadowIntent;
 
 import etr.android.reamp.R;
 import etr.android.reamp.mvp.BaseTest;
-import etr.android.reamp.mvp.internal.RegularFragment;
 import etr.android.reamp.mvp.internal.SimpleView;
 import etr.android.reamp.mvp.internal.navigation.FirstActivity;
 import etr.android.reamp.mvp.internal.navigation.NavFragment;

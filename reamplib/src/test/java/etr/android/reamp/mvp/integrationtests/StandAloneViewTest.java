@@ -88,7 +88,6 @@ public class StandAloneViewTest extends BaseTest {
         TestReampCustomView view = activity.getCustomView();
         TesteePresenter presenter = view.getPresenter();
         activity.removeView();
-        Assert.assertNull(view.getPresenter());
         Assert.assertNull(presenter.getView());
     }
 }

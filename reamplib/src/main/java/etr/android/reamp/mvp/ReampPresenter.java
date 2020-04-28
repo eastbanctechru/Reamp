@@ -2,9 +2,8 @@ package etr.android.reamp.mvp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.support.annotation.NonNull;
+import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import java.io.ByteArrayInputStream;
@@ -19,17 +18,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import etr.android.reamp.BuildConfig;
+import etr.android.reamp.functional.ConsumerNonNull;
 import etr.android.reamp.navigation.Navigation;
+import etr.android.reamp.navigation.ResultProvider;
 
 public class ReampPresenter<SM extends ReampStateModel> {
 
     private static final String TAG = "ReampPresenter";
     private static final String EXTRA_INSTANCE_STATE = "EXTRA_INSTANCE_STATE";
-    private final Handler uiHandler = new Handler(Looper.getMainLooper());
 
     private SM stateModel;
     private List<ReampView> views = new ArrayList<>();
     private List<StateChanges> stateChanges = new ArrayList<>();
+    private final SendStateModelExecutor sendStateModelExecutor = createSendStateModelExecutor();
     private boolean throwOnSerializationError = BuildConfig.DEBUG;
 
     public void attachStateModel(SM stateModel) {
@@ -43,6 +44,10 @@ public class ReampPresenter<SM extends ReampStateModel> {
         return stateModel;
     }
 
+    protected SendStateModelExecutor createSendStateModelExecutor() {
+        return SendStateModelExecutor.createDefault();
+    }
+
     /**
      * Send a state model to a view and save it as a current.
      * If the view is attached, {@link ReampView#onStateChanged(ReampStateModel)} is called.
@@ -50,22 +55,19 @@ public class ReampPresenter<SM extends ReampStateModel> {
      */
     public final void sendStateModel(final SM stateModel) {
         this.stateModel = stateModel;
-        if (Looper.myLooper() != Looper.getMainLooper()) {
-            uiHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    sendStateModel(stateModel);
-                }
-            });
-        } else {
-            for (StateChanges stateChange : stateChanges) {
-                try {
-                    stateChange.onNewState(stateModel);
-                } catch (Throwable e) {
-                    stateChange.onError(e);
+
+        sendStateModelExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                for (StateChanges stateChange : stateChanges) {
+                    try {
+                        stateChange.onNewState(stateModel);
+                    } catch (Throwable e) {
+                        stateChange.onError(e);
+                    }
                 }
             }
-        }
+        });
     }
 
     /**
@@ -94,6 +96,11 @@ public class ReampPresenter<SM extends ReampStateModel> {
 
     }
 
+    /**
+     * @deprecated if you need Context in Presenter,
+     * move Context related logic to long-living object in data-layer and use only application's context.
+     */
+    @Deprecated
     public ReampView getView() {
         if (views.isEmpty()) {
             return null;
@@ -101,6 +108,7 @@ public class ReampPresenter<SM extends ReampStateModel> {
         return views.get(0);
     }
 
+    @Deprecated
     public List<ReampView> getViews() {
         return new ArrayList<>(views);
     }
@@ -169,9 +177,20 @@ public class ReampPresenter<SM extends ReampStateModel> {
     /**
      * Callback from an activity or a fragment when they receive a result intent
      * Do not use this callback in a fragment's presenters if the host activity is not an ReampView
+     * @deprecated use {@link ReampPresenter#onResult(ResultProvider)}.
      */
+    @Deprecated
+    @CallSuper
     public void onResult(int requestCode, int resultCode, Intent data) {
+    }
 
+    /**
+     * Convenient receiving result:
+     * - Useful in Unit-tests without Android dependencies.
+     * - Useful in application code - no extra params like "requestCode, resultCode, data"
+     */
+    public void onResult(@NonNull ResultProvider resultProvider) {
+        // nothing by default.
     }
 
     /**
@@ -183,6 +202,7 @@ public class ReampPresenter<SM extends ReampStateModel> {
 
     /**
      * Called when the first view has been connected
+     *
      * @see ReampPresenter#onConnect(ReampView)
      * @see ReampPresenter#onDisconnect(ReampView) ()
      * @see ReampPresenter#onDisconnect()
@@ -206,6 +226,7 @@ public class ReampPresenter<SM extends ReampStateModel> {
 
     /**
      * Called when the last view has been disconnected
+     *
      * @see ReampPresenter#onConnect(ReampView)
      * @see ReampPresenter#onDisconnect(ReampView) ()
      * @see ReampPresenter#onDisconnect()
@@ -227,8 +248,16 @@ public class ReampPresenter<SM extends ReampStateModel> {
 
     }
 
+    public boolean isNavigationAvailable() {
+        return !views.isEmpty();
+    }
+
     public Navigation getNavigation() {
-        return new Navigation(getView());
+        if (views.isEmpty()) {
+            Log.e(TAG, "ReampPresenter#getNavigation was called when no views were added.", new IllegalStateException());
+            return null;
+        }
+        return new Navigation(views.get(0));
     }
 
     public void connect(StateChanges stateChanges, ReampView reampView) {
@@ -263,6 +292,11 @@ public class ReampPresenter<SM extends ReampStateModel> {
     public void releaseAllViews() {
         views.clear();
         stateChanges.clear();
-        uiHandler.removeCallbacks(null);
+        sendStateModelExecutor.cancelAll();
+    }
+
+    protected final void updateStateModel(@NonNull ConsumerNonNull<SM> updater) {
+        updater.consume(getStateModel());
+        sendStateModel();
     }
 }
